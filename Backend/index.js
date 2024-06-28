@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import { PORT } from './env.js';
 import errorHandler from './src/middlewares/errorHandler.js';
 import corsMiddleware from './src/middlewares/cors.js';
 
@@ -22,7 +23,7 @@ app.use((req, res, next) => {
 // Middleware manejo de errores
 app.use(errorHandler);
 
-// Servidor port: 3000
-app.listen(3000, () => {
-    console.log('Servidor escuchando en el puerto 3000');
+// Ponemos el servidor a escuchar en un puerto obtenido de una variable de entorno
+app.listen(PORT, () => {
+    console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
