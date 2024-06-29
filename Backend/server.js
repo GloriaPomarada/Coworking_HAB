@@ -1,17 +1,28 @@
 import express from 'express';
 import path from 'path';
+import morgan from 'morgan';
 import { PORT } from './env.js';
 import errorHandler from './src/middlewares/errorHandler.js';
 import corsMiddleware from './src/middlewares/cors.js';
 
 const app = express();
+
 // Ruta raíz de express
 app.get('/', (req, res) => {
     res.send('Hello');
 });
 
-// Middleware CORS
+
+//!-> REGISTRO DE MIDDLEWARES:
+//Middleware CORS
 app.use(corsMiddleware);
+//Middleware Morgan-> info de la solicitud.
+app.use(morgan('dev')); 
+//Middleware convierte solicitudes json->objeto y los asigna a req.body.
+app.use(express.json());
+//Middleware convierte solicitudes formularios html->objeto y losasigna a req.body.
+app.use(express.urlencoded({ extended: true })); 
+
 
 // Middleware para manejar errores 404
 app.use((req, res, next) => {
