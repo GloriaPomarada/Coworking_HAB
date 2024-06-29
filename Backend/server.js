@@ -45,7 +45,10 @@ app.listen(PORT, () => {
     console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
 
-//Endpoint de reservas.js //!NO SÉ SI ESTO VA AQUÍ, HELP!!!!!!!!
+
+
+
+/*/Endpoint de reservas.js //!NO SÉ SI ESTO VA AQUÍ, HELP!!!!!!!!
 const coworkingReservas = require('./coworkingReservas');
 app.use('/api/coworking', coworkingReservas);
 
@@ -76,3 +79,4 @@ passport.deserializeUser((id, done) => {
     done(err, user);
   });
 });
+/*/
