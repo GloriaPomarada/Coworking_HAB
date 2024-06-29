@@ -44,3 +44,35 @@ app.use(errorHandler);
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
+
+//Endpoint de reservas.js //!NO SÉ SI ESTO VA AQUÍ, HELP!!!!!!!!
+const coworkingReservas = require('./coworkingReservas');
+app.use('/api/coworking', coworkingReservas);
+
+// passport.js
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
+// Configurar la estrategia de autenticación local
+passport.use(new LocalStrategy(
+  (username, password, done) => {
+    // Aquí debes verificar si las credenciales del usuario son válidas
+    User.findOne({ username: username }, (err, user) => {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false); }
+      if (!user.validPassword(password)) { return done(null, false); }
+      return done(null, user);
+    });
+  }
+));
+
+// Almacenar y recuperar el usuario de forma eficiente durante el proceso de autetificación
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id, (err, user) => {
+    done(err, user);
+  });
+});
