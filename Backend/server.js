@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import morgan from 'morgan';
+import routes from "./src/routes/index.js";
 import { PORT } from './env.js';
 import errorHandler from './src/middlewares/errorHandler.js';
 import corsMiddleware from './src/middlewares/cors.js';
@@ -22,6 +23,11 @@ app.use(morgan('dev'));
 app.use(express.json());
 //Middleware convierte solicitudes formularios html->objeto y losasigna a req.body.
 app.use(express.urlencoded({ extended: true })); 
+
+
+//!-> registro de directorio rutas.
+app.use("/api", routes);
+
 
 
 // Middleware para manejar errores 404
