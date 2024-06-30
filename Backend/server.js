@@ -19,10 +19,10 @@ app.get('/', (req, res) => {
 app.use(corsMiddleware);
 //Middleware Morgan-> info de la solicitud.
 app.use(morgan('dev')); 
-//Middleware convierte solicitudes json->objeto y los asigna a req.body.
-app.use(express.json());
-//Middleware convierte solicitudes formularios html->objeto y losasigna a req.body.
-app.use(express.urlencoded({ extended: true })); 
+//Middlewares Pareso del body de la petición.
+app.use(express.json());//Convierte solicitudes json->objeto y asigna a req.body.
+app.use(express.urlencoded({ extended: true }));//Convierte solicitudes formularios html->objeto y asigna a req.body.
+ 
 
 
 //!-> registro de directorio rutas.
