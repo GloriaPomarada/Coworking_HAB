@@ -1,5 +1,5 @@
 import mysql from 'mysql2/promise';
-import { DB_USER, DB_PASSWORD, DB_NAME, DB_HOST } from '../env.js';
+import { DB_USER, DB_PASSWORD, DB_NAME, DB_HOST } from '../../env.js';
 
 // pool almacena un array de conexiones.
 let pool;
@@ -31,11 +31,9 @@ const getPool = async () => {
 
         // Retornamos un pool.
         return pool;
-        
     } catch (err) {
         console.error(err);
     }
 };
-
 
 export default getPool;
