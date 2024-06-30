@@ -1,4 +1,7 @@
 import randomstring from 'randomstring';
+import insertUserModel from '../models/spaces/insertUserModel';
+import validateSchemaUtil from '../utils/validateSchemaUtils';
+import newUserSchema from '../schema/newUser/newUserSchema';
 
 // Endpoint newUser
 const newUser = async (req, res, next) => {
@@ -7,7 +10,7 @@ const newUser = async (req, res, next) => {
         const { username, email, password } = req.body;
 
         // Validamos el body con Joi.
-        // await validateSchemaUtil(newUserSchema, req.body);
+        await validateSchemaUtil(newUserSchema, req.body);
 
         // Creamos el código de registro.
         const registrationCode = randomstring.generate(30);
