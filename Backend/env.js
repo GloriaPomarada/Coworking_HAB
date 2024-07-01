@@ -1,18 +1,26 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-const { 
+const {
     PORT,
     DB_HOST,
     DB_USER,
     DB_PASSWORD,
     DB_NAME,
+    SMTP_HOST,
+    SMTP_PORT,
+    SMTP_USER,
+    SMTP_PASS,
 } = process.env;
 
-export { 
+export {
     PORT,
     DB_HOST,
     DB_USER,
     DB_PASSWORD,
-    DB_NAME
- };
+    DB_NAME,
+    SMTP_HOST,
+    SMTP_PORT,
+    SMTP_USER,
+    SMTP_PASS,
+};

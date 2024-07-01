@@ -1,4 +1,3 @@
-import Joi from 'joi';
 import joiErrorMessages from '../joiErrorMessage';
 
 // Creamos el esquema de Joi donde comprobamos todas las propiedades necesarias.

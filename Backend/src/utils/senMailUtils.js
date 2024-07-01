@@ -1,12 +1,12 @@
 import nodemailer from 'nodemailer';
-
+import { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } from '../../env';
 // Creamos un transporte para poder enviar emails con nodemailer.
 const transport = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 465,
+    host: SMTP_HOST,
+    port: SMTP_PORT,
     auth: {
-        user: 'maddison53@ethereal.email',
-        pass: 'jn7jnAPss4f63QBp6D',
+        user: SMTP_USER,
+        pass: SMTP_PASS,
     },
 });
 
