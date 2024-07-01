@@ -10,7 +10,7 @@ const main = async () => {
         console.log('Borrando tablas...');
 
         await pool.query(
-            'DROP TABLE IF EXISTS pagos, reservas, espacios_votos, espacios_fotos, espacios, admins, usuarios'
+            'DROP TABLE IF EXISTS pagos, reservas, espacios_equipamientos, equipamientos, espacios_votos, espacios_fotos, incidencias, espacios, categorias_incidencias, categorias_espacios, admins, usuarios'
         );
 
         console.log('Creando tablas...');
@@ -41,23 +41,56 @@ const main = async () => {
             )
         `)
 
+        // Creamos la tabla Categorías de Espacios.
+        await pool.query(`
+        CREATE TABLE IF NOT EXISTS categorias_espacios (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nombre VARCHAR(100) NOT NULL,
+            descripcion TEXT
+            )
+        `)
+
+        // Creamos la tabla Categorías de Incidencias.
+        await pool.query(`
+        CREATE TABLE IF NOT EXISTS categorias_incidencias (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nombre VARCHAR(100) NOT NULL,
+            descripcion TEXT
+            )
+        `)
+
+
         // Creamos la tabla de espacios.
         await pool.query(`
         CREATE TABLE IF NOT EXISTS espacios (
             id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
             nombre VARCHAR(100) NOT NULL,
             descripcion TEXT,
-            tipo ENUM('sala', 'despacho') DEFAULT 'sala',
-            equipamiento TEXT,
+            categoria_id INT,
             capacidad INT,
             precio_por_persona DECIMAL(10, 2),
             precio_espacio_completo DECIMAL(10, 2),
             direccion VARCHAR(100),
             estado ENUM('libre', 'reservado') DEFAULT 'libre',
             incidencias TEXT,
-            imagen LONGBLOB
+            imagen LONGBLOB,
+            FOREIGN KEY (categoria_id) REFERENCES categorias_espacios(id)
             )
         `);
+
+        // Creamos la tabla de Incidencias.
+        await pool.query(`
+        CREATE TABLE IF NOT EXISTS incidencias (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            espacio_id INT NOT NULL,
+            categoria_incidencia_id INT NOT NULL,
+            descripcion TEXT,
+            fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (espacio_id) REFERENCES espacios(id),
+            FOREIGN KEY (categoria_incidencia_id) REFERENCES categorias_incidencias(id)
+            )
+        `);
+
 
         // Creamos la tabla espacios_fotos.
         await pool.query(`
@@ -82,6 +115,28 @@ const main = async () => {
             FOREIGN KEY (espacio_id) REFERENCES espacios(id),
             INDEX (usuario_id),
             INDEX (espacio_id)
+            )
+        `);
+
+        // Creamos la tabla de equipamientos.
+        await pool.query(`
+        CREATE TABLE IF NOT EXISTS equipamientos (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nombre VARCHAR(100) NOT NULL,
+            descripcion TEXT,
+            categoria_id INT,
+            FOREIGN KEY (categoria_id) REFERENCES categorias_espacios(id)
+            )
+        `);
+
+        // Creamos la tabla de espacios_equipamientos.
+        await pool.query(`
+        CREATE TABLE IF NOT EXISTS espacios_equipamientos (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            espacio_id INT NOT NULL,
+            equipamiento_id INT NOT NULL,
+            FOREIGN KEY (espacio_id) REFERENCES espacios(id),
+            FOREIGN KEY (equipamiento_id) REFERENCES equipamientos(id)
             )
         `);
 

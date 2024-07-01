@@ -1,6 +1,6 @@
 import randomstring from 'randomstring';
 import insertUserModel from '../models/spaces/insertUserModel';
-import validateSchemaUtil from '../utils/validateSchemaUtils';
+import validateSchemaUtil from '../../utils/validateSchemaUtils';
 import newUserSchema from '../schema/newUser/newUserSchema';
 
 // Endpoint newUser

@@ -31,6 +31,7 @@ const getPool = async () => {
 
         // Retornamos un pool.
         return pool;
+        
     } catch (err) {
         console.error(err);
     }
