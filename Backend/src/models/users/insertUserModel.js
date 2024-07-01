@@ -21,7 +21,7 @@ const insertUserModel = async (username, email, password, registrationCode) => {
     }
 
     // Creamos el asunto del email de verificación.
-    const emailSubject = 'Activa tu usuario en Diario de Viajes :)';
+    const emailSubject = 'Activa tu cuenta!';
 
     // Creamos el contenido del email
     const emailBody = `
