@@ -1,0 +1,1 @@
+export { default as getEquipment } from './selectEquipmentModel.js';

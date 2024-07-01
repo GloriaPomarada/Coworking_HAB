@@ -4,11 +4,10 @@ const getSpaceByIdModel = async (spaceId) => {
     try {
         const [spaces] = await pool.query(
             `SELECT 
-            E.id,
+             E.id,
             E.nombre,
             E.descripcion,
-            E.tipo,
-            E.equipamiento,
+            E.categoria_id,
             E.capacidad,
             E.precio_por_persona,
             E.precio_espacio_completo,
