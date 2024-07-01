@@ -6,6 +6,7 @@ import express from 'express'; //-> Importo express
 import userRoutes from './userRoutes.js';
 import spaceRoutes from './spaceRoutes.js';
 import equipmentRoutes from './equipmentRoutes.js';
+import categoryRoutes from './categoryRoutes.js';
 
 
 //-> Creamos router.
@@ -15,5 +16,6 @@ const router = express.Router();
 router.use('/users', userRoutes);
 router.use('/spaces', spaceRoutes);
 router.use('/equipment', equipmentRoutes);
+router.use('/categories', categoryRoutes)
 
 export default router;
