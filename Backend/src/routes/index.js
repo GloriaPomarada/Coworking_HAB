@@ -8,6 +8,7 @@ import spaceRoutes from './spaceRoutes.js';
 import equipmentRoutes from './equipmentRoutes.js';
 import categoryRoutes from './categoryRoutes.js';
 import incidentRoutes from './incidentRoutes.js';
+import bookingRoutes from './bookingRoutes.js';
 
 
 //-> Creamos router.
@@ -19,5 +20,7 @@ router.use('/spaces', spaceRoutes);
 router.use('/equipment', equipmentRoutes);
 router.use('/categories', categoryRoutes);
 router.use('/incidents', incidentRoutes);
+router.use('/bookings', bookingRoutes);
+
 
 export default router;

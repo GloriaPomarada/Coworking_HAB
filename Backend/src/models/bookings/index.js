@@ -1,0 +1,1 @@
+export { default as getBookings } from './bookingListModel.js';
