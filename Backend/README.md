@@ -25,25 +25,30 @@ Esta es la API de la aplicación para gestionar espacios de coworking. Mediante 
 
 ### Users
 
-1. **POST /users/register** Registra un nuevo usuario
-2. **POST /users/login** - Login de usuario
-3. **POST /users/password/recover** Recuperación de contraseña
+1. **POST /api/users/register** Registra un nuevo usuario
+2. **POST /api/users/login** - Login de usuario
+3. **POST /api/users/password/recover** Recuperación de contraseña
 4. **PUT /users/password/reset** Cambio de contraseña
 
 ### Spaces
 
-1.  **POST /spaces** - Crea un nuevo espacio
-2.  **GET /spaces** Devuelve el listado de espacios con filtrado ¿?
-3.  **GET /spaces/descripcion** Devuelve el listado de espacios con descripción ¿?
-4.  **GET /spaces/equipment** Devuelve información del equipamiento ¿?
-5.  **GET /spaces/categories** Devuelve información sobre el tipo de espacio ¿?
+1.  **POST /api/spaces** - Crea un nuevo espacio
+2.  **GET /api/spaces** Devuelve el listado de espacios con descripción
+
+### Equipment
+
+1.  **GET /api/equipment** Devuelve listado de equipamiento
+
+### Categories
+
+1.  **GET /api/categories** Devuelve listado de categorias de espacio disponibles
 
 ### Reservas
 
-1. **POST /bookings** Crea la reserva de un espacio
-2. **DELETE /bookings/:bookingsId** Cancela la reserva de un espacio
-3. **GET bookings/:bookingsId** Devuelve la confirmación o el rechazo de la reserva al mail
+1. **POST /api/bookings** Crea la reserva de un espacio
+2. **DELETE /api/bookings/:bookingsId** Cancela la reserva de un espacio
+3. **GET /api/bookings/:bookingsId** Devuelve la confirmación o el rechazo de la reserva al mail
 
 ### Incidencias
 
-1.  **GET /incidents** Devuelve las categorías de incidencias
+1.  **GET /api/incidents** Devuelve las categorías de incidencias
