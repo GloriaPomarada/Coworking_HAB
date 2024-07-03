@@ -7,11 +7,13 @@ const {
     DB_USER,
     DB_PASSWORD,
     DB_NAME,
-    SECRET,
     SMTP_HOST,
     SMTP_PORT,
     SMTP_USER,
-    SMTP_PASS,
+    SMTP_APIKEY,
+    JWT_SECRET,
+    JWT_EXP,
+    UPLOADS_DIR,
 } = process.env;
 
 export {
@@ -20,9 +22,11 @@ export {
     DB_USER,
     DB_PASSWORD,
     DB_NAME,
-    SECRET,
     SMTP_HOST,
     SMTP_PORT,
     SMTP_USER,
-    SMTP_PASS,
+    SMTP_APIKEY,
+    JWT_SECRET,
+    JWT_EXP,
+    UPLOADS_DIR
 };

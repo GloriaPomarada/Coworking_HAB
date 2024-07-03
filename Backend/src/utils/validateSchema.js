@@ -1,4 +1,4 @@
-const validateSchemaUtil = async (schema, body) => {
+const validateSchema = async (schema, body) => {
     try {
         await schema.validateAsync(body);
     } catch (err) {
@@ -8,4 +8,4 @@ const validateSchemaUtil = async (schema, body) => {
     }
 };
 
-export default validateSchemaUtil;
+export default validateSchema;

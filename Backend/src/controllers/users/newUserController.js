@@ -1,31 +1,46 @@
-import randomstring from 'randomstring';
-import insertUserModel from '../models/spaces/insertUserModel';
-import validateSchemaUtil from '../../utils/validateSchemaUtils';
-import newUserSchema from '../schema/newUser/newUserSchema';
+import randomstring from 'randomstring'; // crea el código de registro random
+import validateSchema from '../../utils/validateSchema.js';
+import newUserSchema from '../../schema/user/newUserSchema.js';
+import sendMailUtil from '../../utils/sendMailUtils.js';
+import * as userModel from '../../models/users/index.js';
 
-// Endpoint newUser
-const newUser = async (req, res, next) => {
+//-> Endpoint newUser
+const newUserController = async (req, res, next) => {
     try {
-        // Obtenemos los datos necesarios del body.
         const { username, email, password } = req.body;
 
-        // Validamos el body con Joi.
-        await validateSchemaUtil(newUserSchema, req.body);
+        // -> Validamos body con Joi.
+        await validateSchema(newUserSchema, req.body);
 
-        // Creamos el código de registro.
+        // -> Generamos el codigo de registro para activar la cuenta.
         const registrationCode = randomstring.generate(30);
 
-        // Insertar usuario a la base de datos
-        await insertUserModel(username, email, password, registrationCode);
+        // -> Generamos el correo y el cuerpo del correo.
+        const emailSubject = 'Activación Cuenta Espacios Coworking';
+        const emailBody = `
+    ¡Hola, ${username}!
+    
+    Para activar tu cuenta, haz clic en el siguiente enlace:
 
+    <a href="http://localhost:3000/api/users/activate/${registrationCode}">Activar mi cuenta</a>
+   `;
+
+        // -> Ya validada, llamamos al modelo para que realice la consulta a la base de datos.
+        await userModel.insertUser(username, email, password, registrationCode);
+
+        // -> Ya se ha guardado el user en la DB (lo ha hecho el modelo). Ahora enviamos correo con el registrationCode.
+        await sendMailUtil(email, emailSubject, emailBody);
+
+        // -> Una vez enviado el correo con el registrationCode mandamos respuesta al cliente.
         res.send({
             status: 'ok',
-            message: 'Tu usuario a sido creado, verifica tu e-mail',
+            message:
+                'Usuario creado correctamente. Por favor revisa tu correo.',
         });
+
     } catch (err) {
         next(err);
     }
 };
 
-console.log(newUser());
-export default newUser;
+export default newUserController;

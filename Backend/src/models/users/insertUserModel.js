@@ -1,48 +1,33 @@
+import pool from '../../config/connection.js';
+import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
-import { v4 as uuid } from 'uuid';
-import getPool from '../../config/getPool.js';
-import sendMailUtil from '../../utils/sendMailUtils.js';
+import {
+    emailALreadyRegisterError,
+    usernamelALreadyRegisterError,
+} from '../../services/errorService.js';
 
 const insertUserModel = async (username, email, password, registrationCode) => {
-    const pool = await getPool();
-    let [users] = await pool.query(`SELECT id FROM users WHERE username = ?`, [
+    // revisar si el usuario ya existe?
+    let [users] = await pool.query('SELECT id FROM usuarios WHERE email = ?', [
+        email,
+    ]);
+
+    if (users.length > 0) emailALreadyRegisterError();
+
+    [users] = await pool.query('SELECT id FROM usuarios WHERE username = ?', [
         username,
     ]);
-    // Si existe algún usuario con ese nombre lanzamos un error.
-    if (users.length > 0) {
-        emailAlreadyRegisteredError();
-    }
-    // Buscamos en la base de datos algún usuario con ese email.
-    [users] = await pool.query(`SELECT id FROM users WHERE email = ?`, [email]);
 
-    // Si existe algún usuario con ese email lanzamos un error.
-    if (users.length > 0) {
-        userAlreadyRegisteredError();
-    }
+    if (users.length > 0) usernamelALreadyRegisterError();
 
-    // Creamos el asunto del email de verificación.
-    const emailSubject = 'Activa tu cuenta!';
-
-    // Creamos el contenido del email
-    const emailBody = `
-        ¡Bienvenid@ ${username}!
-
-        Gracias por registrarte con nosotros. Para activar tu cuenta, haz clic en el siguiente enlace:
-
-        <a href="http://localhost:8000/users/validate/${registrationCode}">Activar mi cuenta</a>
-    `;
-
-    // Enviamos el email de verificación al usuario.
-    await sendMailUtil(email, emailSubject, emailBody);
-
-    // Encriptamos la contraseña.
-    const hashedPass = await bcrypt.hash(password, 10);
-
-    // Insertamos el usuario.
-    await pool.query(
-        `INSERT INTO users(id, username, email, password, registrationCode) VALUES(?, ?, ?, ?, ?)`,
-        [uuid(), username, email, hashedPass, registrationCode]
+    const saltRounds = 12;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    // insertar el usario en la DB.
+    const newUser = await pool.query(
+        `INSERT INTO usuarios(id, username, email, password, registrationCode) VALUES(?, ?, ?, ?, ?)`,
+        [uuidv4(), username, email, hashedPassword, registrationCode]
     );
+    return newUser;
 };
 
 export default insertUserModel;
