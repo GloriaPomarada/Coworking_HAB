@@ -38,6 +38,15 @@ export const sendEmailError = () => {
     };
 };
 
+export const pendingActivationError = () => {
+    throw {
+        httpStatus: 403, // Forbidden
+        code: 'PENDING_ACTIVATION',
+        message:
+            'Usuario pendiente de activar. Por favor, verifica tu cuenta antes de continuar.',
+    };
+};
+
 export const recoveryCodeError = () => {
     throw {
         httpStatus: 401, // Unauthorized
