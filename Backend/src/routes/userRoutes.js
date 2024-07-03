@@ -5,6 +5,7 @@ import recoverPassController from '../controllers/users/recoverPassController.js
 
 //* -> RUTAS PUBLICAS
 router.post('/register', userController.register); // .com/api/users/register
+router.put('/activate/:registrationCode', userController.validate); // .com/api/users/activate
 router.post('/login', userController.login); // .com/api/users/login
 router.post('/users/password/recover', recoverPassController);
 
