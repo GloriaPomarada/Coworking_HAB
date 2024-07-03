@@ -2,9 +2,10 @@ import express from 'express';
 import path from 'path';
 import morgan from 'morgan';
 import routes from "./src/routes/index.js";
-import { PORT } from './env.js';
+import { PORT, UPLOADS_DIR } from './env.js';
 import errorHandler from './src/middlewares/errorHandler.js';
 import corsMiddleware from './src/middlewares/cors.js';
+import fileUpload from 'express-fileupload';
 
 const app = express();
 
@@ -22,8 +23,12 @@ app.use(morgan('dev'));
 //Middlewares Pareso del body de la petición.
 app.use(express.json());//Convierte solicitudes json->objeto y asigna a req.body.
 app.use(express.urlencoded({ extended: true }));//Convierte solicitudes formularios html->objeto y asigna a req.body.
- 
 
+//Middleware de Directorio de recursos estaticos
+app.use(express.static(UPLOADS_DIR));
+
+//Middleware de uploads files
+app.use(fileUpload());//Lee un body en formato form-data
 
 //!-> registro de directorio rutas.
 app.use("/api", routes);
