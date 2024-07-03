@@ -37,3 +37,11 @@ export const sendEmailError = () => {
         message: 'Error al enviar email',
     };
 };
+
+export const recoveryCodeError = () => {
+    throw {
+        httpStatus: 401, // Unauthorized
+        code: 'INVALID_RECOVERY_CODE',
+        message: 'Código de recuperación incorrecto',
+    };
+};
