@@ -1,0 +1,298 @@
+{
+	"info": {
+		"_postman_id": "343580b8-f850-451d-a4a5-6688f4658c4f",
+		"name": "Coworking_HAB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33783669"
+	},
+	"item": [
+		{
+			"name": "Lista equipamiento",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL_BASE}}/api/equipment",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"api",
+						"equipment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lista categorías de espacios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL_BASE}}/api/categories",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"api",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Visualización espacio",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL_BASE}}/api/spaces",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"api",
+						"spaces"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Incidencias",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL_BASE}}/api/incidents/",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"api",
+						"incidents",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registro usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"\",\r\n    \"email\" : \"\",\r\n    \"password\" : \"password123\",\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_BASE}}/api/users/register",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset contraseña",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"\",\r\n    \"recoverPassCode\": \"\",\r\n    \"newPassword\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_BASE}}/api/users/password/reset",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"password",
+						"reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"\",\r\n    \"password\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_BASE}}/api/users/login",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Activación usuario",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{URL_BASE}}/api/users/activate/xxxx",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"activate",
+						"xxxx"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reservas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL_BASE}}/api/bookings",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"api",
+						"bookings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recover contraseña",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_BASE}}/api/users/password/recover",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"password",
+						"recover"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Creación espacio",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjllMmM1ODEwLWRhMGItNDExZC05ZjBkLWExZjQ1N2ZkOTQ3NCIsInBhc3N3b3JkIjoiJDJiJDEyJGoxOFZYQU1PZUlDN1VGcFlRNU1lUS5GWTJuc1AybWRqTzNkTU5sR1lxU3ZMRGpQNWtVc08uIiwiYWN0aXZlIjoxLCJyZWNvdmVyUGFzc0NvZGUiOm51bGwsImlhdCI6MTcyMDA3MTU1OSwiZXhwIjoxNzIwNjc2MzU5fQ.hWu3kIg0o0Vwq5hhaJp-VUSNzpzGNlsOhvVjju2hkTI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Oficina B2\",\r\n    \"descripcion\":\"Amplio espacio de trabajo colectivo\",\r\n    \"categoria_id\": \"1\",\r\n    \"capacidad\": \"5\",\r\n    \"precio_por_persona\":\"100\",\r\n    \"precio_espacio_completo\": \"500\",\r\n    \"direccion\":\"Calle de Prueba, 10\",\r\n    \"estado\":\"libre\",\r\n    \"incidencias\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_BASE}}/api/spaces/1",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"api",
+						"spaces",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL_BASE",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
