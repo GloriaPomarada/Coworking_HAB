@@ -5,15 +5,16 @@ import sendMailUtil from '../../utils/sendMailUtils.js';
 // Función controladora que valida a un usuario recién registrado.
 
 const passwordRecoverController = async (req, res, next) => {
-    const { email } = req.body;
+    try {
+        const { email } = req.body;
 
-    const recoverPassCode = randomstring.generate(10);
+        const recoverPassCode = randomstring.generate(10);
 
-    await userModel.recoverPassword(email, recoverPassCode);
+        await userModel.recoverPassword(email, recoverPassCode);
 
-    const emailSubject = 'Recuperación Contraseña Espacios de Coworking';
+        const emailSubject = 'Recuperación Contraseña Espacios de Coworking';
 
-    const emailBody = `
+        const emailBody = `
     Se ha solicitado la recuperación de contraseña para este email en Espacios de Coworking. 
               
     Utiliza el siguiente código para crear una nueva contraseña: ${recoverPassCode}
@@ -21,9 +22,8 @@ const passwordRecoverController = async (req, res, next) => {
     Si no has sido tú ignora este email.
   `;
 
-    await sendMailUtil(email, emailSubject, emailBody);
+        await sendMailUtil(email, emailSubject, emailBody);
 
-    try {
         res.send({
             status: 'ok',
             message:

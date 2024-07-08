@@ -1,4 +1,7 @@
-import { invalidCredentialsError, notAuthenticatedError} from '../services/errorService.js';
+import {
+    invalidCredentialsError,
+    notAuthenticatedError,
+} from '../services/errorService.js';
 import { verifyToken } from '../utils/jwtHandler.js';
 
 const authenticate = async (req, res, next) => {
@@ -6,17 +9,15 @@ const authenticate = async (req, res, next) => {
         const { authorization } = req.headers;
 
         if (!authorization) {
-            return next(notAuthenticatedError());
+            notAuthenticatedError();
         }
-        //-> 'Bearer Token'.
-        const token = authorization.split(' ')[1];
 
         try {
-            const tokenInfo = verifyToken(token);
+            const tokenInfo = verifyToken(authorization);
             req.user = tokenInfo;
             next();
         } catch (error) {
-            return next(invalidCredentialsError());
+            invalidCredentialsError();
         }
     } catch (error) {
         next(error);
