@@ -8,12 +8,6 @@ import { PORT, UPLOADS_DIR } from "./env.js";
 
 const app = express();
 
-// Ruta raíz de express
-app.get('/', (req, res) => {
-    res.send('Hello');
-});
-
-
 //!-> REGISTRO DE MIDDLEWARES:
 //Middleware CORS.
 app.use(corsMiddleware);
