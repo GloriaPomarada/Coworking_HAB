@@ -84,7 +84,7 @@ const main = async () => {
             id INT AUTO_INCREMENT PRIMARY KEY,
             espacio_id INT NOT NULL,
             categoria_incidencia_id INT NOT NULL,
-            descripcion TEXT,
+            mensaje TEXT,
             fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (espacio_id) REFERENCES espacios(id),
             FOREIGN KEY (categoria_incidencia_id) REFERENCES categorias_incidencias(id)

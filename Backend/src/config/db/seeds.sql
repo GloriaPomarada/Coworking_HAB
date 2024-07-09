@@ -32,10 +32,10 @@ VALUES
 ('Espacio Compartido C', 'Área abierta con mesas compartidas', 3, 20, 10.00, 150.00, 'Plaza Mayor 789', 'libre', NULL);
 
 -- Insertar incidencias para espacios específicos
-INSERT INTO incidencias (espacio_id, categoria_incidencia_id, descripcion, fecha)
+INSERT INTO incidencias (espacio_id, categoria_incidencia_id, usuario_id, mensaje, fecha)
 VALUES
-(1, 3, 'Suelo sucio y polvoriento', '2024-06-28 10:00:00'),
-(3, 1, 'Fallo en el enchufe de la pared', '2024-06-29 15:30:00');
+(1, 3, '1', 'Suelo sucio y polvoriento', '2024-06-28 10:00:00'),
+(3, 1, '2', 'Fallo en el enchufe de la pared', '2024-06-29 15:30:00');
 
 -- Insertar fotos de espacios
 INSERT INTO espacios_fotos (name, espacio_id)
@@ -79,3 +79,5 @@ INSERT INTO pagos (reserva_id, a_pagar, metodo_pago, observaciones)
 VALUES
 (1, 100.00, 'tarjeta', 'Pago por reserva de oficina A1'),
 (2, 150.00, 'transferencia', 'Pago por reserva de sala de reuniones B');
+
+UPDATE usuarios SET role = 'admin' WHERE id = '1';

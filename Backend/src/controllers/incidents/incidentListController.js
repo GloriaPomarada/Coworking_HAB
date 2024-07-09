@@ -1,12 +1,15 @@
-import * as incidentsModel from '../../models/incidents/index.js';
+import * as incidencesModel from '../../models/incidents/index.js';
 
 const getIncidentsController = async (req, res) => {
+    const filters = req.query;
+
     try {
-        const incidents = await incidentsModel.getIncidences();
-        res.json(incidents);
+        const findIncidences = await incidencesModel.getIncidences(filters);
+        res.json(findIncidences);
         
     } catch (error) {
-        res.status(500).send('Error en el servidor');
+        console.error('Error al filtrar las incidencias:', error);
+        res.status(500).json({ mensaje: 'Hubo un error al filtrar las incidencias' });
     }
 };
 

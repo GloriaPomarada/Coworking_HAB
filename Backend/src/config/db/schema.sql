@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS coworking_db;
 CREATE DATABASE coworking_db;
 USE coworking_db;
 
---? Usuarios:
+-- Usuarios:
 CREATE TABLE usuarios (
     id CHAR(36) PRIMARY KEY NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
@@ -17,28 +17,28 @@ CREATE TABLE usuarios (
     modifiedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
---? Admins:
+-- Admins:
 CREATE TABLE admins (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id CHAR(36) NOT NULL,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
---? Categorías de Espacios:
+-- Categorías de Espacios:
 CREATE TABLE categorias_espacios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT
 );
 
---? Categorías Incidencias:
+-- Categorías Incidencias:
 CREATE TABLE categorias_incidencias (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT
 );
 
---? Espacios:
+-- Espacios:
 CREATE TABLE espacios (
   id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   nombre VARCHAR(100) NOT NULL,
@@ -54,18 +54,20 @@ CREATE TABLE espacios (
   FOREIGN KEY (categoria_id) REFERENCES categorias_espacios(id)
 );
 
---? Incidencias. Relaciona incidencias con espacio y categorías especificas:
+-- Incidencias. Relaciona incidencias con espacio, categorías y usuarios específicos:
 CREATE TABLE incidencias (
     id INT AUTO_INCREMENT PRIMARY KEY,
     espacio_id INT NOT NULL,
     categoria_incidencia_id INT NOT NULL,
-    descripcion TEXT,
+    usuario_id CHAR(36) NOT NULL,
+    mensaje TEXT,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (espacio_id) REFERENCES espacios(id),
-    FOREIGN KEY (categoria_incidencia_id) REFERENCES categorias_incidencias(id)
+    FOREIGN KEY (categoria_incidencia_id) REFERENCES categorias_incidencias(id),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
---? Fotos de los Espacios:
+-- Fotos de los Espacios:
 CREATE TABLE espacios_fotos (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     name VARCHAR(100) NOT NULL,
@@ -74,7 +76,7 @@ CREATE TABLE espacios_fotos (
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
---? Votos de cada espacio:
+-- Votos de cada espacio:
 CREATE TABLE espacios_votos (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     value TINYINT UNSIGNED NOT NULL,
@@ -87,7 +89,7 @@ CREATE TABLE espacios_votos (
     INDEX (espacio_id)
 );
 
---? Equipamientos:
+-- Equipamientos:
 CREATE TABLE equipamientos (
   id INT AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(100) NOT NULL,
@@ -96,7 +98,7 @@ CREATE TABLE equipamientos (
   FOREIGN KEY (categoria_id) REFERENCES categorias_espacios(id)
 );
 
---? Tabla intermedia para relacionar espacios y equipamientos:
+-- Tabla intermedia para relacionar espacios y equipamientos:
 CREATE TABLE espacios_equipamientos (
   id INT AUTO_INCREMENT PRIMARY KEY,
   espacio_id INT NOT NULL,
@@ -105,7 +107,7 @@ CREATE TABLE espacios_equipamientos (
   FOREIGN KEY (equipamiento_id) REFERENCES equipamientos(id)
 );
 
---? Reservas:
+-- Reservas:
 CREATE TABLE reservas (
   id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   usuario_id CHAR(36) NOT NULL,
@@ -119,8 +121,7 @@ CREATE TABLE reservas (
   FOREIGN KEY (espacio_id) REFERENCES espacios(id)
 );
 
-
---? Pagos:
+-- Pagos:
 CREATE TABLE pagos (
   id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   reserva_id INT NOT NULL,
