@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import {
     notAuthenticatedError,
     invalidCredentialsError,
-} from '../services/errorAuth.js';
+} from '../services/errorService.js';
 
 // Función controladora intermedia que desencripta el token y crea la propiedad "req.user".
 // Si no hay token lanza un error.
@@ -20,7 +20,7 @@ const authUserController = async (req, res, next) => {
         let tokenInfo;
 
         try {
-            tokenInfo = jwt.verify(authorization, process.env.SECRET);
+            tokenInfo = jwt.verify(authorization, process.env.JWT_SECRET);
         } catch (err) {
             console.log(err);
             invalidCredentialsError();

@@ -24,6 +24,7 @@ const sendMailUtil = async (email, subject, body) => {
         };
         await transport.sendMail(mailOptions);
     } catch (error) {
+        console.log(error)
         sendEmailError();
     }
 };
