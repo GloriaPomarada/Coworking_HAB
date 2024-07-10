@@ -1,9 +1,11 @@
 import updateSpaceModel from '../../models/spaces/updateSpaceModel.js';
 import { notFoundError } from '../../services/errorService.js';
+import newSpaceSchema from '../../schema/spaceSchema/newSpaceSchema.js';
 
 // Controlador para actualizar un espacio.
 const updateSpaceController = async (req, res, next) => {
     try {
+        await newSpaceSchema.validateAsync(req.body);
         const { id } = req.params;
         const {
             nombre,

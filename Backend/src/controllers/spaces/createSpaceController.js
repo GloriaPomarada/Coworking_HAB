@@ -1,8 +1,9 @@
 import createSpaceModel from '../../models/spaces/createSpaceModel.js';
-
+import newSpaceSchema from '../../schema/spaceSchema/newSpaceSchema.js';
 // Controlador para crear un espacio.
 const createSpaceController = async (req, res, next) => {
     try {
+        await newSpaceSchema.validateAsync(req.body);
         const {
             nombre,
             descripcion,

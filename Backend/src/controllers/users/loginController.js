@@ -6,9 +6,11 @@ import {
 } from '../../services/errorService.js';
 
 import { generateToken } from '../../utils/jwtHandler.js';
+import loginUserSchema from '../../schema/user/loginUserSchema.js';
 
 const loginController = async (req, res, next) => {
     try {
+        await loginUserSchema.validateAsync(req.body);
         const { email, password } = req.body;
 
         const user = await userModel.getUserByEmail(email);
