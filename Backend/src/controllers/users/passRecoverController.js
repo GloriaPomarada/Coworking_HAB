@@ -1,13 +1,13 @@
 import randomstring from 'randomstring';
 import * as userModel from '../../models/users/index.js';
 import sendMailUtil from '../../utils/sendMailUtils.js';
-import editUserPassSchema from '../../schema/user/editUserPassSchema.js';
+//import editUserPassSchema from '../../schema/user/editUserPassSchema.js';
 
 // Función controladora que valida a un usuario recién registrado.
 
 const passwordRecoverController = async (req, res, next) => {
     try {
-        await editUserPassSchema.validateAsync(req.body);
+        //await editUserPassSchema.validateAsync(req.body);
         const { email } = req.body;
 
         const recoverPassCode = randomstring.generate(10);
