@@ -76,15 +76,32 @@ CREATE TABLE espacios_fotos (
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- Votos de cada espacio:
+
+-- Reservas:
+CREATE TABLE reservas (
+  id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  usuario_id CHAR(36) NOT NULL,
+  espacio_id INT NOT NULL,
+  tipo ENUM('por_persona', 'espacio_completo'),
+  fecha_inicio DATE NOT NULL,
+  fecha_fin DATE NOT NULL,
+  estado ENUM('pendiente', 'reservado', 'cancelada') NOT NULL DEFAULT 'pendiente',
+  observaciones TEXT,
+  FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+  FOREIGN KEY (espacio_id) REFERENCES espacios(id)
+);
+
+-- Tabla espacios_votos 
 CREATE TABLE espacios_votos (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     value TINYINT UNSIGNED NOT NULL,
     usuario_id CHAR(36) NOT NULL,
     espacio_id INT NOT NULL,
+    reserva_id INT NOT NULL,
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
     FOREIGN KEY (espacio_id) REFERENCES espacios(id),
+    FOREIGN KEY (reserva_id) REFERENCES reservas(id),
     INDEX (usuario_id),
     INDEX (espacio_id)
 );
@@ -107,20 +124,6 @@ CREATE TABLE espacios_equipamientos (
   FOREIGN KEY (equipamiento_id) REFERENCES equipamientos(id)
 );
 
--- Reservas:
-CREATE TABLE reservas (
-  id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  usuario_id CHAR(36) NOT NULL,
-  espacio_id INT NOT NULL,
-  tipo ENUM('por_persona', 'espacio_completo'),
-  fecha_inicio DATE NOT NULL,
-  fecha_fin DATE NOT NULL,
-  estado ENUM('pendiente', 'reservado', 'cancelada') NOT NULL DEFAULT 'pendiente',
-  observaciones TEXT,
-  FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-  FOREIGN KEY (espacio_id) REFERENCES espacios(id)
-);
-
 -- Pagos:
 CREATE TABLE pagos (
   id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -131,3 +134,55 @@ CREATE TABLE pagos (
   observaciones TEXT,
   FOREIGN KEY (reserva_id) REFERENCES reservas(id)
 );
+
+
+-- PARA QUE APAREZCAN Y SE ACTUALICEN LAS VALORACIONES DE LOS ESPACIOS:
+-- 1: Añadimos columna de Valoraciones en espacios.
+ALTER TABLE espacios
+ADD COLUMN valoracion_media DECIMAL(3, 2) DEFAULT 0.0;
+
+-- 2: Lógica para calcular la media.
+DELIMITER //
+CREATE PROCEDURE actualizarMediaValoracionesEspacio(IN p_espacio_id INT)
+BEGIN
+    DECLARE media DECIMAL(3, 2);
+
+    SELECT AVG(value) INTO media
+    FROM espacios_votos
+    WHERE espacio_id = p_espacio_id;
+
+    UPDATE espacios
+    SET valoracion_media = media
+    WHERE id = p_espacio_id;
+END //
+DELIMITER ;
+
+-- 3: Disparador para nuevas valoraciones.
+DELIMITER //
+CREATE TRIGGER after_insert_valoracion
+AFTER INSERT ON espacios_votos
+FOR EACH ROW
+BEGIN
+    CALL actualizarMediaValoracionesEspacio(NEW.espacio_id);
+END //
+DELIMITER ;
+
+-- 4: Disparador para valoración existente.
+DELIMITER //
+CREATE TRIGGER after_update_valoracion
+AFTER UPDATE ON espacios_votos
+FOR EACH ROW
+BEGIN
+    CALL actualizarMediaValoracionesEspacio(NEW.espacio_id);
+END //
+DELIMITER ;
+
+-- 5: Disparador para borrar una valoracion.
+DELIMITER //
+CREATE TRIGGER after_delete_valoracion
+AFTER DELETE ON espacios_votos
+FOR EACH ROW
+BEGIN
+    CALL actualizarMediaValoracionesEspacio(OLD.espacio_id);
+END //
+DELIMITER ;

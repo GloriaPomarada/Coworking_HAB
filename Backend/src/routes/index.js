@@ -10,6 +10,7 @@ import categoryRoutes from './categoryRoutes.js';
 import incidentRoutes from './incidentRoutes.js';
 import typeOfIncidentsRoutes from './typeOfIncidentsRoutes.js';
 import bookingRoutes from './bookingRoutes.js';
+import ratingsRoutes from './ratingRoutes.js';
 
 
 //-> Creamos router.
@@ -23,6 +24,8 @@ router.use('/categories', categoryRoutes);
 router.use('/incidents', incidentRoutes);
 router.use('/incidentsCategories', typeOfIncidentsRoutes);
 router.use('/bookings', bookingRoutes);
+router.use('/ratings', ratingsRoutes);
+
 
 
 export default router;

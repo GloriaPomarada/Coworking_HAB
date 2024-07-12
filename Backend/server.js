@@ -5,6 +5,7 @@ import routes from './src/routes/index.js';
 import errorHandler from './src/middlewares/errorHandler.js';
 import corsMiddleware from './src/middlewares/cors.js';
 import { PORT, UPLOADS_DIR } from './env.js';
+import './src/services/updateStatusService.js';
 
 const app = express();
 
