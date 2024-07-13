@@ -17,13 +17,6 @@ CREATE TABLE usuarios (
     modifiedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Admins:
-CREATE TABLE admins (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id CHAR(36) NOT NULL,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
-);
-
 -- Categorías de Espacios:
 CREATE TABLE categorias_espacios (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -54,28 +47,6 @@ CREATE TABLE espacios (
   FOREIGN KEY (categoria_id) REFERENCES categorias_espacios(id)
 );
 
--- Incidencias. Relaciona incidencias con espacio, categorías y usuarios específicos:
-CREATE TABLE incidencias (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    espacio_id INT NOT NULL,
-    categoria_incidencia_id INT NOT NULL,
-    usuario_id CHAR(36) NOT NULL,
-    mensaje TEXT,
-    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (espacio_id) REFERENCES espacios(id),
-    FOREIGN KEY (categoria_incidencia_id) REFERENCES categorias_incidencias(id),
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
-);
-
--- Fotos de los Espacios:
-CREATE TABLE espacios_fotos (
-    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    name VARCHAR(100) NOT NULL,
-    espacio_id INT NOT NULL,
-    FOREIGN KEY (espacio_id) REFERENCES espacios(id),
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
 
 -- Reservas:
 CREATE TABLE reservas (
@@ -85,10 +56,47 @@ CREATE TABLE reservas (
   tipo ENUM('por_persona', 'espacio_completo'),
   fecha_inicio DATE NOT NULL,
   fecha_fin DATE NOT NULL,
-  estado ENUM('pendiente', 'reservado', 'cancelada') NOT NULL DEFAULT 'pendiente',
+  estado ENUM('pendiente', 'reservado', 'cancelada', 'finalizada') NOT NULL DEFAULT 'pendiente',
   observaciones TEXT,
   FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
   FOREIGN KEY (espacio_id) REFERENCES espacios(id)
+);
+
+-- Incidencias:
+CREATE TABLE incidencias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    espacio_id INT NOT NULL,
+    reserva_id INT NOT NULL,
+	usuario_id CHAR(36) NOT NULL,
+    categoria_incidencia_id INT NOT NULL,
+    titulo TEXT,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (espacio_id) REFERENCES espacios(id),
+    FOREIGN KEY (reserva_id) REFERENCES reservas(id),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+	FOREIGN KEY (categoria_incidencia_id) REFERENCES categorias_incidencias(id)
+
+);
+
+-- Mensajes de Incidencias:
+CREATE TABLE mensajes_incidencias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    incidencia_id INT NOT NULL,
+    mensaje TEXT,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    espacio_id INT NOT NULL DEFAULT 1,
+    FOREIGN KEY (incidencia_id) REFERENCES incidencias(id),
+    FOREIGN KEY (espacio_id) REFERENCES espacios(id)
+);
+
+
+-- Fotos de los Espacios:
+CREATE TABLE espacios_fotos (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    espacio_id INT NOT NULL,
+    FOREIGN KEY (espacio_id) REFERENCES espacios(id),
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Tabla espacios_votos 

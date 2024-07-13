@@ -1,14 +1,10 @@
 -- INTRODUCIMOS DATOS EN LAS TABLAS:
-
 -- Insertar usuarios
 INSERT INTO usuarios (id, email, username, password, avatar, active, role, registrationCode, recoverPassCode)
 VALUES
-('1', 'usuario1@example.com', 'usuario1', 'password123', NULL, true, 'cliente', 'regCode123', 'recov123'),
-('2', 'usuario2@example.com', 'usuario2', 'password456', NULL, true, 'cliente', 'regCode456', 'recov456'),
-('3', 'admin@example.com', 'admin', 'adminpass', NULL, true, 'admin', NULL, NULL);
-
--- Relacionar usuarios como admins
-INSERT INTO admins (usuario_id) VALUES ('3'); -- '3' corresponde al usuario 'admin' creado anteriormente
+('1dbc6da7-3755-401f-aae2-3df2f37ef16a', 'usuario1@example.com', 'usuario1', 'password123', NULL, true, 'cliente', 'regCode123', 'recov123'),
+('2dbc6da7-3755-401f-aae2-3df2f37ef16b', 'usuario2@example.com', 'usuario2', 'password456', NULL, true, 'cliente', 'regCode456', 'recov456'),
+('3dbc6da7-3755-401f-aae2-3df2f37ef16c', 'usuario3@example.com', 'usuario3', 'password789', NULL, true, 'cliente', 'regcode789', 'recov789');
 
 -- Insertar categorías de espacios
 INSERT INTO categorias_espacios (nombre, descripcion)
@@ -31,12 +27,6 @@ VALUES
 ('Sala de Reuniones B', 'Sala equipada con proyector y pizarra', 2, 10, 20.00, 150.00, 'Avenida Central 456', 'libre', NULL),
 ('Espacio Compartido C', 'Área abierta con mesas compartidas', 3, 20, 10.00, 150.00, 'Plaza Mayor 789', 'libre', NULL);
 
--- Insertar incidencias para espacios específicos
-INSERT INTO incidencias (espacio_id, categoria_incidencia_id, usuario_id, mensaje, fecha)
-VALUES
-(1, 3, '1', 'Suelo sucio y polvoriento', '2024-06-28 10:00:00'),
-(3, 1, '2', 'Fallo en el enchufe de la pared', '2024-06-29 15:30:00');
-
 -- Insertar fotos de espacios
 INSERT INTO espacios_fotos (name, espacio_id)
 VALUES
@@ -44,12 +34,23 @@ VALUES
 ('sala_reuniones_b_1.jpg', 2),
 ('espacio_compartido_c_1.jpg', 3);
 
--- Insertar votos para espacios
-INSERT INTO espacios_votos (value, usuario_id, espacio_id)
+-- Insertar reservas
+INSERT INTO reservas (usuario_id, espacio_id, tipo, fecha_inicio, fecha_fin, estado, observaciones)
 VALUES
-(5, '1', 1),
-(4, '2', 2),
-(3, '1', 3);
+('1dbc6da7-3755-401f-aae2-3df2f37ef16a', 1, 'por_persona', '2024-07-01', '2024-07-01', 'reservado', 'Reserva para entrevista de trabajo'),
+('2dbc6da7-3755-401f-aae2-3df2f37ef16b', 2, 'espacio_completo', '2024-07-02', '2024-07-02', 'reservado', 'Reunión mensual de equipo');
+
+-- Insertar incidencias
+INSERT INTO incidencias (espacio_id, reserva_id, usuario_id, categoria_incidencia_id, titulo)
+VALUES
+(1, 1, '1dbc6da7-3755-401f-aae2-3df2f37ef16a', 3, 'Suelo sucio y polvoriento'),
+(2, 2, '2dbc6da7-3755-401f-aae2-3df2f37ef16b', 1, 'Fallo en el enchufe de la pared');
+
+-- Insertar mensajes de incidencias
+INSERT INTO mensajes_incidencias (incidencia_id, mensaje)
+VALUES
+(1, 'El equipo de limpieza ha sido notificado y resolverá el problema a la brevedad.'),
+(2, 'El electricista vendrá a revisar el enchufe mañana por la mañana.');
 
 -- Insertar equipamientos
 INSERT INTO equipamientos (nombre, descripcion, categoria_id)
@@ -68,16 +69,8 @@ VALUES
 (3, 2), -- Espacio Compartido C: Sillas ergonómicas
 (3, 3); -- Espacio Compartido C: Mesas de trabajo
 
--- Insertar reservas
-INSERT INTO reservas (usuario_id, espacio_id, tipo, fecha_inicio, fecha_fin, estado, observaciones)
-VALUES
-('1', 1, 'por_persona', '2024-07-01', '2024-07-01', 'reservado', 'Reserva para entrevista de trabajo'),
-('2', 2, 'espacio_completo', '2024-07-02', '2024-07-02', 'reservado', 'Reunión mensual de equipo');
-
 -- Insertar pagos asociados a reservas
 INSERT INTO pagos (reserva_id, a_pagar, metodo_pago, observaciones)
 VALUES
 (1, 100.00, 'tarjeta', 'Pago por reserva de oficina A1'),
 (2, 150.00, 'transferencia', 'Pago por reserva de sala de reuniones B');
-
-UPDATE usuarios SET role = 'admin' WHERE id = '1';

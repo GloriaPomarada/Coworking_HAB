@@ -1,7 +1,5 @@
 //! -> ÉSTE ES EL ROUTER PROPIAMENTE DICHO.
-
 import express from 'express';
-
 //-> Importamos modulos de rutas.
 import userRoutes from './userRoutes.js';
 import spaceRoutes from './spaceRoutes.js';
@@ -11,7 +9,6 @@ import incidentRoutes from './incidentRoutes.js';
 import typeOfIncidentsRoutes from './typeOfIncidentsRoutes.js';
 import bookingRoutes from './bookingRoutes.js';
 import ratingsRoutes from './ratingRoutes.js';
-
 
 //-> Creamos router.
 const router = express.Router();
