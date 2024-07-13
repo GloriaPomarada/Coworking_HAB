@@ -2,6 +2,7 @@ import express from 'express';
 import fileUpload from 'express-fileupload';
 import morgan from 'morgan';
 import routes from './src/routes/index.js';
+import notFound from './src/middlewares/notFound.js';
 import errorHandler from './src/middlewares/errorHandler.js';
 import corsMiddleware from './src/middlewares/cors.js';
 import { PORT, UPLOADS_DIR } from './env.js';
@@ -22,6 +23,9 @@ app.use(fileUpload()); //-> carga de archivos con express.
 
 //!-> registro de directorio rutas.
 app.use('/api', routes);
+
+// Middleware para manejar rutas no encontradas (404)
+app.use(notFound);
 
 // Middleware manejo de errores
 app.use(errorHandler);

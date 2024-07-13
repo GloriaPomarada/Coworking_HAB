@@ -1,8 +1,7 @@
-export default function errorHandler(error, req, res, next) {
-    console.error(error);
+const errorHandler = (err, req, res, next) => {
+    const status = err.status || 500;
+    const message = err.message || 'Error interno del servidor';
+    res.status(status).json({ mensaje: message });
+};
 
-    res.status(error.status || 500).send({
-        status: 'error',
-        message: error.message,
-    });
-}
+export default errorHandler;
