@@ -7,8 +7,13 @@ import errorHandler from './src/middlewares/errorHandler.js';
 import corsMiddleware from './src/middlewares/cors.js';
 import { PORT, UPLOADS_DIR } from './env.js';
 import './src/services/updateStatusService.js';
+import path from 'path';
 
 const app = express();
+
+// Servir archivos estáticos desde la carpeta 'public'
+const PUBLIC_FOLDER = path.join(process.cwd(), 'public');
+app.use(express.static(PUBLIC_FOLDER));
 
 //!-> REGISTRO DE MIDDLEWARES:
 //Middleware CORS.

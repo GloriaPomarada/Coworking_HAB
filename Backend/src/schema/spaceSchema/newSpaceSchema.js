@@ -6,13 +6,6 @@ import joiErrorMessages from '../joiErrorMessages.js';
 
 // Creamos el esquema de Joi donde comprobamos todas las propiedades necesarias.
 const newSpaceSchema = joi.object({
-    id: joi
-        .number()
-        .max(100)
-        .integer()
-        .positive()
-        .required()
-        .messages(joiErrorMessages),
     nombre: joi.string().min(5).max(100).required().messages(joiErrorMessages),
     direccion: joi
         .string()
@@ -20,9 +13,9 @@ const newSpaceSchema = joi.object({
         .max(100)
         .required()
         .messages(joiErrorMessages),
-    categoria: joi
+    categoria_id: joi
         .string()
-        .min(3)
+        .min(1)
         .max(30)
         .required()
         .messages(joiErrorMessages),
@@ -46,7 +39,9 @@ const newSpaceSchema = joi.object({
         .messages(joiErrorMessages),
     estado: joi.string().min(3).max(30).required().messages(joiErrorMessages),
 
-    description: joi.string().required(),
+    descripcion: joi.string().required(),
+    incidencias: joi.string(),
+    imagen: joi.string(),
 });
 
 export default newSpaceSchema;
