@@ -65,7 +65,7 @@
                         "header": [],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\r\n    \"email\": \"corresponsalesoriente@gmail.com\",\r\n    \"password\": \"Password123!!\"\r\n}",
+                            "raw": "{\r\n    \"email\": \"\",\r\n    \"password\": \"\"\r\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -87,7 +87,7 @@
                         "header": [],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\r\n    \"email\" : \"corresponsalesoriente@gmail.com\",\r\n    \"password\" : \"Password123!!\"\r\n}",
+                            "raw": "{\r\n    \"email\" : \"\",\r\n    \"password\" : \"\"\r\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -142,6 +142,44 @@
                             "raw": "{{URL_BASE}}/api/users/password/reset",
                             "host": ["{{URL_BASE}}"],
                             "path": ["api", "users", "password", "reset"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Lista usuarios (solo admin)",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{URL_BASE}}/api/users",
+                            "host": ["{{URL_BASE}}"],
+                            "path": ["api", "users"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Perfil usuario",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{URL_BASE}}/api/users/profile/2",
+                            "host": ["{{URL_BASE}}"],
+                            "path": ["api", "users", "profile", "2"]
                         }
                     },
                     "response": []
@@ -251,24 +289,10 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{URL_BASE}}/api/spaces/search?nombre",
+                            "raw": "{{URL_BASE}}/api/spaces?id=1",
                             "host": ["{{URL_BASE}}"],
-                            "path": ["api", "spaces", "search"],
+                            "path": ["api", "spaces"],
                             "query": [
-                                {
-                                    "key": "id",
-                                    "value": "",
-                                    "disabled": true
-                                },
-                                {
-                                    "key": "nombre",
-                                    "value": null
-                                },
-                                {
-                                    "key": "capacidad",
-                                    "value": null,
-                                    "disabled": true
-                                },
                                 {
                                     "key": "precio_por_persona",
                                     "value": null,
@@ -288,6 +312,10 @@
                                     "key": "estado",
                                     "value": null,
                                     "disabled": true
+                                },
+                                {
+                                    "key": "id",
+                                    "value": "1"
                                 }
                             ]
                         }
@@ -425,8 +453,77 @@
                         }
                     },
                     "response": []
+                },
+                {
+                    "name": "New Request",
+                    "request": {
+                        "method": "GET",
+                        "header": []
+                    },
+                    "response": []
                 }
             ]
+        },
+        {
+            "name": "Rating",
+            "item": [
+                {
+                    "name": "New Request",
+                    "request": {
+                        "method": "GET",
+                        "header": []
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Lectura recurso estático",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{URL_BASE}}/coworking_space.jpg",
+                    "host": ["{{URL_BASE}}"],
+                    "path": ["coworking_space.jpg"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Page not found",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "pm.test(\"Status code is 404\", function () {\r",
+                            "    pm.response.to.have.status(404);\r",
+                            "});\r",
+                            "\r",
+                            "pm.test(\"Response should contain 'RESOURCE_NOT_FOUND'\", function () {\r",
+                            "    const jsonData = pm.response.json();\r",
+                            "    pm.expect(jsonData.status).to.eql(\"error\");\r",
+                            "    pm.expect(jsonData.code).to.eql(\"RESOURCE_NOT_FOUND\");\r",
+                            "    pm.expect(jsonData.message).to.include(\"El recurso requerido no existe\");\r",
+                            "});\r",
+                            ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                }
+            ],
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{URL_BASE}}/some-endpoint",
+                    "host": ["{{URL_BASE}}"],
+                    "path": ["some-endpoint"]
+                }
+            },
+            "response": []
         }
     ],
     "event": [
