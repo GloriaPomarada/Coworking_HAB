@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import axios from "axios";
-import Auth from "../utils/auth";
+import Auth from "../utils/auth.js";
 
 const AuthContext = createContext();
 // eslint-disable-next-line react/prop-types
@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   // eslint-disable-next-line no-unused-vars
   const [isAutenticated, setisAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const fetchUser = async () => {
     try {
@@ -18,8 +19,10 @@ export const AuthProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setUser(response.data.data.user);
+      const userProfile = response.data.data.user;
+      setUser(userProfile);
       setisAuthenticated(true);
+      setIsAdmin(userProfile.isAdmin);
     } catch (error) {
       console.log(error);
       // Auth.logout(); // opcional, paso de seguridad
@@ -38,13 +41,14 @@ export const AuthProvider = ({ children }) => {
   const login = async (token) => {
     Auth.login(token);
     await fetchUser(token);
-    setisAuthenticated(true);
+    // setisAuthenticated(true);
   };
 
   const logout = () => {
     Auth.logout();
     setUser(null);
     setisAuthenticated(false);
+    setIsAdmin(false);
     setLoading(false);
   };
 
@@ -67,6 +71,7 @@ export const AuthProvider = ({ children }) => {
         isAutenticated,
         updateuser,
         loading,
+        isAdmin,
       }}
     >
       {children}
