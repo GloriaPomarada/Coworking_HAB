@@ -65,7 +65,7 @@
                         "header": [],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\r\n    \"email\": \"\",\r\n    \"password\": \"\"\r\n}",
+                            "raw": "{\r\n    \"email\": \"corresponsalesoriente@gmail.com\",\r\n    \"password\": \"Password123!!\"\r\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -128,7 +128,13 @@
                     "name": "Reset contraseña",
                     "request": {
                         "method": "PUT",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "",
+                                "type": "text"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
                             "raw": "{\r\n    \"email\":\"\",\r\n    \"recoverPassCode\": \"\",\r\n    \"newPassword\": \"\"\r\n}",
@@ -331,7 +337,13 @@
                     "name": "Crear reserva",
                     "request": {
                         "method": "POST",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "",
+                                "type": "text"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
                             "raw": "{\r\n    \"usuario_id\":\"\",\r\n    \"espacio_id\": ,\r\n    \"tipo\":\"\",\r\n    \"fecha_inicio\":\"\",\r\n    \"fecha_fin\":\"\",\r\n    \"observaciones\":\"\"\r\n}",
@@ -353,7 +365,13 @@
                     "name": "Cancelar reserva",
                     "request": {
                         "method": "PUT",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "",
+                                "type": "text"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
                             "raw": "{\r\n    \"usuario_id\":\"\",\r\n    \"reserva_id\":\r\n}",
@@ -372,26 +390,84 @@
                     "response": []
                 },
                 {
-                    "name": "Lista reservas",
+                    "name": "Lista reservas (Admin / UserOwner)",
                     "request": {
                         "method": "GET",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "",
+                                "type": "text"
+                            }
+                        ],
                         "url": {
-                            "raw": "{{URL_BASE}}/api/bookings",
+                            "raw": "{{URL_BASE}}/api/bookings?usuario_id=",
                             "host": ["{{URL_BASE}}"],
-                            "path": ["api", "bookings"]
+                            "path": ["api", "bookings"],
+                            "query": [
+                                {
+                                    "key": "usuario_id",
+                                    "value": ""
+                                },
+                                {
+                                    "key": "espacio_id",
+                                    "value": null,
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "tipo",
+                                    "value": null,
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "fecha_inicio",
+                                    "value": null,
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "fecha_fin",
+                                    "value": null,
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "estado",
+                                    "value": null,
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "observaciones",
+                                    "value": null,
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "usuario_username",
+                                    "value": null,
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "espacio_nombre",
+                                    "value": null,
+                                    "disabled": true
+                                }
+                            ]
                         }
                     },
                     "response": []
                 },
                 {
-                    "name": "Estado reserva",
+                    "name": "Aceptar reserva (Admin)",
                     "request": {
                         "method": "POST",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "",
+                                "type": "text"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\r\n    \"id\": ,\r\n    \"estado\": \"\"\r\n}",
+                            "raw": "{\r\n    \"estado\": \"reservado\"\r\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -399,18 +475,67 @@
                             }
                         },
                         "url": {
-                            "raw": "{{URL_BASE}}/api/bookings/reservation/:id/status",
+                            "raw": "{{URL_BASE}}/api/bookings/reservation/:espacioID/status",
                             "host": ["{{URL_BASE}}"],
                             "path": [
                                 "api",
                                 "bookings",
                                 "reservation",
-                                ":id",
+                                ":espacioID",
                                 "status"
+                            ],
+                            "query": [
+                                {
+                                    "key": "espacioID",
+                                    "value": null,
+                                    "disabled": true
+                                }
                             ],
                             "variable": [
                                 {
-                                    "key": "id",
+                                    "key": "espacioID",
+                                    "value": ""
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Detalles y mensajes",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL_BASE}}/api/bookings/details/:reservaID",
+                            "host": ["{{URL_BASE}}"],
+                            "path": [
+                                "api",
+                                "bookings",
+                                "details",
+                                ":reservaID"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "reservaID",
                                     "value": ""
                                 }
                             ]
@@ -455,23 +580,110 @@
                     "response": []
                 },
                 {
-                    "name": "New Request",
+                    "name": "Nueva incidencia",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"espacio_id\": \"\",\r\n    \"reserva_id\": \"\",\r\n    \"usuario_id\": \"\",\r\n    \"categoria_incidencia_id\":\"\",\r\n    \"titulo\":\"\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL_BASE}}/api/incidents/create",
+                            "host": ["{{URL_BASE}}"],
+                            "path": ["api", "incidents", "create"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Crear mensaje",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"incidenciaId\":\"\",\r\n    \"mensaje\":\"\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL_BASE}}/api/incidents/postmessage",
+                            "host": ["{{URL_BASE}}"],
+                            "path": ["api", "incidents", "postmessage"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Lista incidencias (Admin)",
                     "request": {
                         "method": "GET",
-                        "header": []
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{URL_BASE}}/api/incidents",
+                            "host": ["{{URL_BASE}}"],
+                            "path": ["api", "incidents"]
+                        }
                     },
                     "response": []
                 }
             ]
         },
         {
-            "name": "Rating",
+            "name": "Votos espacios",
             "item": [
                 {
-                    "name": "New Request",
+                    "name": "Votar espacio",
                     "request": {
-                        "method": "GET",
-                        "header": []
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"reserva_id\":,\r\n    \"value\":\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL_BASE}}/api/ratings/create",
+                            "host": ["{{URL_BASE}}"],
+                            "path": ["api", "ratings", "create"]
+                        }
                     },
                     "response": []
                 }

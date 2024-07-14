@@ -44,6 +44,7 @@ Esta es la API de la aplicación para gestionar espacios de coworking. Mediante 
 2.  **GET /api/spaces** Devuelve el listado de espacios con descripción
 3.  **PUT /api/spaces** Modifica un espacio
 4.  **GET /api/spaces/search?key=value** Filtrado de espacios
+5.  **GET /api/categories** Devuelve las categorías de espacios
 
 ### Equipamiento
 
@@ -57,10 +58,17 @@ Esta es la API de la aplicación para gestionar espacios de coworking. Mediante 
 
 1. **POST /api/bookings/create** Crea la reserva de un espacio
 2. **PUT /api/bookings/:bookingsId** Cancela la reserva de un espacio
-3. **GET /api/bookings/:bookingsId** Devuelve la confirmación o el rechazo de la reserva
-4. **POST /api/bookings/reservation/:id/status** Cambia el estado de una reserva
+3. **GET /api/bookings?key=value** Devuelve las reservas filtradas
+4. **POST /api/bookings/reservation/:espacioID/status** Aceptar reserva
+5. **GET /api/bookings/details/:reservaID** Devuelve detalles y mensajes de la reserva
 
 ### Incidencias
 
-1.  **GET /api/incidents** Devuelve las incidencias con filtro
+1.  **GET /api/incidents** Devuelve el listado de incidencias
 2.  **GET /api/incidentsCategories** Devuelve las categorías de incidencias
+3.  **POST /api/incidents/create** Crea una nueva incidencia
+4.  **POST /api/incidents/postmessage** Crea un mensaje de incidencia
+
+### Votar espacios
+
+1. **POST /api/ratings/create** Crea el voto de espacios
