@@ -23,6 +23,11 @@ class Auth {
     const token = this.getToken();
     return token ? true : false;
   }
+
+  isAdmin() {
+    const profile = this.getProfile();
+    return profile.isAdmin;
+  }
 }
 
 export default new Auth();
