@@ -5,3 +5,4 @@ export { default as getAllUsers} from './getUsersModel.js';
 export { default as getUserById } from './selectUserByIdModel.js';
 export { default as recoverPassword} from './recoverPassModel.js'
 export { default as resetPassword } from './resetPassModel.js';
+export { getUser, updatePassword } from './newPasswordModel.js';
