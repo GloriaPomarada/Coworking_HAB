@@ -65,7 +65,7 @@
                         "header": [],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\r\n    \"email\": \"corresponsalesoriente@gmail.com\",\r\n    \"password\": \"Password123!!\"\r\n}",
+                            "raw": "{\r\n    \"email\": \"\",\r\n    \"password\": \"Password123!!\"\r\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -87,7 +87,7 @@
                         "header": [],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\r\n    \"email\" : \"\",\r\n    \"password\" : \"\"\r\n}",
+                            "raw": "{\r\n    \"email\" : \"\",\r\n    \"password\" : \"Password123!!\"\r\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -708,31 +708,38 @@
                 {
                     "listen": "test",
                     "script": {
-                        "exec": [
-                            "pm.test(\"Status code is 404\", function () {\r",
-                            "    pm.response.to.have.status(404);\r",
-                            "});\r",
-                            "\r",
-                            "pm.test(\"Response should contain 'RESOURCE_NOT_FOUND'\", function () {\r",
-                            "    const jsonData = pm.response.json();\r",
-                            "    pm.expect(jsonData.status).to.eql(\"error\");\r",
-                            "    pm.expect(jsonData.code).to.eql(\"RESOURCE_NOT_FOUND\");\r",
-                            "    pm.expect(jsonData.message).to.include(\"El recurso requerido no existe\");\r",
-                            "});\r",
-                            ""
-                        ],
+                        "exec": ["\r", ""],
                         "type": "text/javascript",
                         "packages": {}
                     }
+                },
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "packages": {},
+                        "type": "text/javascript"
+                    }
                 }
             ],
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
             "request": {
                 "method": "GET",
                 "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
                 "url": {
-                    "raw": "{{URL_BASE}}/some-endpoint",
+                    "raw": "{{URL_BASE}}/prueba",
                     "host": ["{{URL_BASE}}"],
-                    "path": ["some-endpoint"]
+                    "path": ["prueba"]
                 }
             },
             "response": []
