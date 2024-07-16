@@ -12,7 +12,7 @@ function ValidacionUsuario() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/usuarios/activate", { codigo });
+      const response = await axios.post("/api/users/activate", { codigo });
       if (response.data.status === "ok") {
         setMessage("Usuario validado con éxito");
         setMessageType("success");
