@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 function Register() {
@@ -76,6 +76,7 @@ function Register() {
         <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
           Registrar
         </button>
+        <p className="mt-4 text-center text-gray-700">¿Ya tienes una cuenta? <Link className="text-blue-800 underline" to="/login">Inicia Sesion</Link></p>
       </form>
       {message && <p className="mt-4 text-center text-gray-700">{message}</p>}
     </div>

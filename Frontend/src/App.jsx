@@ -5,6 +5,8 @@ import Register from "./components/auth/Register/Register.jsx"
 import CreateSpace from "./components/pages/CreateSpace.jsx";
 import ValidacionUsuario from "./components/auth/Validate/Validation.jsx";
 import NavBar from "./components/shared/NavBar/NavBar.jsx";
+import RecoverPass from "./components/pages/RecoverPass/RecoverPass.jsx";
+import ResetPass from "./components/pages/ResetPass/ResetPass.jsx";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           element={<ValidacionUsuario />}
         />
         <Route path="/activate" element={<ValidacionUsuario />} />
+        <Route path="/recoverPass" element={<RecoverPass/>} />
+        <Route path="/resetPass" element={<ResetPass/>} />
       </Routes>
     </>
   );

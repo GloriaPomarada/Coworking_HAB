@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   // eslint-disable-next-line no-unused-vars
@@ -60,6 +61,8 @@ const Login = () => {
         >
           Enviar
         </button>
+        <p className="mt-4 text-center text-gray-700">¿Aun no tienes una cuenta? <Link className="text-blue-800 underline" to="/register">Registrate</Link></p>
+        <p className="mt-4 text-center text-gray-700">¿Has olvidado tu contraseña? <Link className="text-blue-800 underline" to="/recoverPass">Recuperar Contraseña</Link></p>
       </div>
     </form>
   );
