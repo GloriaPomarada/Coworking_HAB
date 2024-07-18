@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode";
 class Auth {
   login(token) {
     localStorage.setItem("token", token);
-    window.location.assign("/espacios");
+    window.location.assign("/home");
   }
 
   logout() {
@@ -21,12 +21,14 @@ class Auth {
 
   isLoggedIn() {
     const token = this.getToken();
-    return token ? true : false;
+    return !!token;
   }
 
   isAdmin() {
     const profile = this.getProfile();
-    return profile.isAdmin;
+    return profile && typeof profile.isAdmin === "boolean"
+      ? profile.isAdmin
+      : false;
   }
 }
 

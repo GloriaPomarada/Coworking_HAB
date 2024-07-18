@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
-import { Link } from "react-router-dom";
 
 const Login = () => {
   // eslint-disable-next-line no-unused-vars
@@ -20,8 +19,8 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post("/api/users/login", formState);
-      const { token, email } = response.data;
-      login(token, email);
+      const { token } = response.data.data;
+      login(token);
     } catch (error) {
       const errorMessage =
         error.response?.data?.message || "Error en el inicio de sesión";
@@ -61,8 +60,15 @@ const Login = () => {
         >
           Enviar
         </button>
-        <p className="mt-4 text-center text-gray-700">¿Aun no tienes una cuenta? <Link className="text-blue-800 underline" to="/register">Registrate</Link></p>
-        <p className="mt-4 text-center text-gray-700">¿Has olvidado tu contraseña? <Link className="text-blue-800 underline" to="/recoverPass">Recuperar Contraseña</Link></p>
+        {message && (
+          <div
+            className={`mt-4 p-4 rounded-md ${
+              messageType === "error" ? "bg-red-500" : "bg-green-500"
+            } text-white`}
+          >
+            {message}
+          </div>
+        )}
       </div>
     </form>
   );

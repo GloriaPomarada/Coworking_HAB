@@ -7,21 +7,19 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   // eslint-disable-next-line no-unused-vars
-  const [isAutenticated, setisAuthenticated] = useState(false);
+  const [isAutenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const fetchUser = async () => {
+  const fetchUserProfile = async (token) => {
     try {
-      const response = await axios.get("/api/usuarios/profile", {
-        headers: {
-          // eslint-disable-next-line no-undef
-          Authorization: `Bearer ${token}`,
-        },
+      console.log("Token:", token);
+      const response = await axios.get("/api/users/profile", {
+        headers: { Authorization: `Bearer ${token}` },
       });
-      const userProfile = response.data.data.user;
-      setUser(userProfile);
-      setisAuthenticated(true);
+      const userProfile = response.data.data.token;
+      setUser((prevUser) => ({ ...prevUser, ...userProfile }));
+      setIsAuthenticated(true);
       setIsAdmin(userProfile.isAdmin);
     } catch (error) {
       console.log(error);
@@ -34,20 +32,22 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = Auth.getToken();
     if (token) {
-      fetchUser(token);
+      fetchUserProfile(token);
+      console.log("Token:", token);
     }
   }, []);
 
   const login = async (token) => {
     Auth.login(token);
-    await fetchUser(token);
-    // setisAuthenticated(true);
+    await fetchUserProfile(token);
+    setUser((prevUser) => ({ ...prevUser, token }));
+    setIsAuthenticated(true);
   };
 
   const logout = () => {
     Auth.logout();
     setUser(null);
-    setisAuthenticated(false);
+    setIsAuthenticated(false);
     setIsAdmin(false);
     setLoading(false);
   };
@@ -57,17 +57,17 @@ export const AuthProvider = ({ children }) => {
   };
 
   const updateuser = async (token) => {
-    await fetchUser(token);
+    await fetchUserProfile(token);
   };
 
   return (
     <AuthContext.Provider
       value={{
         user,
+        token: user?.token,
         login,
         logout,
         loggedIn,
-        // eslint-disable-next-line no-undef
         isAutenticated,
         updateuser,
         loading,

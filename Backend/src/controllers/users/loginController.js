@@ -39,6 +39,12 @@ const loginController = async (req, res, next) => {
             status: 'ok',
             data: {
                 token,
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    isAdmin: user.isAdmin,
+                },
             },
         });
     } catch (err) {
