@@ -40,10 +40,10 @@ const loginController = async (req, res, next) => {
             data: {
                 token,
                 user: {
-                    id: user.id,
-                    name: user.name,
-                    email: user.email,
-                    isAdmin: user.isAdmin,
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                isAdmin: user.isAdmin,
                 },
             },
         });

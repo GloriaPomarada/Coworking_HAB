@@ -17,13 +17,13 @@ export const getBookingInfo = async (incidenciaId) => {
 };
 
 // Función para crear un mensaje de incidencia
-export const createMessage = async (incidenciaId, mensaje, espacioId) => {
+export const createMessage = async (incidenciaId, mensaje, espacioId, reservaId, usuarioId) => {
     try {
         const query = `
-            INSERT INTO mensajes_incidencias (incidencia_id, mensaje, espacio_id)
-            VALUES (?, ?, ?)
+            INSERT INTO mensajes_incidencias (incidencia_id, mensaje, espacio_id, reserva_id, usuario_id)
+            VALUES (?, ?, ?, ?, ?)
         `;
-        const [result] = await pool.execute(query, [incidenciaId, mensaje, espacioId]);
+        const [result] = await pool.execute(query, [incidenciaId, mensaje, espacioId, reservaId, usuarioId]);
         return result.insertId; // Devuelve el ID del mensaje insertado
     } catch (error) {
         throw error;

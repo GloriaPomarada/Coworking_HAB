@@ -1,14 +1,16 @@
 import pool from "../../config/connection.js";
+import votesSchema from "../../schema/ratings/votesSchema.js";
 import * as ratingsModel from '../../models/ratings/index.js';
 
-const postVoteController = async (req, res) => {
+const postVoteController = async (req, res, next) => {
     const { reserva_id, value } = req.body;
     const usuario_id = req.user.id;
+    
+    const { error } = votesSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ message: error.details[0].message });
+        }
 
-    // Validar que value esté en el rango permitido (1-5)
-    if (value < 1 || value > 5) {
-        return res.status(400).json({ message: 'El valor de la valoración debe estar entre 1 y 5.' });
-    }
 
     try {
         // Verificar si la reserva existe y pertenece al usuario
@@ -30,10 +32,15 @@ const postVoteController = async (req, res) => {
         }
 
         const insertId = await ratingsModel.postNewVote(usuario_id, reserva.espacio_id, value, reserva_id);
-        res.status(201).json({ message: 'Valoración añadida con éxito', id: insertId });
+        
+        res.send({
+            status: 'ok', 
+            message: 'Valoración añadida con éxito', 
+            id: insertId 
+        });
 
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+    } catch (err) {
+        next(err);
     }
 };
 

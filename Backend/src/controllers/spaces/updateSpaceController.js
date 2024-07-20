@@ -16,8 +16,7 @@ const updateSpaceController = async (req, res, next) => {
             precio_espacio_completo,
             direccion,
             estado,
-            incidencias,
-            imagen,
+            valoracion_media,
         } = req.body;
 
         // Si faltan datos requeridos, lanzamos error.
@@ -43,8 +42,8 @@ const updateSpaceController = async (req, res, next) => {
             precio_espacio_completo,
             direccion,
             estado,
-            incidencias,
-            imagen,
+            valoracion_media,
+            
         });
 
         // Enviamos respuesta al cliente.
@@ -61,9 +60,7 @@ const updateSpaceController = async (req, res, next) => {
                     precio_espacio_completo,
                     direccion,
                     estado,
-                    incidencias,
-                    imagen,
-                },
+                }
             });
         } else {
             notFoundError('Espacio');

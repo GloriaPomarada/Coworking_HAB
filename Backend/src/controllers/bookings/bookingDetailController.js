@@ -1,6 +1,4 @@
 import * as bookingsModel from '../../models/bookings/index.js';
-
-
 const bookingDetailController = async (req, res, next) => {
     try {
         const { reservaId } = req.params;
@@ -23,9 +21,8 @@ const bookingDetailController = async (req, res, next) => {
         }
 
         res.status(200).json(data);
-    } catch (error) {
-        console.error('Error al obtener detalles de la reserva:', error);
-        next(error);
+    } catch (err) {
+        next(err);
     }
 };
 

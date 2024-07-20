@@ -8,11 +8,11 @@ const createSpaceModel = async ({
     precio_por_persona,
     precio_espacio_completo,
     direccion,
-    estado = null, // Default value if not provided
-    incidencias = null, // Default value if not provided
+    estado = null,
+    valoracion_media,
 }) => {
     const query = `
-        INSERT INTO espacios (nombre, descripcion, categoria_id, capacidad, precio_por_persona, precio_espacio_completo, direccion, estado, incidencias)
+        INSERT INTO espacios (nombre, descripcion, categoria_id, capacidad, precio_por_persona, precio_espacio_completo, direccion, estado, valoracion_media )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
@@ -25,10 +25,10 @@ const createSpaceModel = async ({
         precio_espacio_completo,
         direccion,
         estado,
-        incidencias,
+        valoracion_media,
     ]);
 
-    // Get the ID of the newly inserted row
+    
     const newSpaceId = result.insertId;
 
     return newSpaceId;

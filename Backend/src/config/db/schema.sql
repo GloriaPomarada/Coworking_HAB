@@ -33,33 +33,31 @@ CREATE TABLE categorias_incidencias (
 
 -- Espacios:
 CREATE TABLE espacios (
-  id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  nombre VARCHAR(100) NOT NULL,
-  descripcion TEXT,
-  categoria_id INT,
-  capacidad INT,
-  precio_por_persona DECIMAL(10, 2),
-  precio_espacio_completo DECIMAL(10, 2),
-  direccion VARCHAR(100),
-  estado ENUM('libre', 'reservado') DEFAULT 'libre',
-  incidencias TEXT,
-  imagen LONGBLOB,
-  FOREIGN KEY (categoria_id) REFERENCES categorias_espacios(id)
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    categoria_id INT,
+    capacidad INT,
+    precio_por_persona DECIMAL(10, 2),
+    precio_espacio_completo DECIMAL(10, 2),
+    direccion VARCHAR(100),
+    estado ENUM('libre', 'reservado') DEFAULT 'libre',
+    valoracion_media DECIMAL(3, 2) DEFAULT 0.0,
+    FOREIGN KEY (categoria_id) REFERENCES categorias_espacios(id)
 );
-
 
 -- Reservas:
 CREATE TABLE reservas (
-  id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  usuario_id CHAR(36) NOT NULL,
-  espacio_id INT NOT NULL,
-  tipo ENUM('por_persona', 'espacio_completo'),
-  fecha_inicio DATE NOT NULL,
-  fecha_fin DATE NOT NULL,
-  estado ENUM('pendiente', 'reservado', 'cancelada', 'finalizada') NOT NULL DEFAULT 'pendiente',
-  observaciones TEXT,
-  FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-  FOREIGN KEY (espacio_id) REFERENCES espacios(id)
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    usuario_id CHAR(36) NOT NULL,
+    espacio_id INT NOT NULL,
+    tipo ENUM('por_persona', 'espacio_completo'),
+    fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL,
+    estado ENUM('pendiente', 'reservado', 'cancelada', 'finalizada') NOT NULL DEFAULT 'pendiente',
+    observaciones TEXT,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (espacio_id) REFERENCES espacios(id)
 );
 
 -- Incidencias:
@@ -67,15 +65,14 @@ CREATE TABLE incidencias (
     id INT AUTO_INCREMENT PRIMARY KEY,
     espacio_id INT NOT NULL,
     reserva_id INT NOT NULL,
-	usuario_id CHAR(36) NOT NULL,
+    usuario_id CHAR(36) NOT NULL,
     categoria_incidencia_id INT NOT NULL,
     titulo TEXT,
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (espacio_id) REFERENCES espacios(id),
     FOREIGN KEY (reserva_id) REFERENCES reservas(id),
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-	FOREIGN KEY (categoria_incidencia_id) REFERENCES categorias_incidencias(id)
-
+    FOREIGN KEY (categoria_incidencia_id) REFERENCES categorias_incidencias(id)
 );
 
 -- Mensajes de Incidencias:
@@ -84,11 +81,15 @@ CREATE TABLE mensajes_incidencias (
     incidencia_id INT NOT NULL,
     mensaje TEXT,
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    espacio_id INT NOT NULL DEFAULT 1,
-    FOREIGN KEY (incidencia_id) REFERENCES incidencias(id),
-    FOREIGN KEY (espacio_id) REFERENCES espacios(id)
+    espacio_id INT NOT NULL,
+    reserva_id INT NOT NULL,
+    usuario_id CHAR(36) NOT NULL,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (espacio_id) REFERENCES espacios(id),
+    FOREIGN KEY (reserva_id) REFERENCES reservas(id),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (incidencia_id) REFERENCES incidencias(id)
 );
-
 
 -- Fotos de los Espacios:
 CREATE TABLE espacios_fotos (
@@ -99,7 +100,7 @@ CREATE TABLE espacios_fotos (
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tabla espacios_votos 
+-- Tabla espacios_votos:
 CREATE TABLE espacios_votos (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     value TINYINT UNSIGNED NOT NULL,
@@ -111,45 +112,38 @@ CREATE TABLE espacios_votos (
     FOREIGN KEY (espacio_id) REFERENCES espacios(id),
     FOREIGN KEY (reserva_id) REFERENCES reservas(id),
     INDEX (usuario_id),
-    INDEX (espacio_id)
+    INDEX (espacio_id),
+    INDEX (reserva_id)
 );
 
 -- Equipamientos:
 CREATE TABLE equipamientos (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(100) NOT NULL,
-  descripcion TEXT,
-  categoria_id INT,
-  FOREIGN KEY (categoria_id) REFERENCES categorias_espacios(id)
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT
 );
 
 -- Tabla intermedia para relacionar espacios y equipamientos:
 CREATE TABLE espacios_equipamientos (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  espacio_id INT NOT NULL,
-  equipamiento_id INT NOT NULL,
-  FOREIGN KEY (espacio_id) REFERENCES espacios(id),
-  FOREIGN KEY (equipamiento_id) REFERENCES equipamientos(id)
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    espacio_id INT NOT NULL,
+    equipamiento_id INT NOT NULL,
+    FOREIGN KEY (espacio_id) REFERENCES espacios(id),
+    FOREIGN KEY (equipamiento_id) REFERENCES equipamientos(id)
 );
 
 -- Pagos:
 CREATE TABLE pagos (
-  id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  reserva_id INT NOT NULL,
-  a_pagar DECIMAL(10, 2) NOT NULL,
-  fecha_pago TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  metodo_pago ENUM('efectivo', 'tarjeta', 'transferencia') NOT NULL,
-  observaciones TEXT,
-  FOREIGN KEY (reserva_id) REFERENCES reservas(id)
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    reserva_id INT NOT NULL,
+    a_pagar DECIMAL(10, 2) NOT NULL,
+    fecha_pago TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    metodo_pago ENUM('efectivo', 'tarjeta', 'transferencia') NOT NULL,
+    observaciones TEXT,
+    FOREIGN KEY (reserva_id) REFERENCES reservas(id)
 );
 
-
--- PARA QUE APAREZCAN Y SE ACTUALICEN LAS VALORACIONES DE LOS ESPACIOS:
--- 1: Añadimos columna de Valoraciones en espacios.
-ALTER TABLE espacios
-ADD COLUMN valoracion_media DECIMAL(3, 2) DEFAULT 0.0;
-
--- 2: Lógica para calcular la media.
+-- Procedimiento para actualizar la media de valoraciones de un espacio:
 DELIMITER //
 CREATE PROCEDURE actualizarMediaValoracionesEspacio(IN p_espacio_id INT)
 BEGIN
@@ -165,7 +159,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- 3: Disparador para nuevas valoraciones.
+-- Disparador para nuevas valoraciones:
 DELIMITER //
 CREATE TRIGGER after_insert_valoracion
 AFTER INSERT ON espacios_votos
@@ -175,7 +169,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- 4: Disparador para valoración existente.
+-- Disparador para valoraciones actualizadas:
 DELIMITER //
 CREATE TRIGGER after_update_valoracion
 AFTER UPDATE ON espacios_votos
@@ -185,7 +179,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- 5: Disparador para borrar una valoracion.
+-- Disparador para valoraciones eliminadas:
 DELIMITER //
 CREATE TRIGGER after_delete_valoracion
 AFTER DELETE ON espacios_votos

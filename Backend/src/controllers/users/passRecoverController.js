@@ -1,13 +1,13 @@
 import randomstring from 'randomstring';
 import * as userModel from '../../models/users/index.js';
 import sendMailUtil from '../../utils/sendMailUtils.js';
-//import editUserPassSchema from '../../schema/user/editUserPassSchema.js';
+import passRecoverSchema from '../../schema/user/passRecoverSchema.js';
 
 // Función controladora que valida a un usuario recién registrado.
 
 const passwordRecoverController = async (req, res, next) => {
     try {
-        //await editUserPassSchema.validateAsync(req.body);
+        await passRecoverSchema.validateAsync(req.body);
         const { email } = req.body;
 
         const recoverPassCode = randomstring.generate(10);
@@ -30,9 +30,10 @@ const passwordRecoverController = async (req, res, next) => {
             status: 'ok',
             message:
                 'Se ha enviado un correo para la recuperación de la contraseña',
+                
         });
-    } catch (error) {
-        next(error);
+    } catch (err) {
+        next(err);
     }
 };
 

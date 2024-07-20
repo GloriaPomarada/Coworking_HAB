@@ -1,5 +1,4 @@
 import * as incidencesModel from '../../models/incidents/index.js';
-
 const getIncidentsController = async (req, res) => {
     const filters = req.query;
 

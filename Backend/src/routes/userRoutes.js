@@ -10,10 +10,11 @@ router.put('/activate/:registrationCode', userController.validate); // .com/api/
 router.post('/login', userController.login); // .com/api/users/login
 router.post('/password/recover', userController.passwordRecover); // .com/api/user/password/recover
 router.put('/password/reset', userController.passwordReset); // .com/api/users/password/reset
+router.get('/profile/:userId', middleware.verifyUser, userController.publicProfile); //.com/api/users/profile/:id
 
 //*-> RUTAS PRIVADAS
 router.get('/', middleware.authenticate, middleware.isAdmin, userController.getUsers) //.com/api/users
-router.get('/profile/:id', middleware.authenticate, middleware.verifyUser, userController.getUserById);//.com/api/users/profile/:id
+router.get('/profile', middleware.authenticate, middleware.verifyUser, userController.getUserById); //.com/api/users/profile (miPerfil)
 router.post('/password/update', middleware.authenticate, middleware.verifyUser, userController.updatePassword) //.com/api/users/password/update
 
 export default router;

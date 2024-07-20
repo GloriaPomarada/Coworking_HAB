@@ -1,7 +1,11 @@
 import pool from "../../config/connection.js";
 
 const filteredSpaces = async (filters) => {
-    let sql = 'SELECT * FROM espacios WHERE 1';
+    let sql = `SELECT e.nombre, e.descripcion, ce.nombre AS categorias_nombre
+  FROM espacios e
+  JOIN categorias_espacios ce ON e.categoria_id = ce.id
+  WHERE 1`;
+
     const params = [];
 
     // Construir la consulta dinámicamente según los filtros recibidos
@@ -18,17 +22,25 @@ const filteredSpaces = async (filters) => {
         params.push(filters.capacidad);
     }
     if (filters.precioDesde) {
-        sql += ' AND precio_por_persona >= ?';
+        sql += ' AND precio_espacio_completo >= ?';
         params.push(filters.precioDesde);
     }
     if (filters.precioHasta) {
-        sql += ' AND precio_por_persona <= ?';
+        sql += ' AND precio_espacio_completo <= ?';
         params.push(filters.precioHasta);
     }
     if (filters.estado) {
         sql += ' AND estado = ?';
         params.push(filters.estado);
     }
+    if (filters.valoracion_media) {
+        sql += ' AND valoracion_media >= ?';
+        params.push(filters.valoracion_media);
+    }
+    if (filters.categoria_nombre) {
+        sql += ' AND ce.nombre LIKE ?';
+        params.push('%' + filters.categoria_nombre + '%');
+      }
 
     try {
         const [rows] = await pool.query(sql, params);

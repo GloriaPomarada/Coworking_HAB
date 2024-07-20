@@ -6,8 +6,14 @@ import joiErrorMessages from '../joiErrorMessages.js';
 
 // Creamos el esquema de Joi donde comprobamos todas las propiedades necesarias.
 const editUserPassSchema = joi.object({
-    email: joi.string().email().required().messages(joiErrorMessages),
-    recoverPassCode: joi.string().required().messages(joiErrorMessages),
+    userId: joi.string().guid({ version: 'uuidv4' }).required().messages(joiErrorMessages),    
+    oldPassword: joi
+        .string()
+        .pattern(
+            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[¡!$%^&*()_+|~=`{}:";'<>¿?,.])[a-zA-Z0-9¡!$%^&*()_+|~=`{}:";'<>¿?,.]{8,}$/
+        )
+        .required()
+        .messages(joiErrorMessages),
     newPassword: joi
         .string()
         .pattern(

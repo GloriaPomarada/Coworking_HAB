@@ -1,4 +1,3 @@
-
 import pool from '../../config/connection.js';
 
 const updateReservaEstado = async (id, estado) => {

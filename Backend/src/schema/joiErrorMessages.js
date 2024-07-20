@@ -13,6 +13,8 @@ const joiErrorMessages = {
     'string.min': 'El campo "{#key}" debe tener al menos {#limit} caracteres',
     'string.max': 'El campo "{#key}" no debe exceder los {#limit} caracteres',
     'object.unknown': 'No se permiten campos adicionales en este objeto',
+    'date.base': 'El campo debe ser una fecha válida',
+    'date.min': 'La fecha debe ser en el futuro',
 };
 
 export default joiErrorMessages;

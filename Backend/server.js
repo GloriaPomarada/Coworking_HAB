@@ -24,7 +24,7 @@ app.use(morgan('dev'));
 app.use(express.json()); //Convierte solicitudes json->objeto y asigna a req.body.
 app.use(express.urlencoded({ extended: true })); //Convierte solicitudes formularios.html->objeto y asigna a req.body.
 app.use(fileUpload()); //-> carga de archivos con express.
-// app.use(express.static(UPLOADS_DIR)); //-> directorio donde vamos a guardar los archivos.
+app.use(express.static(UPLOADS_DIR)); //-> directorio donde vamos a guardar los archivos.
 
 //!-> registro de directorio rutas.
 app.use('/api', routes);

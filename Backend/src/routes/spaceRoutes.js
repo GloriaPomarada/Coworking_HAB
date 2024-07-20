@@ -5,6 +5,7 @@ import authenticateMiddleware from '../middlewares/authenticateMiddleware.js';
 import isAdmin from '../middlewares/isAdmin.js';
 
 router.get('/', spaceController.getFilterSpace); //.com/api/spaces?filter=param
+router.get('/:id', spaceController.getSpace); //-> .com/api/espacios/:espacioId
 router.post('/', authenticateMiddleware, isAdmin, spaceController.createSpace); //-> .com/crear-espacio
 router.put(
     '/:id',
