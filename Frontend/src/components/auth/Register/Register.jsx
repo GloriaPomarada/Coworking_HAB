@@ -28,7 +28,7 @@ function Register() {
       console.log(resp);
       setMessage("Registro exitoso. Revise su correo para la activacion. Redirigiendo a la página de inicio de sesión...");
       setTimeout(() => {
-        navigate('/login');
+        navigate('/auth/login');
       }, 3000); 
     } catch (error) {
       console.error("Error registrando usuario:", error);
@@ -76,7 +76,7 @@ function Register() {
         <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
           Registrar
         </button>
-        <p className="mt-4 text-center text-gray-700">¿Ya tienes una cuenta? <Link className="text-blue-800 underline" to="/login">Inicia Sesion</Link></p>
+        <p className="mt-4 text-center text-gray-700">¿Ya tienes una cuenta? <Link className="text-blue-800 underline" to="/auth/login">Inicia Sesion</Link></p>
       </form>
       {message && <p className="mt-4 text-center text-gray-700">{message}</p>}
     </div>

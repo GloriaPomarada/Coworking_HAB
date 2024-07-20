@@ -1,12 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from './App.jsx'
 import ErrorPage from "./components/pages/ErrorPage/ErrorPage.jsx";
-import Login from "./components/auth/Login/Login.jsx";
-import Register from "./components/auth/Register/Register.jsx";
-import CreateSpace from "./components/pages/CreateSpace/CreateSpace.jsx";
-import Activate from "./components/auth/Activate/Activate.jsx"
-import RecoverPass from "./components/pages/RecoverPass/RecoverPass.jsx";
-import ResetPass from "./components/pages/ResetPass/ResetPass.jsx";
+import Home from './components/pages/Home/Home.jsx'
+import AuthRoutes from './components/routes/AuthRoutes.jsx'
+import SpacesRoutes from "./components/routes/SpacesRoutes.jsx";
+
 const router = createBrowserRouter([
     {
         path: "/",
@@ -14,29 +12,22 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage/>,
         children:[
             {
-                path:"/login",
-                element:<Login/>
+                index: true,
+                element:<Home/>
             },
             {
-                path:"/register",
-                element:<Register/>
+                path:"/auth/*",
+                element:<AuthRoutes/>
             },
             {
-                path:"/create-space",
-                element:<CreateSpace/>
+                path:"/space/*",
+                element:<SpacesRoutes/>
             },
             {
-                path:"/activate/*",
-                element:<Activate/>
-            },
-            {
-                path:"/recoverPass",
-                element:<RecoverPass/>
-            },
-            {
-                path:"/resetPass",
-                element:<ResetPass/>
+                path:"/home",
+                element:<Home/>
             }
+           
         ]
     }
 ]);

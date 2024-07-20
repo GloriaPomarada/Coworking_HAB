@@ -1,32 +1,22 @@
-import { Route, Routes } from "react-router-dom";
-import Home from "./components/pages/Home/Home";
-import Login from "./components/auth/Login/Login";
-import Register from "./components/auth/Register/Register.jsx";
-import CreateSpace from "./components/pages/CreateSpace.jsx";
-import ValidacionUsuario from "./components/auth/Validate/Validation.jsx";
+// import { Route, Routes } from "react-router-dom";
+// import Home from "./components/pages/Home/Home";
+// import Login from "./components/auth/Login/Login";
+// import Register from "./components/auth/Register/Register.jsx";
+// import CreateSpace from "./components/pages/CreateSpace.jsx";
+// import ValidacionUsuario from "./components/auth/Validate/Validation.jsx";
+import { AuthProvider } from "./components/context/AuthContext.jsx";
 import NavBar from "./components/shared/NavBar/NavBar.jsx";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
     <>
-      <h1>Coworking HAB</h1>
-      <nav>
+      <AuthProvider>
+        <h1>Coworking HAB</h1>
         <NavBar />
-      </nav>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/create-space" element={<CreateSpace />} />
-        {/* <Route
-          path="/validate/:registrationCode"
-          element={<ValidacionUsuario />}
-        /> */}
-        <Route
-          path="/activate/:registrationCode"
-          element={<ValidacionUsuario />}
-        />
-      </Routes>
+        <Outlet/>
+      </AuthProvider>
+      
     </>
   );
 }

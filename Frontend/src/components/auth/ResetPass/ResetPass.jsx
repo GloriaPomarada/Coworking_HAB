@@ -27,7 +27,7 @@ function ResetPass() {
             console.log(resp);
             setMessage('Recuperacion de Contraseña Completa');
             setTimeout(() => {
-                navigate('/login');
+                navigate('/auth/login');
             }, 2000);
 
         } catch (error) {

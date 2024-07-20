@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     try {
       console.log("Token:", token);
       const response = await axios.get("/api/users/profile", {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: token },
       });
       const userProfile = response.data.data.token;
       setUser((prevUser) => ({ ...prevUser, ...userProfile }));

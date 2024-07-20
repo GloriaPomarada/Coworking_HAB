@@ -25,7 +25,7 @@ function RecoverPass() {
             console.log(resp);
             setMessage("Email de Recuperación enviado , revisa tu correo")
             setTimeout(() => {
-                navigate('/resetPass');
+                navigate('/auth/resetPass');
             }, 2000);
         } catch (error) {
             console.error("Error al recuperar Contraseña:", error);
