@@ -3,10 +3,10 @@ import { useParams } from "react-router-dom";
 import useInput from "../hooks/UseInput";
 import PropTypes from "prop-types";
 import axios from "axios";
-// import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 const SpaceForm = ({ onSubmit }) => {
-  // const { isAdmin } = useAuth();
+  const { isAdmin } = useAuth();
   const { id } = useParams();
 
   const {
@@ -57,12 +57,6 @@ const SpaceForm = ({ onSubmit }) => {
     setValue: setEstado,
     reset: resetEstado,
   } = useInput("");
-  const {
-    value: valoracion_media,
-    bind: bindValoracion_media,
-    setValue: setValoracion_media,
-    reset: resetValoracion_media,
-  } = useInput("");
 
   useEffect(() => {
     if (id) {
@@ -79,7 +73,6 @@ const SpaceForm = ({ onSubmit }) => {
           setPrecio_completo(space.precio_espacio_completo);
           setDireccion(space.direccion);
           setEstado(space.estado);
-          setValoracion_media(space.valoracion_media);
         } catch (error) {
           if (error.response) {
             console.error("Response error:", error.response.data);
@@ -106,16 +99,15 @@ const SpaceForm = ({ onSubmit }) => {
     setPrecio_completo,
     setDireccion,
     setEstado,
-    setValoracion_media,
   ]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // if (!isAdmin) {
-      //   throw new Error("Acceso denegado: solo administradores");
-      // }
+      if (!isAdmin) {
+        throw new Error("Acceso denegado: solo administradores");
+      }
 
       const formData = new FormData();
       formData.append("nombre", nombre);
@@ -126,7 +118,6 @@ const SpaceForm = ({ onSubmit }) => {
       formData.append("precio_espacio_completo", precio_espacio_completo);
       formData.append("direccion", direccion);
       formData.append("estado", estado);
-      formData.append("valoracion_media", valoracion_media);
 
       await onSubmit(id, formData);
 
@@ -145,7 +136,6 @@ const SpaceForm = ({ onSubmit }) => {
     resetPrecio_completo();
     resetDireccion();
     resetEstado();
-    resetValoracion_media();
   };
 
   return (
@@ -227,14 +217,6 @@ const SpaceForm = ({ onSubmit }) => {
           <option value="libre">Libre</option>
           <option value="reservado">Reservado</option>
         </select>
-      </label>
-      <label>
-        Valoración media:
-        <input
-          type="tnumber"
-          {...bindValoracion_media}
-          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
       </label>
       <button
         type="submit"

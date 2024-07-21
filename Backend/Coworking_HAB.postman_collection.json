@@ -65,7 +65,7 @@
                         "header": [],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\r\n    \"email\": \"\",\r\n    \"password\": \"Password123!!\"\r\n}",
+                            "raw": "{\r\n    \"email\": \"\",\r\n    \"password\": \"\"\r\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -87,7 +87,7 @@
                         "header": [],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\r\n    \"email\" : \"\",\r\n    \"password\" : \"Password123!!\"\r\n}",
+                            "raw": "{\r\n    \"email\" : \"\",\r\n    \"password\" : \"\"\r\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -103,13 +103,13 @@
                     "response": []
                 },
                 {
-                    "name": "Recover contraseña",
+                    "name": "Cambiar contraseña",
                     "request": {
                         "method": "POST",
                         "header": [],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\r\n    \"email\": \"\"\r\n}",
+                            "raw": "{\r\n    \"userId\": \"\",\r\n    \"oldPassword\": \"\",\r\n    \"newPassword\":\"\"\r\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -117,9 +117,9 @@
                             }
                         },
                         "url": {
-                            "raw": "{{URL_BASE}}/api/users/password/recover",
+                            "raw": "{{URL_BASE}}/api/users/password/update",
                             "host": ["{{URL_BASE}}"],
-                            "path": ["api", "users", "password", "recover"]
+                            "path": ["api", "users", "password", "update"]
                         }
                     },
                     "response": []
@@ -189,6 +189,54 @@
                         }
                     },
                     "response": []
+                },
+                {
+                    "name": "Perfil público",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{URL_BASE}}/api/users/profile/:userId",
+                            "host": ["{{URL_BASE}}"],
+                            "path": ["api", "users", "profile", ":userId"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": ""
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Avatar",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "avatar",
+                                    "value": "",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{URL_BASE}}/api/users/avatar",
+                            "host": ["{{URL_BASE}}"],
+                            "path": ["api", "users", "avatar"]
+                        }
+                    },
+                    "response": []
                 }
             ]
         },
@@ -214,7 +262,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{ \r\n    \"nombre\": \"Oficina D1\",\r\n    \"descripcion\":\"Amplio espacio de trabajo colectivo\",\r\n    \"categoria_id\": \"1\",\r\n    \"capacidad\": \"5\",\r\n    \"precio_por_persona\":\"100\",\r\n    \"precio_espacio_completo\": \"500\",\r\n    \"direccion\":\"Calle de Prueba, 10\",\r\n    \"estado\": \"libre\",\r\n    \"incidencias\": null,\r\n    \"imagen\":\"foto.jpg\" \r\n}",
+                            "raw": "{ \r\n    \"nombre\": \"Oficina prueba 2\",\r\n    \"descripcion\":\"Amplio espacio de trabajo colectivo\",\r\n    \"categoria_id\": 1,\r\n    \"capacidad\": \"5\",\r\n    \"precio_por_persona\":\"100\",\r\n    \"precio_espacio_completo\": \"500\",\r\n    \"direccion\":\"Calle de Prueba, 10000000\",\r\n    \"estado\": \"libre\"\r\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -268,7 +316,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{ \r\n    \"id\": 5,\r\n    \"nombre\": \"Oficina modificada\",\r\n    \"descripcion\":\"Amplio espacio de trabajo colectivo\",\r\n    \"categoria_id\": 2,\r\n    \"capacidad\": 10,\r\n    \"precio_por_persona\":\"100\",\r\n    \"precio_espacio_completo\": \"500\",\r\n    \"direccion\":\"Calle de Prueba, 10\",\r\n    \"estado\": \"libre\",\r\n    \"incidencias\": null,\r\n    \"imagen\":\"foto.jpg\" \r\n}",
+                            "raw": "{ \r\n    \"id\": 1,\r\n    \"nombre\": \"Oficina modificada\",\r\n    \"descripcion\":\"Amplio espacio de trabajo colectivo\",\r\n    \"categoria_id\": 2,\r\n    \"capacidad\": 10,\r\n    \"precio_por_persona\":\"100\",\r\n    \"precio_espacio_completo\": \"500\",\r\n    \"direccion\":\"Calle de Prueba, 10\",\r\n    \"estado\": \"libre\"\r\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -324,6 +372,89 @@
                                     "value": "1"
                                 }
                             ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Borrar foto espacios",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{URL_BASE}}/api/spaces/:spaceId/photos/:photoId",
+                            "host": ["{{URL_BASE}}"],
+                            "path": [
+                                "api",
+                                "spaces",
+                                ":spaceId",
+                                "photos",
+                                ":photoId"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "spaceId",
+                                    "value": ""
+                                },
+                                {
+                                    "key": "photoId",
+                                    "value": ""
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Detalle de espacio",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{URL_BASE}}/api/spaces/:spaceId",
+                            "host": ["{{URL_BASE}}"],
+                            "path": ["api", "spaces", ":spaceId"],
+                            "variable": [
+                                {
+                                    "key": "spaceId",
+                                    "value": ""
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Fotos espacios",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "photo",
+                                    "value": "",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{URL_BASE}}/api/spaces/1/photos",
+                            "host": ["{{URL_BASE}}"],
+                            "path": ["api", "spaces", "1", "photos"]
                         }
                     },
                     "response": []
@@ -620,7 +751,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\r\n    \"incidenciaId\":\"\",\r\n    \"mensaje\":\"\"\r\n}",
+                            "raw": "{\r\n    \"incidenciaId\":\"\",\r\n    \"mensaje\":\"\",\r\n    \"espacio_id\":2,\r\n    \"reserva_id\":2,\r\n    \"usuario_id\": \"\"\r\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
