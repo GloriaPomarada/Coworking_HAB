@@ -28,5 +28,5 @@ export {
     SMTP_APIKEY,
     JWT_SECRET,
     JWT_EXP,
-    UPLOADS_DIR
+    UPLOADS_DIR // =uploads
 };

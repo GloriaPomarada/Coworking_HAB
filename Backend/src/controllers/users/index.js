@@ -7,3 +7,4 @@ export { default as getUsers } from './getUsersController.js';
 export { default as getUserById } from './getUserByIdController.js';
 export { default as publicProfile } from './publicProfileController.js';
 export { default as updatePassword } from './newPasswordController.js';
+export { default as avatar } from './avatarController.js';

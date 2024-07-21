@@ -16,5 +16,6 @@ router.get('/profile/:userId', middleware.verifyUser, userController.publicProfi
 router.get('/', middleware.authenticate, middleware.isAdmin, userController.getUsers) //.com/api/users
 router.get('/profile', middleware.authenticate, middleware.verifyUser, userController.getUserById); //.com/api/users/profile (miPerfil)
 router.post('/password/update', middleware.authenticate, middleware.verifyUser, userController.updatePassword) //.com/api/users/password/update
+router.put('/avatar', middleware.authenticate, middleware.verifyUser, userController.avatar); //.com/api/users/avatar
 
 export default router;
