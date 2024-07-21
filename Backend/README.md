@@ -31,12 +31,13 @@ Esta es la API de la aplicación para gestionar espacios de coworking. Mediante 
 2. **PUT /api/users/activate** Activa un usuario mediante el código de registro
 3. **POST /api/users/login** - Login de usuario
 4. **POST /api/users/password/recover** Recuperación de contraseña
-5. **PUT /users/password/reset** Cambio de contraseña
+5. **PUT /users/password/update** Cambio de contraseña
 
 **Rutas privadas**
 
 1. **GET /api/users** Devuelve el listado de los perfiles de usuarios
 2. **GET /api/users/profile** Devuelve el perfil de un usuario
+3. **PUT /api/users/avatar** Actualiza el avatar de un usuario
 
 ### Espacios
 
@@ -45,6 +46,8 @@ Esta es la API de la aplicación para gestionar espacios de coworking. Mediante 
 3.  **PUT /api/spaces** Modifica un espacio
 4.  **GET /api/spaces/search?key=value** Filtrado de espacios
 5.  **GET /api/categories** Devuelve las categorías de espacios
+6.  **POST /api/spaces/:spaceId/photos** - Añade una imagen a un espacio
+7.  **DELETE /api/spaces/:spaceId/photos/:photoId** - Elimina una imagen de un espacio
 
 ### Equipamiento
 

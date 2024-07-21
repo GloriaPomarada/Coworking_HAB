@@ -26,9 +26,7 @@ class Auth {
 
   isAdmin() {
     const profile = this.getProfile();
-    return profile && typeof profile.isAdmin === "boolean"
-      ? profile.isAdmin
-      : false;
+    return profile && profile.role === "admin";
   }
 }
 
