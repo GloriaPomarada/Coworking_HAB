@@ -1,29 +1,27 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import Notification from "../../shared/Notification/Notification";
-import axios from "axios";
+import api from "../../utils/axiosConfig";
 
 function Activate() {
   const [activationSuccess, setActivationSuccess] = useState(false);
-  const [message, setMessage] = useState(false);
-  const [messageType, setMessageType] = useState(false);
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
   const { registrationCode } = useParams();
 
   useEffect(() => {
     const activateAccount = async () => {
       if (registrationCode) {
-        console.log(registrationCode);
         try {
-          const response = await axios.put(
-            `/api/usuarios/active/${registrationCode}`
-          );
+          const response = await api.put(`/users/activate/${registrationCode}`);
           if (response.data.status === "ok") {
             setActivationSuccess(true);
-            setMessageType(response.data);
+            setMessage("Cuenta activada con éxito");
+            setMessageType("success");
           }
         } catch (error) {
           setMessage(
-            error.response.data.message || "Error durante la activación"
+            error.response?.data?.message || "Error durante la activación"
           );
           setMessageType("error");
         }
@@ -32,16 +30,18 @@ function Activate() {
     activateAccount();
   }, [registrationCode]);
 
-  if (!activationSuccess) {
-    return <Notification message={message} messageType={messageType} />;
-  }
-
   return (
     <div>
-      <h2>Cuent activada con éxito!</h2>
-      <h3>
-        <Link to="/auth/login">Ingresa a tu cuenta!</Link>{" "}
-      </h3>
+      {!activationSuccess ? (
+        <Notification message={message} messageType={messageType} />
+      ) : (
+        <>
+          <h2>Cuenta activada con éxito!</h2>
+          <h3>
+            <Link to="/auth/login">Ingresa a tu cuenta</Link>
+          </h3>
+        </>
+      )}
     </div>
   );
 }

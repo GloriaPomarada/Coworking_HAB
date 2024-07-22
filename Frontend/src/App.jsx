@@ -10,14 +10,13 @@ import { Outlet } from "react-router-dom";
 
 function App() {
   return (
-    <>
-      <AuthProvider>
+    <AuthProvider>
+      <main>
         <h1>Coworking HAB</h1>
         <NavBar />
-        <Outlet/>
-      </AuthProvider>
-      
-    </>
+        <Outlet />
+      </main>
+    </AuthProvider>
   );
 }
 
