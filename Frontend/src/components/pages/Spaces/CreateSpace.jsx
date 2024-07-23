@@ -14,7 +14,7 @@ const CreateSpace = () => {
       const response = await axios.post("/api/spaces", formData, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: token, // Correctly formatted Authorization header
+          Authorization: token,
         },
       });
       console.log(response);
