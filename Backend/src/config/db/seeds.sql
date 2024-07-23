@@ -22,26 +22,26 @@ VALUES
 -- Insertar reservas
 INSERT INTO reservas (usuario_id, espacio_id, tipo, fecha_inicio, fecha_fin, estado, observaciones)
 VALUES
-    ('61373d2a-1e5c-46c7-8f95-312459afef05', 1, 'por_persona', '2024-07-01', '2024-07-01', 'reservado', 'Reserva para entrevista de trabajo'),
-    ('0ff06646-35a4-45aa-a37f-62184d1276c7', 2, 'espacio_completo', '2024-07-02', '2024-07-02', 'reservado', 'Reunión mensual de equipo');
+    ('71d2abfd-24c2-4335-8c0a-dbed788dbffb', 1, 'por_persona', '2024-07-01', '2024-07-01', 'reservado', 'Reserva para entrevista de trabajo'),
+    ('2ef328f7-1257-4be4-baf0-bd4702af8239', 2, 'espacio_completo', '2024-07-02', '2024-07-02', 'reservado', 'Reunión mensual de equipo');
 
 -- Insertar incidencias
 INSERT INTO incidencias (espacio_id, reserva_id, usuario_id, categoria_incidencia_id, titulo)
 VALUES
-    (1, 1, '61373d2a-1e5c-46c7-8f95-312459afef05', 3, 'Suelo sucio y polvoriento'),
-    (2, 2, '0ff06646-35a4-45aa-a37f-62184d1276c7', 1, 'Fallo en la iluminación');
+    (1, 1, '71d2abfd-24c2-4335-8c0a-dbed788dbffb', 3, 'Suelo sucio y polvoriento'),
+    (2, 2, '2ef328f7-1257-4be4-baf0-bd4702af8239', 1, 'Fallo en la iluminación');
 
 INSERT INTO mensajes_incidencias (incidencia_id, mensaje, espacio_id, reserva_id, usuario_id)
 VALUES
-    (1, 'Se requiere limpieza urgente del suelo.', 1, 1, '61373d2a-1e5c-46c7-8f95-312459afef05'),
-    (2, 'Necesitamos revisión eléctrica lo antes posible.', 2, 2, '0ff06646-35a4-45aa-a37f-62184d1276c7');
+    (1, 'Se requiere limpieza urgente del suelo.', 1, 1, '71d2abfd-24c2-4335-8c0a-dbed788dbffb'),
+    (2, 'Necesitamos revisión eléctrica lo antes posible.', 2, 2, '2ef328f7-1257-4be4-baf0-bd4702af8239');
 
 
 -- Insertar valoraciones de espacios
-INSERT INTO espacios_votos (value, usuario_id, espacio_id)
+INSERT INTO espacios_votos (value, usuario_id, espacio_id, reserva_id)
 VALUES
-    (4, '61373d2a-1e5c-46c7-8f95-312459afef05', 1),
-    (5, '0ff06646-35a4-45aa-a37f-62184d1276c7', 2);
+    (4, '71d2abfd-24c2-4335-8c0a-dbed788dbffb', 1, 5),
+    (5, '2ef328f7-1257-4be4-baf0-bd4702af8239', 2, 6);
 
 -- Insertar fotos de espacios
 INSERT INTO espacios_fotos (name, espacio_id)

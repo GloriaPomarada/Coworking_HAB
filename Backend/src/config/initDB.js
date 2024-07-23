@@ -184,6 +184,13 @@ const main = async () => {
 // Creación de procedimientos almacenados y disparadores
         console.log('Creando procedimientos almacenados y disparadores...');
 
+         // Creación de procedimientos almacenados y disparadores
+         console.log('Creando procedimientos almacenados y disparadores...');
+
+         await pool.query(
+            'DROP PROCEDURE IF EXISTS actualizarMediaValoracionesEspacio'
+        );
+
         await pool.query(`
             CREATE PROCEDURE actualizarMediaValoracionesEspacio(IN p_espacio_id INT)
             BEGIN
