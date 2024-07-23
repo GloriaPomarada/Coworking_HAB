@@ -10,17 +10,16 @@ function SpacesList() {
     const fetchSpaces = async () => {
       try {
         const response = await axios.get("/api/spaces");
-        console.log("API Response:", response.data); // Log the response data
+        console.log("API Response:", response.data);
 
-        // Assuming response.data has a structure like { data: [], status: "ok" }
         if (response.data && Array.isArray(response.data.data)) {
           setSpaces(response.data.data);
         } else {
-          console.error("Unexpected data format:", response.data);
+          console.error("Error en el formato de la data:", response.data);
           setSpaces([]);
         }
       } catch (error) {
-        console.error("Error fetching spaces:", error);
+        console.error("Error en el fetch de espacios:", error);
       }
     };
 
@@ -28,16 +27,22 @@ function SpacesList() {
   }, []);
 
   const handleEditClick = (id) => {
-    navigate(`/update-space/${id}`);
+    if (id) {
+      navigate(`/space/update-space/${id}`);
+    } else {
+      console.error("No se proporcionó un ID válido");
+    }
   };
 
   return (
     <div>
       <h2>Listado de espacios</h2>
+      {console.log("Spaces array:", spaces)}
       <ul>
         {Array.isArray(spaces) && spaces.length > 0 ? (
           spaces.map((space) => (
             <li key={space.id}>
+              {console.log("Space object individual:", space)}
               <strong>Nombre:</strong> {space.nombre} <br />
               <button onClick={() => handleEditClick(space.id)}>Editar</button>
             </li>

@@ -10,12 +10,12 @@ const UpdateSpace = () => {
   const { token } = useAuth();
   const [photos, setPhotos] = useState([]);
 
-  const handleUpdateSubmit = async (id, formData) => {
+  const handleUpdateSubmit = async (formData) => {
     try {
       const response = await axios.put(`/api/spaces/${id}`, formData, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: token,
         },
       });
 
@@ -37,12 +37,14 @@ const UpdateSpace = () => {
       if (photos.length === 0) return;
 
       const formData = new FormData();
-      photos.forEach((photo, index) => formData.append(`photo${index}`, photo));
+      photos.forEach((photo, index) =>
+        formData.append(`photo/${index}`, photo)
+      );
 
       await axios.post(`/api/spaces/${spaceId}/photos`, formData, {
         headers: {
-          Authorization: `Token ${token}`,
           "Content-Type": "multipart/form-data",
+          Authorization: token,
         },
       });
     } catch (error) {
