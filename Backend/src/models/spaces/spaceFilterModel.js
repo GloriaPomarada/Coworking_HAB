@@ -1,7 +1,7 @@
 import pool from "../../config/connection.js";
 
 const filteredSpaces = async (filters) => {
-    let sql = `SELECT e.nombre, e.descripcion, ce.nombre AS categorias_nombre
+    let sql = `SELECT e.id, e.nombre, e.descripcion, ce.nombre AS categorias_nombre
   FROM espacios e
   JOIN categorias_espacios ce ON e.categoria_id = ce.id
   WHERE 1`;
