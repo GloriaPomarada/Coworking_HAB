@@ -26,7 +26,7 @@ const CreateSpace = () => {
       navigate("/");
     } catch (error) {
       console.error(
-        "Error al crear o actualizar el espacio:",
+        "Error al crear el espacio:",
         error.response ? error.response.data : error.message
       );
     }
@@ -38,10 +38,7 @@ const CreateSpace = () => {
       if (photos.length === 0) return;
 
       const formData = new FormData();
-      photos.forEach(
-        (photo, index) => formData.append(`name/${index}`, photo)
-        // formData.append(`photo${index}`, photo)
-      );
+      photos.forEach((photo, index) => formData.append(`name/${index}`, photo));
 
       await axios.post(`api/spaces/${spaceId}/photos`, formData, {
         headers: {
@@ -50,7 +47,7 @@ const CreateSpace = () => {
       });
     } catch (error) {
       console.error(
-        "Error uploading photos:",
+        "Error al subir las fotos:",
         error.response ? error.response.data : error.message
       );
     }
