@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx"
 
 function SpacesList() {
   const [spaces, setSpaces] = useState([]);
   const navigate = useNavigate();
+  const { isAdmin } = useAuth();
 
   useEffect(() => {
     const fetchSpaces = async () => {
@@ -35,24 +37,50 @@ function SpacesList() {
   };
 
   return (
+    <>
+  {
+    isAdmin ? (
+      <div>
+        <h2>Listado de espacios</h2>
+        {console.log("Spaces array:", spaces)}
+        <ul>
+          {Array.isArray(spaces) && spaces.length > 0 ? (
+            spaces.map((space) => (
+              <li key={space.id}>
+                {console.log("Space object individual:", space)}
+                <strong>Nombre:</strong> {space.nombre} <br />
+                <button onClick={() => handleEditClick(space.id)}>Editar</button>
+              </li>
+            ))
+          ) : (
+            <li>No hay espacios disponibles</li>
+          )}
+        </ul>
+      </div>   
+  ) : (
     <div>
-      <h2>Listado de espacios</h2>
-      {console.log("Spaces array:", spaces)}
-      <ul>
-        {Array.isArray(spaces) && spaces.length > 0 ? (
-          spaces.map((space) => (
-            <li key={space.id}>
-              {console.log("Space object individual:", space)}
-              <strong>Nombre:</strong> {space.nombre} <br />
-              <button onClick={() => handleEditClick(space.id)}>Editar</button>
-            </li>
-          ))
-        ) : (
-          <li>No hay espacios disponibles</li>
-        )}
-      </ul>
-    </div>
+    <h2>Listado de espacios</h2>
+    {console.log("Spaces array:", spaces)}
+    <ul>
+      {Array.isArray(spaces) && spaces.length > 0 ? (
+        spaces.map((space) => (
+          <li key={space.id}>
+            {console.log("Space object individual:", space)}
+            <strong>Nombre:</strong> {space.nombre} <br />
+          </li>
+        ))
+      ) : (
+        <li>No hay espacios disponibles</li>
+      )}
+    </ul>
+  </div>
+  )
+}
+
+</>
   );
 }
 
 export default SpacesList;
+
+

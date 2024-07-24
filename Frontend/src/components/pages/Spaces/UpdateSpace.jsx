@@ -5,11 +5,12 @@ import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
 
 const UpdateSpace = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const { token } = useAuth();
   const [photos, setPhotos] = useState([]);
 
-  const handleUpdateSubmit = async (id, formData, token, photos) => {
+  const handleUpdateSubmit = async (formData) => {
     try {
       const response = await axios.put(`/api/spaces/${id}`, formData, {
         headers: {
@@ -20,7 +21,7 @@ const UpdateSpace = () => {
 
       const spaceId = response.data.id;
 
-      await uploadPhotos(spaceId, photos);
+      await uploadPhotos(spaceId);
 
       navigate("/");
     } catch (error) {
@@ -31,15 +32,18 @@ const UpdateSpace = () => {
     }
   };
 
-  const uploadPhotos = async (spaceId, photos) => {
+  const uploadPhotos = async (spaceId) => {
     try {
       if (photos.length === 0) return;
 
       const formData = new FormData();
-      photos.forEach((photo, index) => formData.append(`name/${index}`, photo));
+      photos.forEach((photo, index) =>
+        formData.append(`photo/${index}`, photo)
+      );
 
       await axios.post(`/api/spaces/${spaceId}/photos`, formData, {
         headers: {
+          "Content-Type": "multipart/form-data",
           Authorization: token,
         },
       });
