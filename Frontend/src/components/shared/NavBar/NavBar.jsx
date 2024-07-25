@@ -31,11 +31,10 @@ function NavBar() {
       <div className="container mx-auto flex justify-between items-center py-4">
         <div className="flex items-center">
           <img
-            src="./public/LogoCoworking.jpg"
+            src="../../../../public/logocoworkingrgb.png"
             alt="logo"
-            className="h-8 w-8 mr-4"
           />
-          <h1 className="text-xl font-bold">Coworking HAB</h1>
+         
         </div>
 
         <nav className="flex space-x-4">
