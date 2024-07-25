@@ -43,14 +43,19 @@ function NavBar() {
           {user ? (
             isAdmin ? (
               <>
-                <Link to="/" className="hover:text-gray-400">
-                  Home
-                </Link>
+                
                 <Link to="/space/create-space" className="hover:text-gray-400">
                   Crear Espacio
                 </Link>
                 <Link to="/space/spaces" className="hover:text-gray-400">
                   Ver Espacios
+                </Link>
+                <Link to="/user/profile" className="hover:text-gray-400 focus:outline-none">
+                  <img
+                      src="./public/iconoPerfUser.png"
+                      alt=""
+                      className="h-7 w-7 mr-4"
+                    />
                 </Link>
                 <button
                   className="hover:text-gray-400 focus:outline-none"
@@ -68,11 +73,16 @@ function NavBar() {
               </>
             ) : (
               <>
-                <Link to="/" className="hover:text-gray-400">
-                  Home
-                </Link>
+                
                 <Link to="/space/spaces" className="hover:text-gray-400">
                   Ver Espacios
+                </Link>
+                <Link to="/user/profile" className="hover:text-gray-400 focus:outline-none">
+                  <img
+                      src="./public/iconoPerfUser.png"
+                      alt=""
+                      className="h-7 w-7 mr-4"
+                    />
                 </Link>
                 <button
                   className="hover:text-gray-400 focus:outline-none"

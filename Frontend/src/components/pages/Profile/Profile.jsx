@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -122,9 +123,12 @@ const Profile = () => {
       </div>
       <div className="mt-6 flex justify-between items-center">
         <div>
-          <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300">
-            Cambiar Contraseña
-          </button>
+          <Link to="/auth/recoverPass">
+            <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300">
+              Cambiar Contraseña
+            </button>
+          </Link>
+         
         </div>
         <div>
           <label
