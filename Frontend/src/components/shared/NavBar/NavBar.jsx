@@ -26,6 +26,7 @@ function NavBar() {
     };
   }, []);
 
+
   return (
     <header className="bg-black text-white">
       <div className="container mx-auto flex justify-between items-center py-4">
@@ -33,8 +34,9 @@ function NavBar() {
           <img
             src="../../../../public/logocoworkingrgb.png"
             alt="logo"
+            className="h-12 w-auto object-contain mr-4 rounded-md shadow-sm cursor-pointer"
+            onClick={() => navigate('/')}
           />
-         
         </div>
 
         <nav className="flex space-x-4">
