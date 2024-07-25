@@ -1,9 +1,8 @@
 import * as userModel from '../../models/users/index.js';
 
 const getUserByIdController = async (req, res, next) => {
-    const user = await userModel.getUserById(req.user.id);
-
     try {
+        const user = await userModel.getUserById(req.user.id);
         res.send({
             status: 'ok',
             data: {

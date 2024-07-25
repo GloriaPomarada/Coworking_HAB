@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import Notification from "../../shared/Notification/Notification";
-import api from "../../utils/axiosConfig";
+import axios from "axios";
 
 function Activate() {
   const [activationSuccess, setActivationSuccess] = useState(false);
@@ -13,7 +13,9 @@ function Activate() {
     const activateAccount = async () => {
       if (registrationCode) {
         try {
-          const response = await api.put(`/users/activate/${registrationCode}`);
+          const response = await axios.put(
+            `/api/users/activate/${registrationCode}`
+          );
           if (response.data.status === "ok") {
             setActivationSuccess(true);
             setMessage("Cuenta activada con éxito");
