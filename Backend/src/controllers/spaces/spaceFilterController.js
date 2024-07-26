@@ -1,11 +1,11 @@
 import * as spaceModel from '../../models/spaces/index.js';
 
 
-const getFilterSpace = async (req, res, next) => {
+const getSpaces = async (req, res, next) => {
     const filters = req.query;
 
     try {
-        const findSpaces = await spaceModel.filteredSpaces(filters);
+        const findSpaces = await spaceModel.spacesList(filters);
 
         res.send({
             status: 'ok',
@@ -18,4 +18,4 @@ const getFilterSpace = async (req, res, next) => {
 };
 
 
-export default getFilterSpace;
+export default getSpaces;

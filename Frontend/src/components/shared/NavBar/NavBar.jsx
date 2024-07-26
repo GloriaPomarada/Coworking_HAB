@@ -1,4 +1,3 @@
-
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { useState, useRef, useEffect } from "react";
@@ -26,7 +25,6 @@ function NavBar() {
     };
   }, []);
 
-
   return (
     <header className="bg-black text-white">
       <div className="container mx-auto flex justify-between items-center py-4">
@@ -35,7 +33,7 @@ function NavBar() {
             src="../../../../public/logocoworkingrgb.png"
             alt="logo"
             className="h-12 w-auto object-contain mr-4 rounded-md shadow-sm cursor-pointer"
-            onClick={() => navigate('/')}
+            onClick={() => navigate("/")}
           />
         </div>
 
@@ -43,19 +41,21 @@ function NavBar() {
           {user ? (
             isAdmin ? (
               <>
-                
                 <Link to="/space/create-space" className="hover:text-gray-400">
                   Crear Espacio
                 </Link>
                 <Link to="/space/spaces" className="hover:text-gray-400">
                   Ver Espacios
                 </Link>
-                <Link to="/user/profile" className="hover:text-gray-400 focus:outline-none">
+                <Link
+                  to="/user/profile"
+                  className="hover:text-gray-400 focus:outline-none"
+                >
                   <img
-                      src="./public/iconoPerfUser.png"
-                      alt=""
-                      className="h-7 w-7 mr-4"
-                    />
+                    src="./public/iconoPerfUser.png"
+                    alt=""
+                    className="h-7 w-7 mr-4"
+                  />
                 </Link>
                 <button
                   className="hover:text-gray-400 focus:outline-none"
@@ -73,16 +73,18 @@ function NavBar() {
               </>
             ) : (
               <>
-                
                 <Link to="/space/spaces" className="hover:text-gray-400">
                   Ver Espacios
                 </Link>
-                <Link to="/user/profile" className="hover:text-gray-400 focus:outline-none">
+                <Link
+                  to="/user/profile"
+                  className="hover:text-gray-400 focus:outline-none"
+                >
                   <img
-                      src="./public/iconoPerfUser.png"
-                      alt=""
-                      className="h-7 w-7 mr-4"
-                    />
+                    src="./public/iconoPerfUser.png"
+                    alt=""
+                    className="h-7 w-7 mr-4"
+                  />
                 </Link>
                 <button
                   className="hover:text-gray-400 focus:outline-none"
