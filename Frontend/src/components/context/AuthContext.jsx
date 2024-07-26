@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   console.log({ user, isAuthenticated, isAdmin });
   // eslint-disable-next-line no-unused-vars
-  const [tokenExpiredMessage, setTokenExpiredMessage] = useState("");
+  // const [tokenExpiredMessage, setTokenExpiredMessage] = useState("");
 
   const fetchUserProfile = async (token) => {
     try {
@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }) => {
         isAuthenticated,
         loading,
         isAdmin,
-        setTokenExpiredMessage,
+        // setTokenExpiredMessage,
       }}
     >
       {children}
