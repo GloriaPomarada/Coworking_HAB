@@ -72,16 +72,19 @@ const SpaceForm = ({ onSubmit }) => {
       }
       const jsonFormData = JSON.stringify(formState);
 
-      let spaceId = id;
+      // let spaceId = id;
+      let spaceId;
       if (id) {
+        console.log("Space ID:", id);
         await onSubmit(id, jsonFormData, token);
       } else {
-        const response = await onSubmit(null, jsonFormData, token, photos);
-        console.log(token);
-        spaceId = response.data.id;
+        const response = await onSubmit(null, jsonFormData, token, photos, id);
+
+        // console.log(token);
+        spaceId = response.data.data.id;
+        console.log("Nuevo space ID:", spaceId);
       }
 
-      // Upload photos separately
       await uploadPhotos(spaceId);
 
       resetForm();
@@ -95,6 +98,7 @@ const SpaceForm = ({ onSubmit }) => {
   };
 
   const uploadPhotos = async (spaceId) => {
+    console.log("Space ID en uploadPhotos:", spaceId);
     if (photos.length === 0) return;
 
     const photoData = new FormData();
