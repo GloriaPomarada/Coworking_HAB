@@ -11,9 +11,16 @@ import path from 'path';
 
 const app = express();
 
-// Servir archivos estáticos desde la carpeta 'public'
-const PUBLIC_FOLDER = path.join(process.cwd(), 'public');
-app.use(express.static(PUBLIC_FOLDER));
+// Servir archivos estáticos desde la carpeta 'uploads'
+
+const PUBLIC_FOLDER = path.join(process.cwd(), 'uploads');
+
+// Servimos static files desde 'uploads'
+app.use('/uploads', express.static(PUBLIC_FOLDER));
+
+//server antes, apuntando a public
+// const PUBLIC_FOLDER = path.join(process.cwd(), 'public');
+// app.use(express.static(PUBLIC_FOLDER));
 
 //!-> REGISTRO DE MIDDLEWARES:
 //Middleware CORS.

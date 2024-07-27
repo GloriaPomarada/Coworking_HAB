@@ -19,9 +19,29 @@ const SpaceForm = ({ onSubmit }) => {
     direccion: "",
     estado: "",
   });
+  const [categories, setCategories] = useState([]);
   const [photos, setPhotos] = useState([]);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get("/api/categories", {
+          headers: { Authorization: token },
+        });
+        setCategories(response.data);
+      } catch (error) {
+        const errorMessage =
+          error.response?.data?.message ||
+          "Error al hacer el fetch de las categorías";
+        setMessage(errorMessage);
+        setMessageType("error");
+      }
+    };
+
+    fetchCategories();
+  }, [token]);
 
   useEffect(() => {
     if (id) {
@@ -72,15 +92,12 @@ const SpaceForm = ({ onSubmit }) => {
       }
       const jsonFormData = JSON.stringify(formState);
 
-      // let spaceId = id;
       let spaceId;
       if (id) {
         console.log("Space ID:", id);
         await onSubmit(id, jsonFormData, token);
       } else {
         const response = await onSubmit(null, jsonFormData, token, photos, id);
-
-        // console.log(token);
         spaceId = response.data.data.id;
         console.log("Nuevo space ID:", spaceId);
       }
@@ -167,14 +184,22 @@ const SpaceForm = ({ onSubmit }) => {
         </label>
         <label>
           Categoría:
-          <input
-            type="text"
+          <select
             name="categoria_id"
             value={formState.categoria_id}
             onChange={handleInputChange}
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+          >
+            <option value="" disabled>
+              Selecciona una categoría
+            </option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.nombre}
+              </option>
+            ))}
+          </select>
         </label>
         <label>
           Capacidad:
