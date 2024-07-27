@@ -11,15 +11,15 @@ import path from 'path';
 
 const app = express();
 
-// Servir archivos estáticos desde la carpeta 'public'
+// Servir archivos estáticos desde la carpeta 'uploads'
 
 const PUBLIC_FOLDER = path.join(process.cwd(), 'uploads');
 
-// Serve static files from the 'uploads' directory
+// Servimos static files desde 'uploads'
 app.use('/uploads', express.static(PUBLIC_FOLDER));
 
-// const PUBLIC_FOLDER = path.join(process.cwd(), 'uploads');
-// // const PUBLIC_FOLDER = path.join(process.cwd(), 'public');
+//server antes, apuntando a public
+// const PUBLIC_FOLDER = path.join(process.cwd(), 'public');
 // app.use(express.static(PUBLIC_FOLDER));
 
 //!-> REGISTRO DE MIDDLEWARES:

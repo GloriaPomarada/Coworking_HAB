@@ -74,6 +74,7 @@ const Profile = () => {
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
       <div className="flex justify-center mb-6">
         <img
+          //Pasamos el avatarUrl a la etiqueta img
           src={avatarUrl}
           alt={userData?.avatar}
           className="w-24 h-24 rounded-full object-cover"
