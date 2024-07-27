@@ -43,7 +43,7 @@ const Profile = () => {
       formData.append("avatar", file);
       try {
         const token = localStorage.getItem("token");
-        await axios.post("/api/users/avatar", formData, {
+        await axios.put("/api/users/avatar", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: token,
@@ -65,12 +65,17 @@ const Profile = () => {
   if (isLoading) return <div>Cargando...</div>;
   if (!userData) return <div>No se encontraron datos del usuario</div>;
 
+  // Construimos la URL para acceder al avatar
+  const avatarUrl = userData.avatar
+    ? `http://localhost:3001/uploads/${userData.avatar}`
+    : "/avatarDefault.png";
+
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
       <div className="flex justify-center mb-6">
         <img
-          src={userData?.avatar || "/public/avatarDefault.png"}
-          alt="Avatar del usuario"
+          src={avatarUrl}
+          alt={userData?.avatar}
           className="w-24 h-24 rounded-full object-cover"
         />
       </div>
@@ -128,7 +133,6 @@ const Profile = () => {
               Cambiar Contraseña
             </button>
           </Link>
-         
         </div>
         <div>
           <label
