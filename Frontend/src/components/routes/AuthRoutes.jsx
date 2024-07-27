@@ -4,6 +4,7 @@ import Login from "../auth/Login/Login";
 import RecoverPass from "../auth/RecoverPass/RecoverPass";
 import ResetPass from "../auth/ResetPass/ResetPass";
 import Activate from "../auth/Activate/Activate";
+import UpdatePass from "../auth/UpdatePass/UpdatePass";
 
 function AuthRoutes() {
   return (
@@ -13,6 +14,7 @@ function AuthRoutes() {
       <Route path="/activate/:registrationCode" element={<Activate />} />
       <Route path="/recoverPass" element={<RecoverPass />} />
       <Route path="/resetPass" element={<ResetPass />} />
+      <Route path="/updatePass" element={<UpdatePass />} />
     </Routes>
   );
 }

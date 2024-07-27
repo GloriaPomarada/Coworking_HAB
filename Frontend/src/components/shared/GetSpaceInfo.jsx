@@ -39,16 +39,22 @@ function SpacesList() {
   return (
     <>
       {isAdmin ? (
-        <div>
-          <h2>Listado de espacios</h2>
+        <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold mb-4">Listado de espacios</h2>
           {console.log("Spaces array:", spaces)}
-          <ul>
+          <ul className="space-y-2">
             {Array.isArray(spaces) && spaces.length > 0 ? (
               spaces.map((space) => (
-                <li key={space.id}>
+                <li key={space.id} className="text-gray-600">
                   {console.log("objeto espacio individual:", space)}
-                  <strong>Nombre:</strong> {space.nombre} <br />
-                  <button onClick={() => handleEditClick(space.id)}>
+                  <span className="font-semibold text-gray-700">
+                    Nombre:
+                  </span>{" "}
+                  {space.nombre} <br />
+                  <button
+                    onClick={() => handleEditClick(space.id)}
+                    className="inline-block bg-blue-500 text-white py-1 px-4 rounded-md cursor-pointer hover:bg-blue-600 transition duration-300"
+                  >
                     Editar
                   </button>
                 </li>
@@ -60,12 +66,12 @@ function SpacesList() {
         </div>
       ) : (
         <div>
-          <h2>Listado de espacios</h2>
+          <h2 className="text-xl font-semibold mb-4">Listado de espacios</h2>
           {console.log("Espacos array:", spaces)}
           <ul>
             {Array.isArray(spaces) && spaces.length > 0 ? (
               spaces.map((space) => (
-                <li key={space.id}>
+                <li key={space.id} className="text-gray-600">
                   {console.log("objeto espacio individual:", space)}
                   <strong>Nombre:</strong> {space.nombre} <br />
                 </li>

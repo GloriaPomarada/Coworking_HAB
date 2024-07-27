@@ -20,11 +20,13 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post("/api/users/login", formState);
-      localStorage.setItem("userId", response.data.id);
-      localStorage.setItem("userId", response.data.userId);
+
       console.log("UserId guardado:", localStorage.getItem("userId"));
 
       const { token } = response.data.data;
+      const { id } = response.data.data.user;
+      localStorage.setItem("userId", id);
+      console.log("UserId guardado:", localStorage.getItem("userId"));
       login(token);
 
       navigate("/Profile");

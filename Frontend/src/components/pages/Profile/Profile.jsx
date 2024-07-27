@@ -129,7 +129,7 @@ const Profile = () => {
       </div>
       <div className="mt-6 flex justify-between items-center">
         <div>
-          <Link to="/auth/recoverPass">
+          <Link to="/auth/updatePass">
             <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300">
               Cambiar Contraseña
             </button>
