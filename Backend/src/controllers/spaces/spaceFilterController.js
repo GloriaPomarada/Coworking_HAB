@@ -1,7 +1,5 @@
 import * as spaceModel from '../../models/spaces/index.js';
-
-
-const getSpaces = async (req, res, next) => {
+const getSpaces= async (req, res, next) => {
     const filters = req.query;
 
     try {

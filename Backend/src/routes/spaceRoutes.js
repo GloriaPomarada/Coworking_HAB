@@ -4,7 +4,7 @@ import * as spaceController from '../controllers/spaces/index.js';
 import * as middleware from '../middlewares/index.js';
 
 router.get('/filters', spaceController.filter); //-> .com/api/filtros
-router.get('/:id', spaceController.getSpace); //-> .com/api/espacios/:espacioId
+router.get('/:id', spaceController.getSpace); //-> .com/api/:espacioId
 router.get('/', spaceController.getSpaces); //.com/api/spaces
 
 router.post(

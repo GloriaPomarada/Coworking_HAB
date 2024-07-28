@@ -7,13 +7,12 @@ function SpacesList() {
   const [spaces, setSpaces] = useState([]);
   const navigate = useNavigate();
   const { isAdmin } = useAuth();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchSpaces = async () => {
       try {
-        const response = await axios.get("/api/spaces");
-        console.log("API Response:", response.data);
-
+        const response = await axios.get(`/api/spaces`);
         if (response.data && Array.isArray(response.data.data)) {
           setSpaces(response.data.data);
         } else {
@@ -26,7 +25,7 @@ function SpacesList() {
     };
 
     fetchSpaces();
-  }, []);
+  }, [apiUrl]);
 
   const handleEditClick = (id) => {
     if (id) {
@@ -36,24 +35,77 @@ function SpacesList() {
     }
   };
 
+  const goToSpace = (id) => {
+    if (id) {
+      navigate(`/space/${id}`);
+    } else {
+      console.error("No se proporcionó un ID válido");
+    }
+    navigate(`/space/${id}`);
+  };
+
   return (
     <>
       {isAdmin ? (
-        <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-4">Listado de espacios</h2>
-          {console.log("Spaces array:", spaces)}
-          <ul className="space-y-2">
+        <div className="p-6 bg-gray-100 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-gray-800 block mb-4 text-center">
+            Éstos son nuestros Espacios:
+          </h2>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {Array.isArray(spaces) && spaces.length > 0 ? (
               spaces.map((space) => (
-                <li key={space.id} className="text-gray-600">
-                  {console.log("objeto espacio individual:", space)}
-                  <span className="font-semibold text-gray-700">
-                    Nombre:
-                  </span>{" "}
-                  {space.nombre} <br />
+                <li
+                  key={space.id}
+                  className="p-4 bg-white rounded-lg shadow-lg flex flex-col"
+                >
+                  {/* Imagen de espacio */}
+                  <div className="mb-4">
+                    <img
+                      src={
+                        space.imagen
+                          ? `${apiUrl}/${space.imagen}`
+                          : "https://via.placeholder.com/300x200"
+                      }
+                      alt={space.imagen}
+                      className="w-full h-48 rounded-lg object-cover"
+                    />
+                  </div>
+
+                  {/* Contenedor de información */}
+                  <div className="flex-1">
+                    <div className="mb-2">
+                      <h3 className="text-lg font-semibold text-gray-700 mb-1">
+                        Nombre
+                      </h3>
+                      <p className="text-gray-600">{space.nombre}</p>
+                    </div>
+                    <div className="mb-2">
+                      <h3 className="text-lg font-semibold text-gray-700 mb-1">
+                        Descripción
+                      </h3>
+                      <p className="text-gray-600">{space.descripcion}</p>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-700 mb-1">
+                        Categoría
+                      </h3>
+                      <p className="text-gray-600">{space.categorias_nombre}</p>
+                    </div>
+                  </div>
+
+                  {/* Botón centrado en una nueva fila */}
+                  <div className="mt-auto flex justify-center">
+                    <button
+                      onClick={() => goToSpace(space.id)}
+                      type="submit"
+                      className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 mt-3"
+                    >
+                      Ir
+                    </button>
+                  </div>
                   <button
                     onClick={() => handleEditClick(space.id)}
-                    className="inline-block bg-blue-500 text-white py-1 px-4 rounded-md cursor-pointer hover:bg-blue-600 transition duration-300"
+                    className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 mt-3"
                   >
                     Editar
                   </button>
@@ -65,19 +117,68 @@ function SpacesList() {
           </ul>
         </div>
       ) : (
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Listado de espacios</h2>
-          {console.log("Espacos array:", spaces)}
-          <ul>
+        <div className="p-6 bg-gray-100 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-gray-800 block mb-4 text-center">
+            Éstos son nuestros Espacios:
+          </h2>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {Array.isArray(spaces) && spaces.length > 0 ? (
               spaces.map((space) => (
-                <li key={space.id} className="text-gray-600">
-                  {console.log("objeto espacio individual:", space)}
-                  <strong>Nombre:</strong> {space.nombre} <br />
+                <li
+                  key={space.id}
+                  className="p-4 bg-white rounded-lg shadow-lg flex flex-col"
+                >
+                  {/* Imagen de espacio */}
+                  <div className="mb-4">
+                    <img
+                      src={
+                        space.imagen
+                          ? `${apiUrl}/${space.imagen}`
+                          : "https://via.placeholder.com/300x200"
+                      }
+                      alt={space.imagen}
+                      className="w-full h-48 rounded-lg object-cover"
+                    />
+                  </div>
+
+                  {/* Contenedor de información */}
+                  <div className="flex-1">
+                    <div className="mb-2">
+                      <h3 className="text-lg font-semibold text-gray-700 mb-1">
+                        Nombre
+                      </h3>
+                      <p className="text-gray-600">{space.nombre}</p>
+                    </div>
+                    <div className="mb-2">
+                      <h3 className="text-lg font-semibold text-gray-700 mb-1">
+                        Descripción
+                      </h3>
+                      <p className="text-gray-600">{space.descripcion}</p>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-700 mb-1">
+                        Categoría
+                      </h3>
+                      <p className="text-gray-600">{space.categorias_nombre}</p>
+                    </div>
+                  </div>
+
+                  {/* Botón centrado en una nueva fila */}
+                  <div className="mt-auto flex justify-center">
+                    <button
+                      onClick={() => handleEditClick(space.id)}
+                      type="submit"
+                      className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 mt-3"
+                    >
+                      Ir
+                    </button>
+                  </div>
                 </li>
               ))
             ) : (
-              <li>No hay espacios disponibles</li>
+              <li className="text-gray-500 text-center">
+                No hay espacios disponibles
+              </li>
             )}
           </ul>
         </div>

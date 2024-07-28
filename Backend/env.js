@@ -14,6 +14,7 @@ const {
     JWT_SECRET,
     JWT_EXP ,
     UPLOADS_DIR,
+    CLIENT_URL,
 } = process.env;
 
 export {
@@ -28,5 +29,6 @@ export {
     SMTP_APIKEY,
     JWT_SECRET,
     JWT_EXP,
-    UPLOADS_DIR, // =uploads
+    UPLOADS_DIR, 
+    CLIENT_URL
 };

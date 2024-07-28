@@ -5,22 +5,18 @@ import routes from './src/routes/index.js';
 import notFound from './src/middlewares/notFound.js';
 import errorHandler from './src/middlewares/errorHandler.js';
 import corsMiddleware from './src/middlewares/cors.js';
-import { PORT, UPLOADS_DIR } from './env.js';
+import { PORT } from './env.js';
 import './src/services/updateStatusService.js';
 import path from 'path';
 
 const app = express();
 
 // Servir archivos estáticos desde la carpeta 'uploads'
-
 const PUBLIC_FOLDER = path.join(process.cwd(), 'uploads');
 
 // Servimos static files desde 'uploads'
 app.use('/uploads', express.static(PUBLIC_FOLDER));
 
-//server antes, apuntando a public
-// const PUBLIC_FOLDER = path.join(process.cwd(), 'public');
-// app.use(express.static(PUBLIC_FOLDER));
 
 //!-> REGISTRO DE MIDDLEWARES:
 //Middleware CORS.
@@ -31,7 +27,6 @@ app.use(morgan('dev'));
 app.use(express.json()); //Convierte solicitudes json->objeto y asigna a req.body.
 app.use(express.urlencoded({ extended: true })); //Convierte solicitudes formularios.html->objeto y asigna a req.body.
 app.use(fileUpload()); //-> carga de archivos con express.
-// app.use(express.static(UPLOADS_DIR)); //-> directorio donde vamos a guardar los archivos.
 
 //!-> registro de directorio rutas.
 app.use('/api', routes);

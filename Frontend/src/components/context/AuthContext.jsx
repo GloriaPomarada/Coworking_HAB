@@ -1,19 +1,19 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable react/prop-types */
 import { useState, useEffect, createContext, useContext } from "react";
 import axios from "axios";
 import Auth from "../utils/auth";
 
+//*-> Creando el contexto (Estado Global).
 const AuthContext = createContext();
 
-// eslint-disable-next-line react/prop-types
+//*-> Proveedor de Estado Global.
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
-  console.log({ user, isAuthenticated, isAdmin });
-  // eslint-disable-next-line no-unused-vars
-  // const [tokenExpiredMessage, setTokenExpiredMessage] = useState("");
-
+  
   const fetchUserProfile = async (token) => {
     try {
       const response = await axios.get("/api/users/profile", {
@@ -25,12 +25,6 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
       setIsAdmin(userProfile.role === "admin");
     } catch (error) {
-      if (error.response && error.response.status === 401) {
-        setTokenExpiredMessage(
-          "Tu sesión ha expirado. Por favor, inicia sesión nuevamente."
-        );
-        logout();
-      }
       console.error(error);
     } finally {
       setLoading(false);
@@ -47,6 +41,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (token) => {
     Auth.login(token);
     await fetchUserProfile(token);
+    setIsAuthenticated(true);
   };
 
   const logout = () => {
@@ -57,7 +52,13 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   };
 
-  const loggedIn = () => Auth.isLoggedIn();
+  const loggedIn = () => {
+    return Auth.isLoggedIn();
+  };
+
+  const updateUser = async (token) => {
+    await fetchUserProfile(token);
+  };
 
   return (
     <AuthContext.Provider
@@ -68,9 +69,9 @@ export const AuthProvider = ({ children }) => {
         logout,
         loggedIn,
         isAuthenticated,
+        updateUser,
         loading,
         isAdmin,
-        // setTokenExpiredMessage,
       }}
     >
       {children}

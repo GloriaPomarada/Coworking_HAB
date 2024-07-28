@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState(null);
-  // eslint-disable-next-line no-unused-vars
-  const [userReservations, setUserReservations] = useState([]);
+  const [userReservations] = useState([]);
   const userId = localStorage.getItem("userId");
 
   const fetchUserData = async () => {
@@ -22,13 +21,6 @@ const Profile = () => {
       setUserData(response.data.data.user);
       console.log("Actualizando userData:", response.data);
 
-      // const reservationsResponse = await axios.get(`/api/reservations/user`, {
-      //   headers: {
-      //     Authorization: token,
-      //   },
-      // });
-
-      //   setUserReservations(reservationsResponse.data);
     } catch (error) {
       console.error("Error al obtener datos:", error);
     } finally {
@@ -65,7 +57,7 @@ const Profile = () => {
   if (isLoading) return <div>Cargando...</div>;
   if (!userData) return <div>No se encontraron datos del usuario</div>;
 
-  // Construimos la URL para acceder al avatar
+  //!-> Construimos la URL para acceder al avatar
   const avatarUrl = userData.avatar
     ? `http://localhost:3001/uploads/${userData.avatar}`
     : "/avatarDefault.png";
