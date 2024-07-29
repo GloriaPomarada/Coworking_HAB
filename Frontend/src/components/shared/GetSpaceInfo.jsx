@@ -37,11 +37,10 @@ function SpacesList() {
 
   const goToSpace = (id) => {
     if (id) {
-      navigate(`/space/${id}`);
+      navigate(`/space/get-space/${id}`);
     } else {
       console.error("No se proporcionó un ID válido");
     }
-    navigate(`/space/${id}`);
   };
 
   return (
