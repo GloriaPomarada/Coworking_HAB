@@ -1,6 +1,9 @@
+/* eslint-disable no-unused-vars */
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { useState, useRef, useEffect } from "react";
+import MobileNav from "./mobileNav.jsx";
+import DesktopNav from "./DesktopNav.jsx";
 
 function NavBar() {
   const { user, isAdmin, logout } = useAuth();
@@ -25,106 +28,35 @@ function NavBar() {
     };
   }, []);
 
+    const [isScrolled, setIsScrolled] = useState(false);
+const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    useEffect(() => {
+      document.addEventListener("mousedown", handleClickOutside);
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }, [])
   return (
-    <header className="bg-black text-white">
-      <div className="container mx-auto flex justify-between items-center py-4">
+    <header   className={`bg-black text-white sticky top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-5'} `} >
+      <div className="container mx-auto flex justify-between items-center px-4 sm:px-6 lg:px-8">
         <div className="flex items-center">
           <img
             src="../../../../public/logocoworkingrgb.png"
             alt="logo"
-            className="h-12 w-auto object-contain mr-4 rounded-md shadow-sm cursor-pointer"
-            onClick={() => navigate("/")}
+            className="h-12 w-auto object-contain rounded-md shadow-sm cursor-pointer"
+            onClick={() => navigate('/')}
           />
         </div>
-
-        <nav className="flex space-x-4">
-          {user ? (
-            isAdmin ? (
-              <>
-                <Link to="/space/create-space" className="hover:text-gray-400">
-                  Crear Espacio
-                </Link>
-                <Link to="/space/spaces" className="hover:text-gray-400">
-                  Ver Espacios
-                </Link>
-                <Link
-                  to="/user/profile"
-                  className="hover:text-gray-400 focus:outline-none"
-                >
-                  <img
-                    src="./public/iconoPerfUser.png"
-                    alt=""
-                    className="h-7 w-7 mr-4"
-                  />
-                </Link>
-                <button
-                  className="hover:text-gray-400 focus:outline-none"
-                  onClick={() => {
-                    navigate("/");
-                    logout();
-                  }}
-                >
-                  <img
-                    src="./public/logo_logout.png"
-                    alt=""
-                    className="h-8 w-8 mr-4"
-                  />
-                </button>
-              </>
-            ) : (
-              <>
-                <Link to="/space/spaces" className="hover:text-gray-400">
-                  Ver Espacios
-                </Link>
-                <Link
-                  to="/user/profile"
-                  className="hover:text-gray-400 focus:outline-none"
-                >
-                  <img
-                    src="./public/iconoPerfUser.png"
-                    alt=""
-                    className="h-7 w-7 mr-4"
-                  />
-                </Link>
-                <button
-                  className="hover:text-gray-400 focus:outline-none"
-                  onClick={logout}
-                >
-                  <img
-                    src="./public/logo_logout.png"
-                    alt=""
-                    className="h-8 w-8 mr-4"
-                  />
-                </button>
-              </>
-            )
-          ) : (
-            <div className="relative" ref={menuRef}>
-              <button
-                className="hover:text-gray-400 focus:outline-none"
-                onClick={handleMenuToggle}
-              >
-                Account
-              </button>
-              {menuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded-md shadow-lg">
-                  <Link
-                    to="/auth/login"
-                    className="block px-4 py-2 hover:bg-gray-200"
-                  >
-                    Log in
-                  </Link>
-                  <Link
-                    to="/auth/register"
-                    className="block px-4 py-2 hover:bg-gray-200"
-                  >
-                    Sign Up
-                  </Link>
-                </div>
-              )}
-            </div>
-          )}
-        </nav>
+        <MobileNav/>
+        <DesktopNav/>
       </div>
     </header>
   );
