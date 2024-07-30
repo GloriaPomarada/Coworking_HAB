@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,6 +25,7 @@ const Profile = () => {
       console.log("Actualizando userData:", response.data);
     } catch (error) {
       console.error("Error al obtener datos:", error);
+      toast.error("Error al obtener los datos:" + error.response.data.mensaje);
     } finally {
       setIsLoading(false);
     }
@@ -42,8 +45,10 @@ const Profile = () => {
           },
         });
         fetchUserData();
+        toast.success("Avatar cambiado");
       } catch (error) {
         console.error("Error al subir el avatar:", error);
+        toast.error("Error al subir el avatar:" + error.response.data.mensaje);
       }
     }
   };

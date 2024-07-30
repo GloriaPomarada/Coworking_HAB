@@ -3,12 +3,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UpdateSpace = () => {
-  // const { id } = useParams();
   const navigate = useNavigate();
   const { token } = useAuth();
   const [photos, setPhotos] = useState([]);
+  const [imagePreview, setImagePreview] = useState("");
 
   const handleUpdateSubmit = async (id, formData, token, photos) => {
     try {
@@ -31,82 +33,57 @@ const UpdateSpace = () => {
         "Error al actualizar el espacio:",
         error.response ? error.response.data : error.message
       );
+      toast.error(
+        "Error al actualizar el espacio: " + error.response.data.mensaje
+      );
     }
   };
 
   const handlePhotosChange = (e) => {
     const files = Array.from(e.target.files);
+    console.log("Archivos seleccionados:", files);
     if (files.length > 0) {
-      setPhotos((prevPhotos) => [...prevPhotos, ...files]);
-      console.log("Fotos actualizadas:", files);
-      console.log("Estado actual de photos:", [...photos, ...files]);
+      setPhotos((prevPhotos) => {
+        const updatedPhotos = [...prevPhotos, ...files];
+        console.log("Estado de las fotos actualizadas:", updatedPhotos);
+        return updatedPhotos;
+      });
+    }
+    if (files.length > 0) {
+      setImagePreview(URL.createObjectURL(files[0]));
+    } else {
+      setImagePreview("");
     }
   };
 
-  // const handlePhotosChange = (e) => {
-  //   const files = Array.from(e.target.files);
-  //   if (files.length > 0) {
-  //     setPhotos(files);
-  //     console.log("Fotos actualizadas:", files);
-  //   }
-  // };
-
-  const uploadPhotos = async (spaceId, photos) => {
-    console.log("spaceId:", spaceId);
-    console.log("photos:", photos);
-    if (!photos || !Array.isArray(photos) || photos.length === 0) return;
+  const uploadPhotos = async (spaceId, files) => {
+    console.log("spaceId para actualizar:", spaceId);
+    console.log("Fotos para actualizar:", files);
+    if (!photos || !Array.isArray(files) || photos.files === 0) return;
     const formData = new FormData();
-    photos.forEach((file, index) => formData.append(`photo`, file));
+    photos.forEach((file) => formData.append(`photo`, file));
     try {
-      console.log("Intentado subir las fotos del spaceId:", spaceId);
-      await axios.post(
-        `http://localhost:3001/api/spaces/${spaceId}/photos`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: token,
-          },
-        }
-      );
-      console.log("Fotos subidas correctamente");
+      console.log("Subiendo fotos a:", spaceId);
+      await axios.post(`/api/spaces/${spaceId}/photos`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: token,
+        },
+      });
+      console.log("Fotos subidas");
+      toast.success("Fotos subidas");
     } catch (error) {
-      console.error("Error al subir las fotos:", error);
+      console.error("Error subiendo las fotos:", error);
+      toast.error("Error subiendo las fotos: " + error.response.data.mensaje);
     }
   };
-  // console.log("Photos:", photos);
-
-  // const uploadPhotos = async (spaceId, photos) => {
-  //   try {
-  //     if (photos.length === 0) return;
-
-  //     const formData = new FormData();
-  //     photos.forEach((photo, index) => formData.append(`foto${index}`, photo));
-
-  //     await axios.post(`/api/spaces/${spaceId}/photos`, formData, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //         Authorization: token,
-  //       },
-  //     });
-  //   } catch (error) {
-  //     console.error(
-  //       "Error al subir las fotos:",
-  //       error.response ? error.response.data : error.message
-  //     );
-  //   }
-  // };
-
-  // const handlePhotosChange = (newPhotos) => {
-  //   setPhotos(newPhotos);
-  // };
 
   return (
     <>
-      <h2>Modifica un espacio</h2>
       <SpaceForm
         onSubmit={handleUpdateSubmit}
         onPhotosChange={handlePhotosChange}
+        imagePreview={imagePreview}
       />
     </>
   );

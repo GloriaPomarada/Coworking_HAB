@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function UpdatePassword() {
   const { token } = useAuth();
@@ -32,20 +34,24 @@ function UpdatePassword() {
         newPassword: passwords.newPassword,
       };
 
-      const resp = await axios.post("/api/users/password/update", payload, {
+      const response = await axios.post("/api/users/password/update", payload, {
         headers: {
           Authorization: token,
         },
       });
-      console.log(resp);
+      console.log(response);
       setMessage("Contraseña actualizada con éxito");
+      toast.success("Contraseña actualizada con éxito");
       setTimeout(() => {
-        navigate("/profile");
+        navigate("/user/profile");
       }, 2000);
     } catch (error) {
       console.error("Error al actualizar la contraseña:", error);
       setMessage(
         "Hubo un error al actualizar la contraseña. Inténtalo de nuevo."
+      );
+      toast.error(
+        "Error al actualizar la contraseña:" + error.response.data.mensaje
       );
     }
   };
