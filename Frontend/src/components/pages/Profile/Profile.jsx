@@ -7,6 +7,7 @@ const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [userReservations] = useState([]);
   const userId = localStorage.getItem("userId");
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const fetchUserData = async () => {
     setIsLoading(true);
@@ -20,7 +21,6 @@ const Profile = () => {
       console.log("Datos recibidos:", response.data);
       setUserData(response.data.data.user);
       console.log("Actualizando userData:", response.data);
-
     } catch (error) {
       console.error("Error al obtener datos:", error);
     } finally {
@@ -57,17 +57,16 @@ const Profile = () => {
   if (isLoading) return <div>Cargando...</div>;
   if (!userData) return <div>No se encontraron datos del usuario</div>;
 
-  //!-> Construimos la URL para acceder al avatar
-  const avatarUrl = userData.avatar
-    ? `http://localhost:3001/uploads/${userData.avatar}`
-    : "/avatarDefault.png";
-
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
       <div className="flex justify-center mb-6">
         <img
           //Pasamos el avatarUrl a la etiqueta img
-          src={avatarUrl}
+          src={
+            userData.avatar
+              ? `${apiUrl}/${userData.avatar}`
+              : "/avatarDefault.png"
+          }
           alt={userData?.avatar}
           className="w-24 h-24 rounded-full object-cover"
         />
