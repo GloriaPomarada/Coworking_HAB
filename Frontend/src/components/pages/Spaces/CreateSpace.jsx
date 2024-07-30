@@ -3,71 +3,72 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CreateSpace = () => {
   const navigate = useNavigate();
-  const { token } = useAuth(); // Se coge el token del contexto
+  const { token } = useAuth();
   const [photos, setPhotos] = useState([]);
+  const [imagePreview, setImagePreview] = useState("");
 
-  // Función para majenar el envío
-  const handleCreateSubmit = async (id, formData, token, photos) => {
+  const handleCreateSubmit = async (id, formData, token) => {
     try {
-      // Crear o modificar un espacio
       const response = await axios.post("/api/spaces", formData, {
         headers: {
           "Content-Type": "application/json",
           Authorization: token,
         },
       });
-      console.log(response);
       const spaceId = response.data.data.id;
-      console.log(spaceId);
 
-      // Maneja la subida de fotos
-      await uploadPhotos(spaceId, photos);
-
-      navigate("/");
+      if (photos.length > 0) {
+        await uploadPhotos(spaceId, photos);
+      }
+      toast.success("Espacio creado");
+      navigate("/space/spaces");
     } catch (error) {
       console.error(
         "Error al crear o actualizar el espacio:",
         error.response ? error.response.data : error.message
       );
+      toast.error("Error al crear el espacio: " + error.response.data.mensaje);
     }
   };
 
-  // Función para la subida de fotos
+  const handlePhotosChange = (e) => {
+    const files = Array.from(e.target.files);
+    setPhotos(files);
+    if (files.length > 0) {
+      setImagePreview(URL.createObjectURL(files[0]));
+    } else {
+      setImagePreview("");
+    }
+  };
+
   const uploadPhotos = async (spaceId, photos) => {
+    const formData = new FormData();
+    photos.forEach((file, index) => formData.append(`photo`, file));
     try {
-      if (photos.length === 0) return;
-
-      const formData = new FormData();
-      photos.forEach((photo, index) => formData.append(`foto${index}`, photo));
-
-      await axios.post(`api/spaces/${spaceId}/photos`, formData, {
+      await axios.post(`/api/spaces/${spaceId}/photos`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: token,
         },
       });
+      toast.success("Fotos subidas");
     } catch (error) {
-      console.error(
-        "Error al subir las fotos:",
-        error.response ? error.response.data : error.message
-      );
+      console.error("Error al subir las fotos:", error);
+      toast.error("Error subiendo las fotos: " + error.response.data.mensaje);
     }
-  };
-
-  // Función para manejar cambios en las fotos
-  const handlePhotosChange = (newPhotos) => {
-    setPhotos(newPhotos);
   };
 
   return (
     <>
-      <h2>Actualiza un espacio</h2>
       <SpaceForm
         onSubmit={handleCreateSubmit}
         onPhotosChange={handlePhotosChange}
+        imagePreview={imagePreview}
       />
     </>
   );

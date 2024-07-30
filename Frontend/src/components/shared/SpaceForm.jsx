@@ -4,11 +4,11 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { useAuth } from "../context/AuthContext";
 
-const SpaceForm = ({ onSubmit }) => {
+const SpaceForm = ({ onSubmit, onPhotosChange, imagePreview }) => {
   const { isAdmin } = useAuth();
   const { id } = useParams();
   const navigate = useNavigate();
-  const { token } = useAuth(); // Se coge el token del contexto
+  const { token } = useAuth();
   const [formState, setFormState] = useState({
     nombre: "",
     descripcion: "",
@@ -20,9 +20,9 @@ const SpaceForm = ({ onSubmit }) => {
     estado: "",
   });
   const [categories, setCategories] = useState([]);
-  const [photos, setPhotos] = useState([]);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
+  const [photos, setPhotos] = useState([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -50,7 +50,7 @@ const SpaceForm = ({ onSubmit }) => {
           const response = await axios.get(`/api/spaces/${id}`, {
             headers: { Authorization: token },
           });
-          const space = response.data;
+          const space = response.data.data;
 
           setFormState({
             nombre: space.nombre,
@@ -78,11 +78,19 @@ const SpaceForm = ({ onSubmit }) => {
   const handleInputChange = ({ target }) => {
     const { name, value } = target;
     setFormState({ ...formState, [name]: value });
+    // setImagePreview(URL.createObjectURL(photos));
   };
 
-  const handleFileChange = (e) => {
-    setPhotos(Array.from(e.target.files));
-  };
+  // const handlePhotosChange = ({ target }) => {
+  //   const files = Array.from(target.files);
+  //   setPhotos(files);
+  //   if (files.length > 0) {
+  //     setImagePreview(URL.createObjectURL(files[0]));
+  //   } else {
+  //     setImagePreview("");
+  //   }
+  //   onPhotosChange(files); // Notify parent component of the change
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -91,48 +99,12 @@ const SpaceForm = ({ onSubmit }) => {
         throw new Error("Acceso denegado: solo administradores");
       }
       const jsonFormData = JSON.stringify(formState);
-
-      let spaceId;
-      if (id) {
-        console.log("Space ID:", id);
-        await onSubmit(id, jsonFormData, token);
-      } else {
-        const response = await onSubmit(null, jsonFormData, token, photos, id);
-        spaceId = response.data.data.id;
-        console.log("Nuevo space ID:", spaceId);
-      }
-
-      await uploadPhotos(spaceId);
-
+      await onSubmit(id, jsonFormData, token, photos);
       resetForm();
       navigate("/");
     } catch (error) {
       const errorMessage =
         error.response?.data?.message || "Error al enviar el formulario";
-      setMessage(errorMessage);
-      setMessageType("error");
-    }
-  };
-
-  const uploadPhotos = async (spaceId) => {
-    console.log("Space ID en uploadPhotos:", spaceId);
-    if (photos.length === 0) return;
-
-    const photoData = new FormData();
-    photos.forEach((photo, index) => {
-      photoData.append(`photo${index}`, photo);
-    });
-
-    try {
-      await axios.post(`/api/spaces/${spaceId}/photos`, photoData, {
-        headers: {
-          Authorization: token,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-    } catch (error) {
-      const errorMessage =
-        error.response?.data?.message || "Error al subir las fotos";
       setMessage(errorMessage);
       setMessageType("error");
     }
@@ -150,6 +122,8 @@ const SpaceForm = ({ onSubmit }) => {
       estado: "",
     });
     setPhotos([]);
+    setImagePreview("");
+    onPhotosChange([]);
   };
 
   return (
@@ -266,20 +240,12 @@ const SpaceForm = ({ onSubmit }) => {
           <input
             type="file"
             multiple
-            onChange={handleFileChange}
+            onChange={onPhotosChange}
+            // onChange={handlePhotosChange}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+          {imagePreview && <img src={imagePreview} alt="preview" />}
         </label>
-        {photos.length > 0 && (
-          <div>
-            <p>Fotos seleccionadas:</p>
-            <ul>
-              {photos.map((photo, index) => (
-                <li key={index}>{photo.name}</li>
-              ))}
-            </ul>
-          </div>
-        )}
         <button
           type="submit"
           className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
@@ -302,6 +268,7 @@ const SpaceForm = ({ onSubmit }) => {
 
 SpaceForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  onPhotosChange: PropTypes.func.isRequired,
 };
 
 export default SpaceForm;
