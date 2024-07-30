@@ -86,7 +86,10 @@ function MobileNav() {
                     Crear Espacio
                   </Link>
                   <Link to="/space/spaces" className="hover:bg-gray-200 p-2 rounded">
-                    Ver Espacios
+                     Ver Espacios
+                  </Link>
+                  <Link to="/space/filter-spaces" className="hover:bg-gray-200 p-2 rounded" >
+                    Filtrar Espacios
                   </Link>
                   <Link to="/user/profile" className="hover:bg-gray-200 p-2 rounded">
                     <img
@@ -104,7 +107,7 @@ function MobileNav() {
                     }}
                   >
                     <img
-                      src="../../../../public/logo_logout.png"
+                      src="../../../../public/logo_logout_black.png"
                       alt="Logout Icon"
                       className="h-8 w-8 inline mr-2"
                     />
@@ -115,6 +118,9 @@ function MobileNav() {
                 <>
                   <Link to="/space/spaces" className="hover:bg-gray-200 p-2 rounded">
                     Ver Espacios
+                  </Link>
+                  <Link to="/space/filter-spaces" className="hover:bg-gray-200 p-2 rounded" >
+                    Filtrar Espacios
                   </Link>
                   <Link to="/user/profile" className="hover:bg-gray-200 p-2 rounded">
                     <img
@@ -129,7 +135,7 @@ function MobileNav() {
                     onClick={logout}
                   >
                     <img
-                      src="../../../../public/logo_logout.png"
+                      src="../../../../public/logo_logout_black.png"
                       alt="Logout Icon"
                       className="h-8 w-8 inline mr-2"
                     />
@@ -144,6 +150,12 @@ function MobileNav() {
                 </Link>
                 <Link to="/auth/register" className="hover:bg-gray-200 p-2 rounded">
                   Sign Up
+                </Link>
+                <Link to="/space/spaces" className="hover:bg-gray-200 p-2 rounded" >
+                  Ver Espacios
+                </Link>
+                <Link to="/space/filter-spaces" className="hover:bg-gray-200 p-2 rounded" >
+                 Filtrar Espacios
                 </Link>
               </>
             )}

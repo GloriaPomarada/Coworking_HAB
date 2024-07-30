@@ -3,9 +3,9 @@
 function Home() {
   return (
     <>
-     <div className="relative max-h-[600px] overflow-hidden ">
+     <div className="relative max-h-[400px] overflow-hidden ">
         <video
-          className="w-full max-h-[600px] object-cover"
+          className="w-full max-h-[400px] object-cover"
           autoPlay
           loop
           muted

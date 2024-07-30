@@ -52,13 +52,6 @@ function DesktopNav() {
            {user ? (
              isAdmin ? (
                <>
-                 {/* <Link to="/space/create-space" className="hover:text-gray-400">
-                   Crear Espacio
-                 </Link>
-                 <Link to="/space/spaces" className="hover:text-gray-400">
-                   Ver Espacios
-                 </Link> */}
-                 {/*  */}
                  <div className="relative" ref={menuRef}>
                    <button
                      className="hover:text-gray-400 focus:outline-none"
@@ -80,9 +73,15 @@ function DesktopNav() {
                        >
                          Ver Espacios
                        </Link>
-                 </div>
-               )}
-                 </div>
+                       <Link
+                         to="/space/filter-spaces"
+                         className="block px-4 py-2 hover:bg-gray-200"
+                       >
+                         Filtrar Espacios
+                       </Link>
+                    </div>
+                 )}
+                </div>
                  <Link to="/user/profile" className="hover:text-gray-400 focus:outline-none">
                    <img
                      src="../../../../public/iconoPerfUser.png"
@@ -106,9 +105,30 @@ function DesktopNav() {
                </>
              ) : (
                <>
-                 <Link to="/space/spaces" className="hover:text-gray-400">
-                   Ver Espacios
-                 </Link>
+                <div className="relative" ref={menuRef}>
+                   <button
+                     className="hover:text-gray-400 focus:outline-none"
+                     onClick={handleMenuToggle}
+                     >
+                         Espacios
+                   </button>
+                   {menuOpen && (
+                     <div className="absolute right-0 mt-4 w-48 bg-white text-black rounded-md shadow-lg">
+                       <Link
+                         to="/space/spaces"
+                         className="block px-4 py-2 hover:bg-gray-200"
+                       >
+                         Ver Espacios
+                       </Link>
+                       <Link
+                         to="/space/filter-spaces"
+                         className="block px-4 py-2 hover:bg-gray-200"
+                       >
+                         Filtrar Espacios
+                       </Link>
+                    </div>
+                 )}
+                </div>
                  <Link to="/user/profile" className="hover:text-gray-400 focus:outline-none">
                    <img
                      src="../../../../public/iconoPerfUser.png"
@@ -129,7 +149,21 @@ function DesktopNav() {
                </>
              )
            ) : (
-             <div className="relative" ref={menuRef}>
+            <>
+              <Link
+                to="/space/filter-spaces"
+                className="block px-4 py-2 hover:text-gray-400"
+              >
+                Filtrar Espacios
+            </Link>
+            <Link
+                to="/space/spaces"
+                className="block px-4 py-2 hover:text-gray-400"
+              >
+                Ver Espacios
+            </Link>
+            
+              <div className="block px-4 py-2 hover:text-gray-400 relative" ref={menuRef}>
                <button
                  className="hover:text-gray-400 focus:outline-none"
                  onClick={handleMenuToggle}
@@ -153,6 +187,8 @@ function DesktopNav() {
                  </div>
                )}
              </div>
+                   
+            </>
            )}
          </nav>
        </div>  )
