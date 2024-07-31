@@ -1,15 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState(null);
-  const [userReservations] = useState([]);
   const userId = localStorage.getItem("userId");
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const navigate = useNavigate(); // Inicializa useNavigate
 
   const fetchUserData = async () => {
     setIsLoading(true);
@@ -25,7 +22,6 @@ const Profile = () => {
       console.log("Actualizando userData:", response.data);
     } catch (error) {
       console.error("Error al obtener datos:", error);
-      toast.error("Error al obtener los datos:" + error.response.data.mensaje);
     } finally {
       setIsLoading(false);
     }
@@ -45,10 +41,8 @@ const Profile = () => {
           },
         });
         fetchUserData();
-        toast.success("Avatar cambiado");
       } catch (error) {
         console.error("Error al subir el avatar:", error);
-        toast.error("Error al subir el avatar:" + error.response.data.mensaje);
       }
     }
   };
@@ -62,89 +56,87 @@ const Profile = () => {
   if (isLoading) return <div>Cargando...</div>;
   if (!userData) return <div>No se encontraron datos del usuario</div>;
 
+  const avatarUrl = userData.avatar
+    ? `http://localhost:8000/uploads/${userData.avatar}`
+    : "/avatarDefault.png";
+
   return (
-    <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-      <div className="flex justify-center mb-6">
-        <img
-          //Pasamos el avatarUrl a la etiqueta img
-          src={
-            userData.avatar
-              ? `${apiUrl}/${userData.avatar}`
-              : "/avatarDefault.png"
-          }
-          alt={userData?.avatar}
-          className="w-24 h-24 rounded-full object-cover"
-        />
-      </div>
-      <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
-        Perfil de Usuario
-      </h1>
-      <div className="space-y-4">
-        <p className="flex justify-between">
-          <span className="font-semibold text-gray-700">
-            Nombre de usuario:
-          </span>
-          <span className="text-gray-600">
-            {userData?.username || "No disponible"}
-          </span>
-        </p>
-        <p className="flex justify-between">
-          <span className="font-semibold text-gray-700">Email:</span>
-          <span className="text-gray-600">
-            {userData?.email || "No disponible"}
-          </span>
-        </p>
-        <p className="flex justify-between">
-          <span className="font-semibold text-gray-700">Rol:</span>
-          <span className="text-gray-600">
-            {userData?.role || "No disponible"}
-          </span>
-        </p>
-        <p className="flex justify-between">
-          <span className="font-semibold text-gray-700">
-            Fecha de creación:
-          </span>
-          <span className="text-gray-600">
-            {userData?.createdAt || "No disponible"}
-          </span>
-        </p>
-      </div>
-      <div className="mt-6">
-        <h2 className="text-xl font-semibold mb-4">Reservas</h2>
-        {userReservations.length > 0 ? (
-          <ul className="space-y-2">
-            {userReservations.map((reservation) => (
-              <li key={reservation.id} className="text-gray-600">
-                {reservation.date} - {reservation.service}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-600">No tienes reservas activas.</p>
-        )}
-      </div>
-      <div className="mt-6 flex justify-between items-center">
-        <div>
-          <Link to="/auth/updatePass">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300">
+    <div className="p-6 bg-gray-100 rounded-lg shadow-md">
+      <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+        <div className="flex justify-center mb-6">
+          <img
+            src={avatarUrl}
+            alt={userData?.avatar || "Avatar"}
+            className="w-24 h-24 rounded-full object-cover"
+          />
+        </div>
+        <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
+          Perfil de Usuario
+        </h1>
+        <div className="space-y-4">
+          <p className="flex justify-between">
+            <span className="font-semibold text-gray-700">
+              Nombre de usuario:
+            </span>
+            <span className="text-gray-600">
+              {userData?.username || "No disponible"}
+            </span>
+          </p>
+          <p className="flex justify-between">
+            <span className="font-semibold text-gray-700">Email:</span>
+            <span className="text-gray-600">
+              {userData?.email || "No disponible"}
+            </span>
+          </p>
+          <p className="flex justify-between">
+            <span className="font-semibold text-gray-700">Rol:</span>
+            <span className="text-gray-600">
+              {userData?.role || "No disponible"}
+            </span>
+          </p>
+          <p className="flex justify-between">
+            <span className="font-semibold text-gray-700">
+              Fecha de creación:
+            </span>
+            <span className="text-gray-600">
+              {userData?.createdAt || "No disponible"}
+            </span>
+          </p>
+        </div>
+        <div className="mt-6 flex justify-center space-x-4">
+          {" "}
+          {/* Usa space-x-4 para espaciado horizontal entre los elementos */}
+          <div>
+            <button
+              onClick={() => navigate("/user/my-bookings")}
+              className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition duration-300"
+            >
+              Mis Reservas
+            </button>
+          </div>
+          <div>
+            <button
+              onClick={() => navigate("/auth/updatePass")}
+              className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
+            >
               Cambiar Contraseña
             </button>
-          </Link>
-        </div>
-        <div>
-          <label
-            htmlFor="avatar-upload"
-            className="inline-block bg-blue-500 text-white py-2 px-4 rounded-md cursor-pointer hover:bg-blue-600 transition duration-300"
-          >
-            Cambiar Avatar
-          </label>
-          <input
-            id="avatar-upload"
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={handleAvatarChange}
-          />
+          </div>
+          <div>
+            <label
+              htmlFor="avatar-upload"
+              className="inline-block bg-blue-500 text-white py-2 px-4 rounded-md cursor-pointer hover:bg-blue-600 transition duration-300 text-center"
+            >
+              Cambiar Avatar
+            </label>
+            <input
+              id="avatar-upload"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleAvatarChange}
+            />
+          </div>
         </div>
       </div>
     </div>

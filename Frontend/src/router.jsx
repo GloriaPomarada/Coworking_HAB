@@ -29,10 +29,11 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/user/*",
+        path: "/user/*", 
         element: <UserRoutes />,
       },
     ],
   },
 ]);
+
 export default router;

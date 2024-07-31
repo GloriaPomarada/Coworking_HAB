@@ -76,7 +76,7 @@ const SpaceFilterPage = () => {
   };
 
   return (
-    <div>
+    <div className="p-6 bg-gray-100 rounded-lg shadow-md">
       <FilterForm
         filters={filters}
         categorias={categorias}

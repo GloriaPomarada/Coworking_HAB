@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
-        token: Auth.getToken(), // Ensure you get the token directly from Auth
+        token: Auth.getToken(), 
         login,
         logout,
         loggedIn,

@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
+import RatingStars from "../../shared/Filter/RatingStars"; // Importa el componente RatingStars
 
 const SpaceCard = ({ espacio }) => {
   return (
-    
-    <div className="bg-white rounded-lg shadow-md p-6 m-4 ">
+    <div className="bg-white rounded-lg shadow-md p-6 m-4">
       <h3 className="text-xl font-bold mb-2 text-gray-800">{espacio.nombre}</h3>
       <p className="text-gray-600 mb-4">{espacio.descripcion}</p>
       <p className="text-sm text-gray-700">
@@ -20,10 +20,10 @@ const SpaceCard = ({ espacio }) => {
       <p className="text-sm text-gray-700">
         <span className="font-semibold">Estado:</span> {espacio.estado}
       </p>
-      <p className="text-sm text-gray-700">
-        <span className="font-semibold">Valoración media:</span>{" "}
-        {espacio.valoracion_media}
-      </p>
+      <div className="text-sm text-gray-700">
+        <span className="font-semibold">Valoración media:</span>
+        <RatingStars rating={parseFloat(espacio.valoracion_media)} />
+      </div>
     </div>
   );
 };

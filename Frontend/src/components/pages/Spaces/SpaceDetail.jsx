@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Carousel } from "react-responsive-carousel";
 import { useNavigate } from "react-router-dom";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // Importa los estilos del carrusel
+import "react-responsive-carousel/lib/styles/carousel.min.css"; 
+import RatingStars from '../../shared/Filter/RatingStars'; 
 
 function SpaceDetail() {
   const { id } = useParams();
@@ -84,7 +85,7 @@ function SpaceDetail() {
                   key={index}
                   src={`${apiUrl}/${imagen}`}
                   alt={`Thumbnail ${index + 1}`}
-                  className="h-16 object-cover"
+                  className="h-16 object-cover rounded-lg"
                   onError={(e) =>
                     (e.target.src = "https://via.placeholder.com/100x100")
                   }
@@ -93,7 +94,7 @@ function SpaceDetail() {
             }
           >
             {space.imagenes.map((imagen, index) => (
-              <div key={index}>
+              <div key={index} className="relative">
                 <img
                   src={
                     imagen
@@ -101,7 +102,7 @@ function SpaceDetail() {
                       : "https://via.placeholder.com/300x200"
                   }
                   alt={`Imagen ${index + 1}`}
-                  className="w-full h-64 rounded-lg object-contain"
+                  className="w-full h-full object-cover rounded-lg"
                   onError={(e) =>
                     (e.target.src = "https://via.placeholder.com/300x200")
                   }
@@ -127,7 +128,7 @@ function SpaceDetail() {
             <h3 className="text-lg font-semibold text-gray-700 mb-1">
               Categoría
             </h3>
-            <p className="text-gray-600">{space.categoria_id}</p>
+            <p className="text-gray-600">{space.categoria_nombre}</p>
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-700 mb-1">
@@ -135,11 +136,9 @@ function SpaceDetail() {
             </h3>
             <p className="text-gray-600">{space.capacidad}</p>
           </div>
-          
+
           <div>
-            <h3 className="text-lg font-semibold text-gray-700 mb-1">
-              Precio 
-            </h3>
+            <h3 className="text-lg font-semibold text-gray-700 mb-1">Precio</h3>
             <p className="text-gray-600">{space.precio_espacio_completo}</p>
           </div>
           <div>
@@ -156,7 +155,21 @@ function SpaceDetail() {
             <h3 className="text-lg font-semibold text-gray-700 mb-1">
               Valoración media
             </h3>
-            <p className="text-gray-600">{space.valoracion_media}</p>
+            <RatingStars rating={parseFloat(space.valoracion_media)} />
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-700 mb-1">
+              Equipamientos
+            </h3>
+            <ul className="list-disc list-inside text-gray-600">
+              {space.equipamientos && space.equipamientos.length > 0 ? (
+                space.equipamientos.map((equipamiento, index) => (
+                  <li key={index}>{equipamiento}</li>
+                ))
+              ) : (
+                <li>No hay equipamientos disponibles.</li>
+              )}
+            </ul>
           </div>
         </div>
         <div className="flex justify-center mt-4">

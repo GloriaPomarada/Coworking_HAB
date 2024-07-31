@@ -2,7 +2,7 @@ import pool from "../../config/connection.js";
 
 const spacesList = async () => {
     let sql = `
-    SELECT e.id, e.nombre, e.descripcion, ce.nombre AS categorias_nombre,
+    SELECT e.id, e.nombre, e.descripcion, e. valoracion_media, ce.nombre AS categorias_nombre,
            ef.name AS imagen
     FROM espacios e
     JOIN categorias_espacios ce ON e.categoria_id = ce.id

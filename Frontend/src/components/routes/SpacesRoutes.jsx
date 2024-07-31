@@ -13,7 +13,6 @@ function SpacesRoutes() {
       <Route path="/spaces" element={<SpacesList />} />
       <Route path="/filter-spaces" element={<SpaceFilterPage />} />
       <Route path="/get-space/:id" element={<SpaceDetail />} />
-
     </Routes>
   );
 }
