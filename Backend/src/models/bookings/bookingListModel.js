@@ -12,15 +12,17 @@ const filteredBookings = async (filters, userId, userRole) => {
             r.estado, 
             r.observaciones, 
             u.username as usuario_username, 
-            e.nombre as espacio_nombre 
+            e.nombre as espacio_nombre,
+            ev.value as valoracion
         FROM reservas r 
         JOIN usuarios u ON r.usuario_id = u.id 
-        JOIN espacios e ON r.espacio_id = e.id 
+        JOIN espacios e ON r.espacio_id = e.id
+        LEFT JOIN espacios_votos ev ON r.id = ev.reserva_id AND ev.usuario_id = r.usuario_id 
         WHERE 1=1`;
 
     const params = [];
 
-    // Si el usuario no es admin, añadir filtro por su propio ID
+    //!-> Si el usuario no es admin, añadir filtro por su propio ID.
     if (userRole !== 'admin') {
         sql += ' AND r.usuario_id = ?';
         params.push(userId);

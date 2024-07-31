@@ -144,19 +144,38 @@ function MyBookings() {
               </button>
             </div>
             <div className="flex flex-col items-center mt-4">
-              <span className="text-center font-semibold mb-2">Valora tu experiencia</span>
-              <div className="flex">
-                {[1, 2, 3, 4, 5].map((value) => (
-                  <FaStar
-                    key={value}
-                    onClick={() => handleVote(booking.id, value)}
-                    className={`cursor-pointer mx-1 ${
-                      ratings[booking.id] >= value ? "text-yellow-500" : "text-gray-300"
-                    } ${ratings[booking.id] ? "pointer-events-none" : ""}`}
-                    size={24}
-                  />
-                ))}
-              </div>
+              {ratings[booking.id] === 0 ? (
+                <>
+                  <span className="text-center font-semibold mb-2">Valora tu experiencia</span>
+                  <div className="flex">
+                    {[1, 2, 3, 4, 5].map((value) => (
+                      <FaStar
+                        key={value}
+                        onClick={() => handleVote(booking.id, value)}
+                        className={`cursor-pointer mx-1 ${
+                          ratings[booking.id] >= value ? "text-yellow-500" : "text-gray-300"
+                        }`}
+                        size={24}
+                      />
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <span className="text-center font-semibold mb-2">Tu valoración ha sido</span>
+                  <div className="flex">
+                    {[1, 2, 3, 4, 5].map((value) => (
+                      <FaStar
+                        key={value}
+                        className={`mx-1 ${
+                          ratings[booking.id] >= value ? "text-yellow-500" : "text-gray-300"
+                        }`}
+                        size={24}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
           </div>
         ))}
