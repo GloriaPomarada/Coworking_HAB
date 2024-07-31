@@ -6,7 +6,8 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState(null);
   const userId = localStorage.getItem("userId");
-  const navigate = useNavigate(); // Inicializa useNavigate
+  const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL; // Importa la URL base desde las variables de entorno
 
   const fetchUserData = async () => {
     setIsLoading(true);
@@ -34,7 +35,7 @@ const Profile = () => {
       formData.append("avatar", file);
       try {
         const token = localStorage.getItem("token");
-        await axios.put("/api/users/avatar", formData, {
+        await axios.put(`/api/users/avatar`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: token,
@@ -57,7 +58,7 @@ const Profile = () => {
   if (!userData) return <div>No se encontraron datos del usuario</div>;
 
   const avatarUrl = userData.avatar
-    ? `http://localhost:8000/uploads/${userData.avatar}`
+    ? `${apiUrl}/${userData.avatar}`
     : "/avatarDefault.png";
 
   return (
@@ -104,8 +105,6 @@ const Profile = () => {
           </p>
         </div>
         <div className="mt-6 flex justify-center space-x-4">
-          {" "}
-          {/* Usa space-x-4 para espaciado horizontal entre los elementos */}
           <div>
             <button
               onClick={() => navigate("/user/my-bookings")}
