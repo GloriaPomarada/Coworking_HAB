@@ -91,6 +91,9 @@ function MobileNav() {
                   <Link to="/space/filter-spaces" className="hover:bg-gray-200 p-2 rounded" >
                     Filtrar Espacios
                   </Link>
+                  <Link to="/user/adminBookings" className="hover:bg-gray-200 p-2 rounded">
+                    Reservas Pendientes
+                  </Link>
                   <Link to="/user/profile" className="hover:bg-gray-200 p-2 rounded">
                     <img
                       src="../../../../public/iconoPerfUser.png"
@@ -99,6 +102,7 @@ function MobileNav() {
                     />
                     Perfil
                   </Link>
+                  
                   <button
                     className="hover:bg-gray-200 p-2 rounded focus:outline-none"
                     onClick={() => {

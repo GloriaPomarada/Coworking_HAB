@@ -81,7 +81,11 @@ function DesktopNav() {
                        </Link>
                     </div>
                  )}
+                 
                 </div>
+                <Link to="/user/adminBookings" className="hover:text-gray-400 focus:outline-none">
+                    Reservas Pendientes
+                  </Link>
                  <Link to="/user/profile" className="hover:text-gray-400 focus:outline-none">
                    <img
                      src="../../../../public/iconoPerfUser.png"
@@ -89,19 +93,17 @@ function DesktopNav() {
                      className="h-7 w-7"
                    />
                  </Link>
-                 <button
-                   className="hover:text-gray-400 focus:outline-none"
-                   onClick={() => {
+                 <Link to="/" className="hover:text-gray-400 focus:outline-none" onClick={() => {
                      navigate("/");
                      logout();
-                   }}
-                 >
-                   <img
+                   }}>
+                 <img
                      src="../../../../public/logo_logout.png"
                      alt="Logout Icon"
                      className="h-8 w-8"
                    />
-                 </button>
+                 </Link>
+              
                </>
              ) : (
                <>
@@ -136,16 +138,16 @@ function DesktopNav() {
                      className="h-7 w-7"
                    />
                  </Link>
-                 <button
-                   className="hover:text-gray-400 focus:outline-none"
-                   onClick={logout}
-                 >
-                   <img
+                 <Link to="/" className="hover:text-gray-400 focus:outline-none" onClick={() => {
+                     navigate("/");
+                     logout();
+                   }}>
+                 <img
                      src="../../../../public/logo_logout.png"
                      alt="Logout Icon"
                      className="h-8 w-8"
                    />
-                 </button>
+                 </Link>
                </>
              )
            ) : (
