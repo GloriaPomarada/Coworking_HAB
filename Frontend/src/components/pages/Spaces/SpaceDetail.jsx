@@ -37,7 +37,7 @@ function SpaceDetail() {
 
   const goToBooking = (id) => {
     if (id) {
-      navigate(`/booking/create/${id}`);
+      navigate(`/user/new-booking/${id}`);
     } else {
       console.error("No se proporcionó un ID válido");
     }
