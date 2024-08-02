@@ -15,12 +15,12 @@ const postVoteController = async (req, res, next) => {
     try {
         // Verificar si la reserva existe y pertenece al usuario
         const [reservas] = await pool.query(
-            'SELECT id, espacio_id, fecha_fin FROM reservas WHERE id = ? AND usuario_id = ? AND estado = "reservado"',
+            'SELECT id, espacio_id, fecha_fin FROM reservas WHERE id = ? AND usuario_id = ?  AND estado = "finalizada"',
             [reserva_id, usuario_id]
         );
 
         if (reservas.length === 0) {
-            return res.status(403).json({ message: 'No tienes permiso para valorar esta reserva o la reserva no existe.' });
+            return res.status(403).json({ message: 'Tu reserva aún no ha sido aceptada.' });
         }
 
         const reserva = reservas[0];

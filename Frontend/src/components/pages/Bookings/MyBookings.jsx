@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { FaStar } from "react-icons/fa"; // Importa el icono de estrella
+import { FaStar } from "react-icons/fa"; 
 import "react-toastify/dist/ReactToastify.css";
 
 function MyBookings() {
@@ -24,9 +24,11 @@ function MyBookings() {
           },
         });
         if (response.data && response.data.data) {
-          setBookings(response.data.data);
+          // Ordenar las reservas de mayor a menor por ID.
+          const sortedBookings = response.data.data.sort((a, b) => b.id - a.id);
+          setBookings(sortedBookings);
           const initialRatings = {};
-          response.data.data.forEach((booking) => {
+          sortedBookings.forEach((booking) => {
             initialRatings[booking.id] = booking.valoracion || 0;
           });
           setRatings(initialRatings);
