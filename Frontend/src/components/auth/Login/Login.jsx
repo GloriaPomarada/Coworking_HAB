@@ -29,7 +29,7 @@ const Login = () => {
       console.log("UserId guardado:", localStorage.getItem("userId"));
       login(token);
 
-      navigate("/Profile");
+      navigate("/user/Profile");
       console.log("Token guardado:", localStorage.getItem("token"));
       console.log("UserId guardado:", localStorage.getItem("userId"));
     } catch (error) {

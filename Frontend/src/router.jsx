@@ -5,6 +5,7 @@ import Home from "./components/pages/Home/Home.jsx";
 import AuthRoutes from "./components/routes/AuthRoutes.jsx";
 import SpacesRoutes from "./components/routes/SpacesRoutes.jsx";
 import UserRoutes from "./components/routes/UserRoutes.jsx";
+// import BookingForm from "./components/pages/Booking/BookingCreate.jsx";
 
 const router = createBrowserRouter([
   {
@@ -29,9 +30,10 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/user/*", 
+        path: "/user/*",
         element: <UserRoutes />,
       },
+      // { path: "/booking/create/:id", element: <BookingForm /> },
     ],
   },
 ]);
