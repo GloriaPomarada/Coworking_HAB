@@ -17,10 +17,7 @@ function AuthRoutes() {
         path="/activate/:registrationCode"
         element={<ProtectedRoute element={<Activate />} />}
       />
-      <Route
-        path="/recoverPass"
-        element={<ProtectedRoute element={<RecoverPass />} />}
-      />
+      <Route path="/recoverPass" element={<RecoverPass />} />
       <Route
         path="/resetPass"
         element={<ProtectedRoute element={<ResetPass />} />}
