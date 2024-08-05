@@ -3,8 +3,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useAuth } from "../context/AuthContext";
+import usePreventNumberInputScroll from "../../hooks/UsePreventScrollNumber.jsx";
+import { FaRegTrashAlt } from "react-icons/fa";
 
-const SpaceForm = ({ onSubmit, onPhotosChange, imagePreview }) => {
+const BASE_URL = import.meta.env.VITE_API_URL;
+
+const SpaceForm = ({ onSubmit, onPhotosChange, photos, imagePreview }) => {
   const { isAdmin } = useAuth();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -22,7 +26,8 @@ const SpaceForm = ({ onSubmit, onPhotosChange, imagePreview }) => {
   const [categories, setCategories] = useState([]);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
-  const [photos, setPhotos] = useState([]);
+  const [spacePhotos, setSpacePhotos] = useState([]);
+  usePreventNumberInputScroll();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -62,6 +67,13 @@ const SpaceForm = ({ onSubmit, onPhotosChange, imagePreview }) => {
             direccion: space.direccion,
             estado: space.estado,
           });
+
+          // Construye la URL e id de la imagen
+          const photoDetails = space.imagenes.map((image) => ({
+            url: `${BASE_URL}/${image.filename}`,
+            id: image.id,
+          }));
+          setSpacePhotos(photoDetails);
         } catch (error) {
           const errorMessage =
             error.response?.data?.message ||
@@ -78,19 +90,34 @@ const SpaceForm = ({ onSubmit, onPhotosChange, imagePreview }) => {
   const handleInputChange = ({ target }) => {
     const { name, value } = target;
     setFormState({ ...formState, [name]: value });
-    // setImagePreview(URL.createObjectURL(photos));
   };
 
-  // const handlePhotosChange = ({ target }) => {
-  //   const files = Array.from(target.files);
-  //   setPhotos(files);
-  //   if (files.length > 0) {
-  //     setImagePreview(URL.createObjectURL(files[0]));
-  //   } else {
-  //     setImagePreview("");
-  //   }
-  //   onPhotosChange(files); // Notify parent component of the change
-  // };
+  const handleDeletePhoto = async (photoId) => {
+    if (!photoId) {
+      console.error("Sin photoId proporcionado");
+      return;
+    }
+
+    try {
+      console.log(`Attempting to delete photo with ID: ${photoId}`);
+      const response = await axios.delete(
+        `/api/spaces/${id}/photos/${photoId}`,
+        {
+          headers: { Authorization: token },
+        }
+      );
+      console.log(`Delete response:`, response);
+      setSpacePhotos((prevPhotos) =>
+        prevPhotos.filter((photo) => photo.id !== photoId)
+      );
+    } catch (error) {
+      console.error("Error al eliminar la foto:", error);
+      const errorMessage =
+        error.response?.data?.message || "Error al eliminar la foto";
+      setMessage(errorMessage);
+      setMessageType("error");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -121,8 +148,6 @@ const SpaceForm = ({ onSubmit, onPhotosChange, imagePreview }) => {
       direccion: "",
       estado: "",
     });
-    setPhotos([]);
-    setImagePreview("");
     onPhotosChange([]);
   };
 
@@ -169,7 +194,11 @@ const SpaceForm = ({ onSubmit, onPhotosChange, imagePreview }) => {
               Selecciona una categoría
             </option>
             {categories.map((category) => (
-              <option key={category.id} value={category.id}>
+              <option
+                selected={formState.categoria_id === category.id ? true : false}
+                key={category.id}
+                value={category.id}
+              >
                 {category.nombre}
               </option>
             ))}
@@ -241,27 +270,46 @@ const SpaceForm = ({ onSubmit, onPhotosChange, imagePreview }) => {
             type="file"
             multiple
             onChange={onPhotosChange}
-            // onChange={handlePhotosChange}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {imagePreview && <img src={imagePreview} alt="preview" />}
+          {imagePreview && (
+            <img src={imagePreview} alt="Preview" className="w-full mt-4" />
+          )}
+          <div className="mt-4">
+            {spacePhotos.map((photo) => (
+              <div key={photo.id} className="relative">
+                <img
+                  src={photo.url}
+                  alt={`Space photo ${photo.id}`}
+                  className="w-full h-40 object-cover rounded-md"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleDeletePhoto(photo.id)}
+                  className="absolute top-2 right-2 text-white bg-red-500 rounded-full  hover:bg-red-600 p-1"
+                >
+                  <FaRegTrashAlt className="w-6 h-6" />
+                </button>
+              </div>
+            ))}
+          </div>
         </label>
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
+          className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
         >
-          {id ? "Actualizar" : "Crear"}
+          {id ? "Actualizar Espacio" : "Crear Espacio"}
         </button>
-        {message && (
-          <div
-            className={`mt-4 p-4 rounded-md ${
-              messageType === "error" ? "bg-red-500" : "bg-green-500"
-            } text-white`}
-          >
-            {message}
-          </div>
-        )}
       </div>
+      {message && (
+        <div
+          className={`mt-4 ${
+            messageType === "error" ? "text-red-500" : "text-green-500"
+          }`}
+        >
+          {message}
+        </div>
+      )}
     </form>
   );
 };
@@ -269,6 +317,8 @@ const SpaceForm = ({ onSubmit, onPhotosChange, imagePreview }) => {
 SpaceForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onPhotosChange: PropTypes.func.isRequired,
+  photos: PropTypes.array.isRequired,
+  imagePreview: PropTypes.string,
 };
 
 export default SpaceForm;

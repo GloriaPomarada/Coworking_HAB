@@ -21,20 +21,28 @@ const UpdateSpace = () => {
         },
       });
 
-      console.log("Response:", response);
-      const spaceId = response.data.data.id;
-      console.log("Space Id:", spaceId);
+      if (response.status === 200 && response.data && response.data.data) {
+        const spaceId = response.data.data.id;
+        console.log("Response:", response);
+        console.log("Space Id:", spaceId);
 
-      await uploadPhotos(spaceId, photos);
-
-      navigate("/space/spaces");
+        await uploadPhotos(spaceId, photos);
+        toast.success("Espacio actualizado");
+        navigate("/space/spaces");
+      } else {
+        toast.error("Respuesta inesperada del servidor");
+        console.error("Unexpected response format:", response);
+      }
     } catch (error) {
       console.error(
         "Error al actualizar el espacio:",
         error.response ? error.response.data : error.message
       );
       toast.error(
-        "Error al actualizar el espacio: " + error.response.data.mensaje
+        "Error al actualizar el espacio: " +
+          (error.response?.data?.mensaje ||
+            error.message ||
+            "Error desconocido")
       );
     }
   };
@@ -56,10 +64,28 @@ const UpdateSpace = () => {
     }
   };
 
+  const handleDeletePhoto = async (spaceId, photoId) => {
+    try {
+      await axios.delete(`/api/spaces/${spaceId}/photos/${photoId}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      setPhotos((prevPhotos) =>
+        prevPhotos.filter((photo) => photo.id !== photoId)
+      );
+      toast.success("Foto borrada");
+    } catch (error) {
+      console.error("Error borrando la foto:", error);
+      toast.error("Error al borrar la foto: " + error.response.data.message);
+    }
+  };
+
   const uploadPhotos = async (spaceId, files) => {
     console.log("spaceId para actualizar:", spaceId);
     console.log("Fotos para actualizar:", files);
-    if (!photos || !Array.isArray(files) || photos.files === 0) return;
+    if (!photos || !Array.isArray(files) || photos.length === 0) return;
     const formData = new FormData();
     photos.forEach((file) => formData.append(`photo`, file));
     try {
@@ -83,6 +109,8 @@ const UpdateSpace = () => {
       <SpaceForm
         onSubmit={handleUpdateSubmit}
         onPhotosChange={handlePhotosChange}
+        onDeletePhoto={handleDeletePhoto}
+        photos={photos}
         imagePreview={imagePreview}
       />
     </>
