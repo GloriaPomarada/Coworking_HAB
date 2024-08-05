@@ -13,7 +13,6 @@ function UpdatePassword() {
     newPassword: "",
   });
 
-  const [message, setMessage] = useState("");
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const navigate = useNavigate();
@@ -28,6 +27,12 @@ function UpdatePassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (passwords.oldPassword === passwords.newPassword) {
+      toast.error(
+        "La nueva contraseña no puede ser igual a la contraseña anterior. Por favor, elige una nueva contraseña."
+      );
+      return;
+    }
     try {
       const userId = localStorage.getItem("userId");
 
@@ -42,19 +47,17 @@ function UpdatePassword() {
           Authorization: token,
         },
       });
+
       console.log(response);
-      setMessage("Contraseña actualizada con éxito");
+
       toast.success("Contraseña actualizada con éxito");
+
       setTimeout(() => {
         navigate("/user/profile");
       }, 2000);
     } catch (error) {
-      console.error("Error al actualizar la contraseña:", error);
-      setMessage(
-        "Hubo un error al actualizar la contraseña. Inténtalo de nuevo."
-      );
       toast.error(
-        "Error al actualizar la contraseña:" + error.response.data.mensaje
+        "Error al actualizar la contraseña: " + error.response.data.mensaje
       );
     }
   };
@@ -117,7 +120,6 @@ function UpdatePassword() {
           Actualizar Contraseña
         </button>
       </form>
-      {message && <p className="mt-4 text-center text-gray-700">{message}</p>}
     </div>
   );
 }

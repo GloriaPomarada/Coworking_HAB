@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function RecoverPass() {
   const [credentials, setCredentials] = useState({
     email: "",
   });
 
-  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -23,18 +23,18 @@ function RecoverPass() {
     try {
       const resp = await axios.post("/api/users/password/recover", credentials);
       console.log(resp);
-      setMessage("Email de Recuperación enviado, revisa tu correo");
+      toast.success("Email de Recuperación enviado, revisa tu correo");
       setTimeout(() => {
         navigate("/auth/resetPass");
       }, 2000);
     } catch (error) {
       console.error("Error al recuperar Contraseña:", error);
       if (error.response && error.response.status === 404) {
-        setMessage(
+        toast.error(
           "La cuenta no está registrada. Por favor, verifica tu correo electrónico."
         );
       } else {
-        setMessage(
+        toast.error(
           "Hubo un error al intentar recuperar la contraseña. Por favor, inténtalo de nuevo."
         );
       }
@@ -68,7 +68,6 @@ function RecoverPass() {
           Recuperar Contraseña
         </button>
       </form>
-      {message && <p className="mt-4 text-center text-gray-700">{message}</p>}
     </div>
   );
 }

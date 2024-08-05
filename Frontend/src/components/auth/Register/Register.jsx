@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 function Register() {
   const [credentials, setCredentials] = useState({
@@ -10,7 +11,6 @@ function Register() {
     password: "",
   });
 
-  const [message, setMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
@@ -24,24 +24,38 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const isValidEmail = (email) => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    };
+    if (!isValidEmail(credentials.email)) {
+      toast.error(
+        "El correo electrónico no es válido. Por favor, verifica e intenta de nuevo."
+      );
+      return;
+    }
     try {
       console.log("Registrando Usuario...");
       const resp = await axios.post("/api/users/register", credentials);
       console.log(resp);
-      setMessage(
-        "Registro exitoso. Revise su correo para la activacion. Redirigiendo a la página de inicio de sesión..."
-      );
-      setTimeout(() => {
-        navigate("/auth/login");
-      }, 3000);
+      if (resp.status === 200) {
+        toast.success(
+          "Registro exitoso. Revise su correo para la activacion. Redirigiendo a la página de inicio de sesión..."
+        );
+        setTimeout(() => {
+          navigate("/auth/login");
+        }, 3000);
+      } else {
+        toast.error("Hubo un problema con el registro. Inténtalo de nuevo.");
+      }
     } catch (error) {
       console.error("Error registrando usuario:", error);
       if (error.response && error.response.status === 409) {
-        setMessage(
+        toast.error(
           "El nombre de usuario ya está registrado. Por favor, elige otro nombre."
         );
       } else {
-        setMessage(
+        toast.error(
           "Hubo un error al registrar el usuario. Por favor, inténtalo de nuevo."
         );
       }
@@ -116,7 +130,6 @@ function Register() {
           </Link>
         </p>
       </form>
-      {message && <p className="mt-4 text-center text-gray-700">{message}</p>}
     </div>
   );
 }

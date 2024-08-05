@@ -3,10 +3,9 @@ import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const Login = () => {
-  const [message, setMessage] = useState("");
-  const [messageType, setMessageType] = useState("");
   const [formState, setFormState] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
@@ -27,12 +26,22 @@ const Login = () => {
       localStorage.setItem("userId", id);
       login(token);
 
+      toast.success("Inicio de sesión exitoso");
       navigate("/user/Profile");
     } catch (error) {
-      const errorMessage =
-        error.response?.data?.message || "Error en el inicio de sesión";
-      setMessage(errorMessage);
-      setMessageType("error");
+      if (error.response && error.response.status === 404) {
+        toast.error(
+          "Usuario no encontrado. Por favor, verifica tus credenciales."
+        );
+      } else if (error.response && error.response.status === 401) {
+        toast.error(
+          "El nombre de usuario no coincide con la contraseña proporcionada. Por favor, verifica tus credenciales."
+        );
+      } else {
+        const errorMessage =
+          error.response?.data?.message || "Error en el inicio de sesión";
+        toast.error(errorMessage);
+      }
     }
   };
 
@@ -88,15 +97,6 @@ const Login = () => {
             Recuperala
           </Link>
         </p>
-        {message && (
-          <div
-            className={`mt-4 p-4 rounded-md ${
-              messageType === "error" ? "bg-red-500" : "bg-green-500"
-            } text-white`}
-          >
-            {message}
-          </div>
-        )}
       </div>
     </form>
   );
