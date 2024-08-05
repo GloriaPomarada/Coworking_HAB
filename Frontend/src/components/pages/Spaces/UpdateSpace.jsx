@@ -21,18 +21,15 @@ const UpdateSpace = () => {
         },
       });
 
-      // Validación de response status y data
       if (response.status === 200 && response.data && response.data.data) {
         const spaceId = response.data.data.id;
         console.log("Response:", response);
         console.log("Space Id:", spaceId);
 
-        // Sube las fotos si la actualización de espacios se realizó con éxito
         await uploadPhotos(spaceId, photos);
         toast.success("Espacio actualizado");
         navigate("/space/spaces");
       } else {
-        // Maneja una respuesta inesperada del servidor
         toast.error("Respuesta inesperada del servidor");
         console.error("Unexpected response format:", response);
       }
@@ -49,31 +46,6 @@ const UpdateSpace = () => {
       );
     }
   };
-  //   try {
-  //     const response = await axios.put(`/api/spaces/${id}`, formData, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: token,
-  //       },
-  //     });
-
-  //     console.log("Response:", response);
-  //     const spaceId = response.data.data.id;
-  //     console.log("Space Id:", spaceId);
-
-  //     await uploadPhotos(spaceId, photos);
-  //     toast.success("Espacio actualizado");
-  //     navigate("/space/spaces");
-  //   } catch (error) {
-  //     console.error(
-  //       "Error al actualizar el espacio:",
-  //       error.response ? error.response.data : error.message
-  //     );
-  //     toast.error(
-  //       "Error al actualizar el espacio: " + error.response.data.mensaje
-  //     );
-  //   }
-  // };
 
   const handlePhotosChange = (e) => {
     const files = Array.from(e.target.files);
@@ -92,7 +64,6 @@ const UpdateSpace = () => {
     }
   };
 
-  //Añadimos la lógica para borrar fotos
   const handleDeletePhoto = async (spaceId, photoId) => {
     try {
       await axios.delete(`/api/spaces/${spaceId}/photos/${photoId}`, {
@@ -114,7 +85,7 @@ const UpdateSpace = () => {
   const uploadPhotos = async (spaceId, files) => {
     console.log("spaceId para actualizar:", spaceId);
     console.log("Fotos para actualizar:", files);
-    if (!photos || !Array.isArray(files) || photos.files === 0) return;
+    if (!photos || !Array.isArray(files) || photos.length === 0) return;
     const formData = new FormData();
     photos.forEach((file) => formData.append(`photo`, file));
     try {

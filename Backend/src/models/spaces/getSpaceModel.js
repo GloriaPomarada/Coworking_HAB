@@ -36,6 +36,7 @@ const getEspacio = async (espacioId = null) => {
                 id: rows[0].id,
                 nombre: rows[0].nombre,
                 descripcion: rows[0].descripcion,
+                categoria_id: rows[0].categoria_id,
                 categoria_nombre: rows[0].categoria_nombre,
                 capacidad: rows[0].capacidad,
                 precio_por_persona: rows[0].precio_por_persona,
