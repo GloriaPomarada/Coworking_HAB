@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
-import RatingStars from './Filter/RatingStars.jsx'; // Importa el componente RatingStars
+import RatingStars from "./Filter/RatingStars.jsx"; // Importa el componente RatingStars
 
 function SpacesList() {
   const [spaces, setSpaces] = useState([]);
@@ -119,7 +119,9 @@ function SpacesList() {
               </li>
             ))
           ) : (
-            <li className="text-gray-500 text-center">No hay espacios disponibles</li>
+            <li className="text-gray-500 text-center">
+              No hay espacios disponibles
+            </li>
           )}
         </ul>
       </div>
