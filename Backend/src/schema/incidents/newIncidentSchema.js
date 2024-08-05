@@ -2,12 +2,6 @@ import joi from 'joi';
 import joiErrorMessages from '../joiErrorMessages.js';
 
 const newIncidentSchema = joi.object({
-    espacio_id: joi
-        .number()
-        .integer()
-        .positive()
-        .required()
-        .messages(joiErrorMessages),
     reserva_id: joi
         .number()
         .integer()

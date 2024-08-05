@@ -1,3 +1,4 @@
-export { default as getIncidences } from './incidentListModel.js';
+export { getIncidentsByUser, getAllIncidents, getMessagesForIncident } from './incidentListModel.js';
 export { default as newIncident} from './newIncidentModel.js';
-export { createMessage, getBookingInfo } from './newMessageModel.js';
+export { createMessage, getIncidenceInfo } from './newMessageModel.js';
+export { default as getMessagesModel } from './getMessagesModel.js';

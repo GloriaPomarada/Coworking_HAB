@@ -13,16 +13,23 @@ const filteredBookings = async (filters, userId, userRole) => {
             r.observaciones, 
             u.username as usuario_username, 
             e.nombre as espacio_nombre,
-            ev.value as valoracion
+            ev.value as valoracion,
+            ef.name as espacio_foto_name  -- Selecciona el nombre del archivo
         FROM reservas r 
         JOIN usuarios u ON r.usuario_id = u.id 
         JOIN espacios e ON r.espacio_id = e.id
         LEFT JOIN espacios_votos ev ON r.id = ev.reserva_id AND ev.usuario_id = r.usuario_id 
+        LEFT JOIN (
+            SELECT 
+                espacio_id, 
+                name 
+            FROM espacios_fotos 
+            WHERE id IN (SELECT MIN(id) FROM espacios_fotos GROUP BY espacio_id)
+        ) ef ON r.espacio_id = ef.espacio_id  -- Unir con la tabla espacios_fotos
         WHERE 1=1`;
 
     const params = [];
 
-    //!-> Si el usuario no es admin, añadir filtro por su propio ID.
     if (userRole !== 'admin') {
         sql += ' AND r.usuario_id = ?';
         params.push(userId);
@@ -72,7 +79,6 @@ const filteredBookings = async (filters, userId, userRole) => {
     try {
         const [rows] = await pool.query(sql, params);
 
-        // Si el usuario no es admin y no encuentra reservas, lanzar un error
         if (userRole !== 'admin' && rows.length === 0) {
             throw new Error('No tienes permiso para acceder a estas reservas.');
         }

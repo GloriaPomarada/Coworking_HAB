@@ -1,15 +1,17 @@
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 function PendingBookings() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [shouldRedirect, setShouldRedirect] = useState(false); 
   const apiUrl = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -21,10 +23,6 @@ function PendingBookings() {
         });
         if (response.data && response.data.data) {
           setBookings(response.data.data);
-          const initialRatings = {};
-          response.data.data.forEach((booking) => {
-            initialRatings[booking.id] = booking.valoracion || 0;
-          });
         } else {
           console.error("Error en el formato de la data:", response.data);
           setError("Error en el formato de los datos recibidos.");
@@ -42,6 +40,14 @@ function PendingBookings() {
     fetchBookings();
   }, [apiUrl, token]);
 
+  useEffect(() => {
+    // Maneja la redirección después de que las reservas hayan sido actualizadas.
+    if (shouldRedirect) {
+      navigate("/user/profile");
+      toast.success(`No tienes reservas pendientes de revisar`);
+    }
+  }, [shouldRedirect, navigate]);
+
   const updateBookingStatus = async (espacioID, newStatus) => {
     try {
       await axios.post(
@@ -54,11 +60,16 @@ function PendingBookings() {
         }
       );
       toast.success(`Reserva actualizada a ${newStatus}`);
-      setBookings((prevBookings) =>
-        prevBookings.map((booking) =>
+      setBookings((prevBookings) => {
+        const updatedBookings = prevBookings.map((booking) =>
           booking.id === espacioID ? { ...booking, estado: newStatus } : booking
-        )
-      );
+        );
+        // Verifica si no quedan reservas pendientes.
+        if (updatedBookings.every(booking => booking.estado !== 'pendiente')) {
+          setShouldRedirect(true); // Activa la redirección.
+        }
+        return updatedBookings;
+      });
     } catch (error) {
       const errorMessage = error.response?.data?.message || error.message;
       console.error(`Error al actualizar la reserva: ${errorMessage}`);
@@ -83,11 +94,10 @@ function PendingBookings() {
   }
 
   if (bookings.length === 0) {
-    return (
-      <div className="flex justify-center items-center h-screen bg-gray-100">
-        <h1 className="text-4xl font-bold text-gray-800">No hay reservas pendientes.</h1> 
-      </div>
-    );
+    return(
+      navigate("/user/profile"),
+      toast.success(`No tienes reservas pendientes de revisar`)
+    )
   }
 
   return (
@@ -111,15 +121,15 @@ function PendingBookings() {
               {booking.fecha_fin}
             </p>
             <p className="text-sm text-gray-700 mb-2">
-              <span className="font-semibold">Estado: </span> 
+              <span className="font-semibold">Estado: </span>
               {booking.estado}
             </p>
             <p className="text-sm text-gray-700 mb-2">
-              <span className="font-semibold">Observaciones: </span> 
+              <span className="font-semibold">Observaciones: </span>
               {booking.observaciones}
             </p>
             <p className="text-sm text-gray-700 mb-2">
-              <span className="font-semibold">Usuario: </span> 
+              <span className="font-semibold">Usuario: </span>
               {booking.usuario_username}
             </p>
             <div className="flex justify-around mt-4">
@@ -144,4 +154,3 @@ function PendingBookings() {
 }
 
 export default PendingBookings;
-

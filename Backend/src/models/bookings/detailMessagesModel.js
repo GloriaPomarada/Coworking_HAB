@@ -19,7 +19,7 @@ const detailWithMessages = async (reservaId) => {
         const [messagesRows] = await pool.query(messagesQuery, [reservaId]);
 
         if (reservationRows.length === 0) {
-            return null; // No se encontró la reserva
+            return null; // No se encontró la reserva.
         }
 
         return {

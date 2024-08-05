@@ -4,6 +4,7 @@ import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function UpdatePassword() {
   const { token } = useAuth();
@@ -12,7 +13,8 @@ function UpdatePassword() {
     newPassword: "",
   });
 
-  const [message, setMessage] = useState("");
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -25,6 +27,12 @@ function UpdatePassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (passwords.oldPassword === passwords.newPassword) {
+      toast.error(
+        "La nueva contraseña no puede ser igual a la contraseña anterior. Por favor, elige una nueva contraseña."
+      );
+      return;
+    }
     try {
       const userId = localStorage.getItem("userId");
 
@@ -39,19 +47,17 @@ function UpdatePassword() {
           Authorization: token,
         },
       });
+
       console.log(response);
-      setMessage("Contraseña actualizada con éxito");
+
       toast.success("Contraseña actualizada con éxito");
+
       setTimeout(() => {
         navigate("/user/profile");
       }, 2000);
     } catch (error) {
-      console.error("Error al actualizar la contraseña:", error);
-      setMessage(
-        "Hubo un error al actualizar la contraseña. Inténtalo de nuevo."
-      );
       toast.error(
-        "Error al actualizar la contraseña:" + error.response.data.mensaje
+        "Error al actualizar la contraseña: " + error.response.data.mensaje
       );
     }
   };
@@ -67,27 +73,45 @@ function UpdatePassword() {
           <label htmlFor="oldPassword" className="block text-gray-700">
             Contraseña Anterior
           </label>
-          <input
-            type="password"
-            name="oldPassword"
-            value={passwords.oldPassword}
-            placeholder="Introduce tu contraseña anterior"
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border border-gray-300 rounded"
-          />
+          <div className="relative">
+            <input
+              type={showOldPassword ? "text" : "password"}
+              name="oldPassword"
+              value={passwords.oldPassword}
+              placeholder="Introduce tu contraseña anterior"
+              onChange={handleChange}
+              className="mt-1 p-2 w-full border border-gray-300 rounded"
+            />
+            <button
+              type="button"
+              onClick={() => setShowOldPassword(!showOldPassword)}
+              className="absolute inset-y-0 right-0 px-3 py-2 text-gray-600"
+            >
+              {showOldPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
         </div>
         <div className="mb-6">
           <label htmlFor="newPassword" className="block text-gray-700">
             Nueva Contraseña
           </label>
-          <input
-            type="password"
-            name="newPassword"
-            value={passwords.newPassword}
-            placeholder="Introduce nueva contraseña"
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border border-gray-300 rounded"
-          />
+          <div className="relative">
+            <input
+              type={showNewPassword ? "text" : "password"}
+              name="newPassword"
+              value={passwords.newPassword}
+              placeholder="Introduce nueva contraseña"
+              onChange={handleChange}
+              className="mt-1 p-2 w-full border border-gray-300 rounded"
+            />
+            <button
+              type="button"
+              onClick={() => setShowNewPassword(!showNewPassword)}
+              className="absolute inset-y-0 right-0 px-3 py-2 text-gray-600"
+            >
+              {showNewPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
         </div>
         <button
           type="submit"
@@ -96,7 +120,6 @@ function UpdatePassword() {
           Actualizar Contraseña
         </button>
       </form>
-      {message && <p className="mt-4 text-center text-gray-700">{message}</p>}
     </div>
   );
 }

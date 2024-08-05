@@ -50,7 +50,7 @@ function BookingForm({ spaceId, onBookingSuccess }) {
 
       if (response.data.status === 'ok') {
         toast.success('Reserva creada con éxito!');
-        onBookingSuccess(); // Llama a la función de newBooking como prop para manejar el éxito
+        onBookingSuccess(); // Llama a la función de newBooking como prop si Ok.
       } else {
         toast.error('No se pudo realizar la reserva.');
       }
@@ -116,7 +116,7 @@ function BookingForm({ spaceId, onBookingSuccess }) {
   );
 }
 
-// Define las propiedades requeridas y sus tipos
+
 BookingForm.propTypes = {
   spaceId: PropTypes.number.isRequired,
   onBookingSuccess: PropTypes.func.isRequired,

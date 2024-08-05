@@ -6,11 +6,10 @@ const getUsersController = async (req, res, next) => {
         const findUsers = await userModel.getAllUsers(filters);
         res.json({
             status: 'ok',
-            data: findUsers
+            data: findUsers,
         });
-        
     } catch (err) {
-        netx(err);
+        next(err);
     }
 };
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
-import RatingStars from "./Filter/RatingStars.jsx"; // Importa el componente RatingStars
+import RatingStars from './Filter/RatingStars.jsx';
 
 function SpacesList() {
   const [spaces, setSpaces] = useState([]);
@@ -57,7 +57,6 @@ function SpacesList() {
                 key={space.id}
                 className="p-4 bg-white rounded-lg shadow-lg flex flex-col"
               >
-                {/* Imagen de espacio */}
                 <div className="mb-4">
                   <img
                     src={
@@ -70,7 +69,6 @@ function SpacesList() {
                   />
                 </div>
 
-                {/* Contenedor de información */}
                 <div className="flex-1">
                   <div className="mb-2">
                     <h3 className="text-lg font-semibold text-gray-700 mb-1">
@@ -98,7 +96,6 @@ function SpacesList() {
                   </div>
                 </div>
 
-                {/* Botón centrado en una nueva fila */}
                 <div className="mt-auto flex justify-center">
                   <button
                     onClick={() => goToSpace(space.id)}

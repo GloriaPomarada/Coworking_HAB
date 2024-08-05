@@ -10,10 +10,9 @@ const AuthContext = createContext();
 //*-> Proveedor de Estado Global.
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
-  
+
   const fetchUserProfile = async (token) => {
     try {
       const response = await axios.get("/api/users/profile", {
@@ -22,7 +21,6 @@ export const AuthProvider = ({ children }) => {
 
       const userProfile = response.data.data.user;
       setUser(userProfile);
-      setIsAuthenticated(true);
       setIsAdmin(userProfile.role === "admin");
     } catch (error) {
       console.error(error);
@@ -41,13 +39,11 @@ export const AuthProvider = ({ children }) => {
   const login = async (token) => {
     Auth.login(token);
     await fetchUserProfile(token);
-    setIsAuthenticated(true);
   };
 
   const logout = () => {
     Auth.logout();
     setUser(null);
-    setIsAuthenticated(false);
     setIsAdmin(false);
     setLoading(false);
   };
@@ -64,11 +60,10 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
-        token: Auth.getToken(), 
+        token: Auth.getToken(),
         login,
         logout,
         loggedIn,
-        isAuthenticated,
         updateUser,
         loading,
         isAdmin,

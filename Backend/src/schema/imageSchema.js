@@ -1,24 +1,25 @@
-import joi from 'joi';
-
-import joiErrorMessages from './joiErrorMessages.js';
+import joi from "joi";
+import joiErrorMessages from "./joiErrorMessages.js";
 
 const imgSchema = joi
-    .object({
-        name: joi.string().required().messages(joiErrorMessages),
-        mimetype: joi
-            .string()
-            .valid(
-                'image/jpeg',
-                'image/png',
-                'image/jpg',
-                'image/gif',
-                'image/webp',
-                'image/svg'
-            )
-            .required()
-            .messages(joiErrorMessages),
-        size: joi.number().max(5000000).required().messages(joiErrorMessages),
-    })
-    .unknown(true);
+  .object({
+    name: joi.string().required().messages(joiErrorMessages),
+    mimetype: joi
+      .string()
+      .valid(
+        "image/jpeg", 
+        "image/png", 
+        "image/jpg", 
+        "image/gif",
+        "image/webp",
+        "image/svg+xml",
+        "image/bmp",
+        "image/tiff"
+      )
+      .required()
+      .messages(joiErrorMessages),
+    size: joi.number().max(5000000).required().messages(joiErrorMessages),
+  })
+  .unknown(true);
 
 export default imgSchema;

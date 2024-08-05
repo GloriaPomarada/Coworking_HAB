@@ -2,12 +2,12 @@ import { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { toast } from "react-toastify";
+
 const Login = () => {
-  // eslint-disable-next-line no-unused-vars
-  const [message, setMessage] = useState("");
-  // eslint-disable-next-line no-unused-vars
-  const [messageType, setMessageType] = useState("");
   const [formState, setFormState] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -21,22 +21,27 @@ const Login = () => {
     try {
       const response = await axios.post("/api/users/login", formState);
 
-      console.log("UserId guardado:", localStorage.getItem("userId"));
-
       const { token } = response.data.data;
       const { id } = response.data.data.user;
       localStorage.setItem("userId", id);
-      console.log("UserId guardado:", localStorage.getItem("userId"));
       login(token);
 
-      navigate("/Profile");
-      console.log("Token guardado:", localStorage.getItem("token"));
-      console.log("UserId guardado:", localStorage.getItem("userId"));
+      toast.success("Inicio de sesión exitoso");
+      navigate("/user/Profile");
     } catch (error) {
-      const errorMessage =
-        error.response?.data?.message || "Error en el inicio de sesión";
-      setMessage(errorMessage);
-      setMessageType("error");
+      if (error.response && error.response.status === 404) {
+        toast.error(
+          "Usuario no encontrado. Por favor, verifica tus credenciales."
+        );
+      } else if (error.response && error.response.status === 401) {
+        toast.error(
+          "El nombre de usuario no coincide con la contraseña proporcionada. Por favor, verifica tus credenciales."
+        );
+      } else {
+        const errorMessage =
+          error.response?.data?.message || "Error en el inicio de sesión";
+        toast.error(errorMessage);
+      }
     }
   };
 
@@ -57,14 +62,23 @@ const Login = () => {
           onChange={handleInputChange}
           className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          name="password"
-          value={formState.password}
-          onChange={handleInputChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Contraseña"
+            name="password"
+            value={formState.password}
+            onChange={handleInputChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute inset-y-0 right-0 px-3 py-2 text-gray-600"
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </button>
+        </div>
         <button
           type="submit"
           className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
@@ -83,15 +97,6 @@ const Login = () => {
             Recuperala
           </Link>
         </p>
-        {message && (
-          <div
-            className={`mt-4 p-4 rounded-md ${
-              messageType === "error" ? "bg-red-500" : "bg-green-500"
-            } text-white`}
-          >
-            {message}
-          </div>
-        )}
       </div>
     </form>
   );
