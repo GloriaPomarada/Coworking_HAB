@@ -1,4 +1,4 @@
-import * as incidentModel  from '../../models/incidents/index.js'; 
+import * as incidentModel from '../../models/incidents/index.js'; 
 import newIncidentSchema from '../../schema/incidents/newIncidentSchema.js';
 
 const createIncident = async (req, res, next) => {
@@ -8,9 +8,9 @@ const createIncident = async (req, res, next) => {
             return res.status(400).json({ mensaje: error.details[0].message });
         }
 
-        const { espacio_id, reserva_id, usuario_id, categoria_incidencia_id, titulo } = req.body;
+        const { reserva_id, usuario_id, categoria_incidencia_id, titulo } = req.body;
 
-        const incidentId = await incidentModel.newIncident(espacio_id, reserva_id, usuario_id, categoria_incidencia_id, titulo);
+        const incidentId = await incidentModel.newIncident(reserva_id, usuario_id, categoria_incidencia_id, titulo);
 
         res.status(201).send({
             status: 'ok',

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -6,25 +6,15 @@ import { toast } from "react-toastify";
 function NewIncident() {
   const [titulo, setTitulo] = useState("");
   const [categoriaIncidenciaId, setCategoriaIncidenciaId] = useState(""); // Inicialmente vacío
-  const [espacioId, setEspacioId] = useState(""); // Añadido para almacenar espacio_id
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Recuperar el estado de navegación
   const { state } = location;
   const bookingId = state?.bookingId;
-  const espacioIdFromState = state?.espacioId;
-
-  useEffect(() => {
-    if (espacioIdFromState) {
-      setEspacioId(espacioIdFromState);
-    }
-  }, [espacioIdFromState]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Verificar que se ha seleccionado una categoría válida
     if (categoriaIncidenciaId === "") {
       toast.error("Por favor, seleccione una categoría.");
       return;
@@ -34,7 +24,6 @@ function NewIncident() {
       await axios.post(
         `/api/incidents/create`,
         {
-          espacio_id: espacioId, // Usar espacioId desde el estado
           reserva_id: bookingId,
           usuario_id: localStorage.getItem("userId"),
           categoria_incidencia_id: categoriaIncidenciaId,
@@ -49,7 +38,7 @@ function NewIncident() {
       toast.success("Incidencia creada correctamente");
       navigate("/user/my-bookings");
     } catch (error) {
-      const errorMessage = error.response?.data?.message || error.message;
+      const errorMessage = error.response?.data?.mensaje || error.message;
       console.error("Error al crear la incidencia:", errorMessage);
       toast.error(` ${errorMessage}`);
     }
@@ -89,7 +78,6 @@ function NewIncident() {
             <option value={1}>Electricidad</option>
             <option value={2}>Mobiliario</option>
             <option value={3}>Limpieza</option>
-            {/* Añadir más opciones según sea necesario */}
           </select>
         </div>
         <div className="flex flex-col items-center mb-4">
