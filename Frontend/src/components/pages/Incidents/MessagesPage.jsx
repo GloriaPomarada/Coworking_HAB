@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import NewMessage from "./NewMessaje.jsx";
+import NewMessage from "./NewMessage.jsx";
 
 const MessagesPage = () => {
   const { id } = useParams();
@@ -47,13 +47,20 @@ const MessagesPage = () => {
       setMessages(response.data);
       toast.success("Nuevo mensaje enviado correctamente");
     } catch (err) {
-      console.error("Error al obtener los mensajes después de enviar uno nuevo:", err);
+      console.error(
+        "Error al obtener los mensajes después de enviar uno nuevo:",
+        err
+      );
       toast.error("Hubo un error al actualizar los mensajes");
     }
   };
 
   if (loading) {
-    return <div className="flex justify-center items-center h-screen">Cargando mensajes...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Cargando mensajes...
+      </div>
+    );
   }
 
   return (
@@ -69,9 +76,12 @@ const MessagesPage = () => {
                 key={message.mensaje_id}
                 className="p-4 border-b border-gray-200 bg-white rounded shadow-sm"
               >
-                <p className="text-center font-bold">{message.espacio_nombre}</p>
+                <p className="text-center font-bold">
+                  {message.espacio_nombre}
+                </p>
                 <p>
-                  <strong>Fecha:</strong> {message.fecha_creacion} {message.hora_creacion}
+                  <strong>Fecha:</strong> {message.fecha_creacion}{" "}
+                  {message.hora_creacion}
                 </p>
                 <p>
                   <strong>Mensaje:</strong> {message.mensaje}
@@ -88,7 +98,9 @@ const MessagesPage = () => {
         <div className="fixed bottom-6 right-6">
           <button
             onClick={handleNewMessageClick}
-            className={`px-4 py-2 text-white rounded ${showNewMessage ? 'bg-gray-400' : 'bg-blue-500'}`}
+            className={`px-4 py-2 text-white rounded ${
+              showNewMessage ? "bg-gray-400" : "bg-blue-500"
+            }`}
           >
             {showNewMessage ? "Ocultar " : "Nuevo Mensaje"}
           </button>

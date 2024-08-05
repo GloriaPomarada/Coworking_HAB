@@ -29,7 +29,7 @@ function Home() {
       </div>
       <div className="container mx-auto mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {cards.map((card, index) => (
-          <Link key={index} to="/space/spaces" className="relative block h-60 bg-cover bg-center flex items-center justify-center text-white text-xl font-bold group" style={{ backgroundImage: `url(${card.image})` }}>
+          <Link key={index} to="/space/spaces" className="relative h-60 bg-cover bg-center flex items-center justify-center text-white text-xl font-bold group" style={{ backgroundImage: `url(${card.image})` }}>
             <div className="absolute inset-0 bg-black opacity-40 group-hover:opacity-0 transition-opacity duration-500"></div>
             <span className="relative z-10 group-hover:opacity-0 transition-opacity duration-500">{card.title}</span>
             <div className="absolute inset-0 bg-blue-500 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-500">
