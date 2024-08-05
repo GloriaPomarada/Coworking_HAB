@@ -1,4 +1,3 @@
-// MyBookings.jsx
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -10,7 +9,6 @@ function MyBookings() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [ratings, setRatings] = useState({});
-  const apiUrl = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
@@ -44,7 +42,7 @@ function MyBookings() {
     };
 
     fetchBookings();
-  }, [apiUrl, token]);
+  }, [token]);
 
   const handleVote = async (bookingId, value) => {
     if (!token || !userId) {
@@ -79,7 +77,7 @@ function MyBookings() {
 
   const handleCreateIncident = (bookingId, espacioId) => {
     navigate('/space/new-incident', {
-      state: { bookingId, espacioId } // Pasar ambos valores
+      state: { bookingId, espacioId }
     });
   };
 
@@ -108,9 +106,18 @@ function MyBookings() {
             key={booking.id}
             className="bg-white rounded-lg shadow-md p-6 mb-4"
           >
-            <h3 className="text-lg font-semibold text-gray-700 mb-2 text-center">
-              {booking.espacio_nombre}
-            </h3>
+            <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold text-gray-700 mb-4 sm:mb-0">
+                {booking.espacio_nombre}
+              </h3>
+              {booking.espacio_foto_name && (
+                <img
+                  src={`${import.meta.env.VITE_API_URL}/${booking.espacio_foto_name}`} 
+                  alt="Espacio"
+                  className="w-full max-w-xs h-32 object-cover rounded-lg sm:ml-4"
+                />
+              )}
+            </div>
             <p className="text-sm text-gray-700 mb-2">
               <span className="font-semibold">Fecha de inicio: </span>
               {booking.fecha_inicio}
@@ -119,7 +126,7 @@ function MyBookings() {
               <span className="font-semibold">Fecha de fin:</span>{" "}
               {booking.fecha_fin}
             </p>
-            <p className="text-sm text-gray-700 mb-2 ">
+            <p className="text-sm text-gray-700 mb-2">
               <span className="font-semibold">Estado:</span> {booking.estado}
             </p>
             <p className="text-sm text-gray-700 mb-2">
@@ -129,7 +136,7 @@ function MyBookings() {
             
             <div className="flex flex-col items-center mt-4">
               <button
-                onClick={() => handleCreateIncident(booking.id, booking.espacio_id)} // Asegúrate de tener espacio_id en cada booking
+                onClick={() => handleCreateIncident(booking.id, booking.espacio_id)}
                 className="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded"
               >
                 Crear Nueva Incidencia
