@@ -116,7 +116,9 @@ function SpacesList() {
               </li>
             ))
           ) : (
-            <li className="text-gray-500 text-center">No hay espacios disponibles</li>
+            <li className="text-gray-500 text-center">
+              No hay espacios disponibles
+            </li>
           )}
         </ul>
       </div>
