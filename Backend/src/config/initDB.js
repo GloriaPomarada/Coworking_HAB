@@ -23,7 +23,7 @@ const main = async () => {
 
         console.log('Creando tablas...');
 
-        // Primero las tablas sin dependencias de claves externas
+        // Primero las tablas sin dependencias de claves externas.
         await pool.query(`
             CREATE TABLE IF NOT EXISTS usuarios (
                 id CHAR(36) PRIMARY KEY NOT NULL,
@@ -72,7 +72,7 @@ const main = async () => {
             )
         `);
 
-        // Luego las tablas con dependencias de claves externas
+        // Luego las tablas con dependencias de claves externas.
         await pool.query(`
             CREATE TABLE IF NOT EXISTS reservas (
                 id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -178,14 +178,9 @@ const main = async () => {
         `);
 
 
-
         console.log('¡Tablas creadas!');
 
-// Creación de procedimientos almacenados y disparadores
         console.log('Creando procedimientos almacenados y disparadores...');
-
-         // Creación de procedimientos almacenados y disparadores
-         console.log('Creando procedimientos almacenados y disparadores...');
 
          await pool.query(
             'DROP PROCEDURE IF EXISTS actualizarMediaValoracionesEspacio'
@@ -297,7 +292,7 @@ const main = async () => {
         console.error('Error al inicializar la base de datos:', err);
 
     } finally {
-        pool.end(); // Cerrar la conexión al finalizar la inicialización
+        pool.end(); 
         process.exit();
     }
     };

@@ -1,33 +1,49 @@
-import pool from "../../config/connection.js";
+import pool from '../../config/connection.js';
 
-const filteredIncidences = async (filters, userId, userRole) => {
-    let sql = `
-        SELECT 
-            i.id, 
-            e.nombre AS espacio_nombre, 
-            i.fecha_creacion,
-            COALESCE(m.mensaje, '') AS mensaje
-        FROM incidencias i
-        JOIN espacios e ON i.espacio_id = e.id
-        LEFT JOIN mensajes_incidencias m ON i.id = m.incidencia_id
-        WHERE 1=1`; 
-
-    const params = [];
-
-    // Filtro por rol del usuario
-    if (userRole !== 'admin') {
-        sql += ' AND i.usuario_id = ?';
-        params.push(userId);
-    }
-
-    try {
-        const [rows] = await pool.query(sql, params);
-
-        return rows;
-    } catch (error) {
-        console.error('Error al ejecutar la consulta de filtrado de incidencias:', error.message);
-        throw new Error('Error al ejecutar la consulta de filtrado de incidencias: ' + error.message);
-    }
+// Obtener incidencias asociadas a un usuario específico con nombre del espacio
+export const getIncidentsByUser = async (userId) => {
+  try {
+    const query = `
+      SELECT i.id, i.titulo, i.fecha_creacion, e.nombre AS espacio_nombre
+      FROM incidencias i
+      JOIN espacios e ON i.espacio_id = e.id
+      WHERE i.usuario_id = ?
+    `;
+    const [rows] = await pool.query(query, [userId]);
+    return rows;
+  } catch (error) {
+    throw error;
+  }
 };
 
-export default filteredIncidences;
+// Obtener todas las incidencias (solo para admin)
+export const getAllIncidents = async () => {
+  try {
+    const query = `
+      SELECT i.id, i.titulo, i.fecha_creacion, e.nombre AS espacio_nombre
+      FROM incidencias i
+      JOIN espacios e ON i.espacio_id = e.id
+    `;
+    const [rows] = await pool.query(query);
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Obtener mensajes para una incidencia específica
+export const getMessagesForIncident = async (incidentId) => {
+  try {
+    const query = `
+      SELECT m.id, m.mensaje, m.fecha_creacion, e.nombre AS espacio_nombre, u.email
+      FROM mensajes_incidencias m
+      JOIN espacios e ON m.espacio_id = e.id
+      JOIN usuarios u ON m.usuario_id = u.id -- Asumiendo que tienes una tabla usuarios para obtener el email
+      WHERE m.incidencia_id = ?
+    `;
+    const [rows] = await pool.execute(query, [incidentId]);
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+};

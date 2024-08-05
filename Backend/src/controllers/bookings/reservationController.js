@@ -2,17 +2,13 @@ import * as reservarModel from '../../models/bookings/index.js';
 import confirmBookingSchema from '../../schema/bookings/confirmBookingSchema.js';
 import sendMailUtil from '../../utils/sendMailUtils.js';
 
-
-
 const reservationController = async (req, res, next ) => {
     try {
         const reservaID = req.params.id
         const { estado } = req.body;
 
-        // Validar el cuerpo de la solicitud usando Joi
         const { error } = confirmBookingSchema.validate({ estado });
 
-        // Si hay un error en la validación, devolver un error 400 con el mensaje de error
         if (error) {
             return res.status(400).json({ message: error.details[0].message });
         }
@@ -46,5 +42,3 @@ const reservationController = async (req, res, next ) => {
 }
 
 export default reservationController;
-
-

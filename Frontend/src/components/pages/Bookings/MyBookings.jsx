@@ -79,7 +79,7 @@ function MyBookings() {
 
   const handleCreateIncident = (bookingId, espacioId) => {
     navigate('/space/new-incident', {
-      state: { bookingId, espacioId } 
+      state: { bookingId, espacioId } // Pasar ambos valores
     });
   };
 
@@ -129,7 +129,7 @@ function MyBookings() {
             
             <div className="flex flex-col items-center mt-4">
               <button
-                onClick={() => handleCreateIncident(booking.id, booking.espacio_id)} 
+                onClick={() => handleCreateIncident(booking.id, booking.espacio_id)} // Asegúrate de tener espacio_id en cada booking
                 className="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded"
               >
                 Crear Nueva Incidencia
