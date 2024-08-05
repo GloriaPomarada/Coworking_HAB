@@ -10,7 +10,17 @@ import 'react-toastify/dist/ReactToastify.css';
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthProvider>
-    <ToastContainer />
+    <ToastContainer 
+  position="bottom-center"
+  autoClose={5000}
+  hideProgressBar={false}
+  newestOnTop={false}
+  closeOnClick
+  rtl={false}
+  pauseOnFocusLoss
+  draggable
+  pauseOnHover
+/>
       <RouterProvider router={router} />
     </AuthProvider>
   </React.StrictMode>

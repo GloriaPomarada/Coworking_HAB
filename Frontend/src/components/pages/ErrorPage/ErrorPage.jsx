@@ -6,7 +6,7 @@ function ErrorPage() {
     <>
       <NavBar/>
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4 pt-1">
-      <h1 className="text-3xl font-bold text-gray-800 mb-4">¡Ups! Algo Salio Mal</h1>
+      {/* <h1 className="text-3xl font-bold text-gray-800 mb-4">¡Ups! Algo Salio Mal</h1> */}
       <div className="mb-4">
         <img 
           src="../../../../public/ErrorPage3.png" 

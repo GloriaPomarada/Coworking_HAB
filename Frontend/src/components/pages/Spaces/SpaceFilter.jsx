@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 import FilterForm from "../../shared/Filter/FilterForm.jsx";
 import SpaceList from "../../shared/Filter/SpaceList.jsx";
 
@@ -20,7 +21,6 @@ const SpaceFilterPage = () => {
   const [espaciosFiltrados, setEspaciosFiltrados] = useState([]);
   const [equipamientos, setEquipamientos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchCategorias = async () => {
@@ -28,7 +28,7 @@ const SpaceFilterPage = () => {
         const response = await axios.get("/api/categories");
         setCategorias(response.data);
       } catch (error) {
-        setError("Error al cargar categorías: " + error.message);
+        toast.error("Error al cargar categorías: " + error.message);
       }
     };
     fetchCategorias();
@@ -40,7 +40,7 @@ const SpaceFilterPage = () => {
         const response = await axios.get("/api/equipment");
         setEquipamientos(response.data);
       } catch (error) {
-        setError("Error al cargar equipamientos: " + error.message);
+        toast.error("Error al cargar equipamientos: " + error.message);
       }
     };
     fetchEquipamientos();
@@ -53,7 +53,6 @@ const SpaceFilterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setError(null);
     try {
       const response = await axios.get("/api/spaces/filters", {
         params: {
@@ -65,11 +64,12 @@ const SpaceFilterPage = () => {
 
       if (response.data && response.data.data) {
         setEspaciosFiltrados(response.data.data);
+        toast.success("Espacios filtrados cargados correctamente.");
       } else {
-        setError("Datos inesperados en la respuesta.");
+        toast.error("Datos inesperados en la respuesta.");
       }
     } catch (error) {
-      setError("Error al filtrar espacios: " + error.message);
+      toast.error("Error al filtrar espacios: " + error.message);
     } finally {
       setIsLoading(false);
     }
@@ -85,7 +85,6 @@ const SpaceFilterPage = () => {
         handleSubmit={handleSubmit}
       />
       {isLoading && <p>Cargando espacios...</p>}
-      {error && <p className="error">{error}</p>}
       <SpaceList espaciosFiltrados={espaciosFiltrados} />
     </div>
   );
