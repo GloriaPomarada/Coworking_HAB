@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect, createContext, useContext } from "react";
 import axios from "axios";
-import Auth from "../utils/auth";
+import Auth from "../../utils/auth";
 
 //*-> Creando el contexto (Estado Global).
 const AuthContext = createContext();

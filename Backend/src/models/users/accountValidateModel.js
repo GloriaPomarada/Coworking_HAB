@@ -26,7 +26,6 @@ const validateAccountModel = async (registrationCode) => {
         if (error.code === 'RESOURCE_NOT_FOUND') {
             throw error;
         }
-        // Aquí podríamos manejar otros tipos de errores de base de datos
         throw new Error('Error en la operación de base de datos');
     }
 };

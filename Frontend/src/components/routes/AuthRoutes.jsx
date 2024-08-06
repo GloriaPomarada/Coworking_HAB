@@ -5,7 +5,7 @@ import RecoverPass from "../auth/RecoverPass/RecoverPass";
 import ResetPass from "../auth/ResetPass/ResetPass";
 import Activate from "../auth/Activate/Activate.jsx";
 import UpdatePass from "../auth/UpdatePass/UpdatePass";
-import ProtectedRoute from "../utils/ProtectedRoute";
+import ProtectedRoute from "../../utils/ProtectedRoute.jsx";
 import Home from "../pages/Home/Home";
 
 function AuthRoutes() {
@@ -13,7 +13,7 @@ function AuthRoutes() {
     <Routes>
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/activate" element={<Activate />}/>
+      <Route path="/activate" element={<Activate />} />
       <Route path="/recoverPass" element={<RecoverPass />} />
       <Route
         path="/resetPass"
