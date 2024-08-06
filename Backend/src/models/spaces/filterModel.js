@@ -6,11 +6,21 @@ const filterModel = async (filters) => {
         (SELECT GROUP_CONCAT(eq.nombre SEPARATOR ', ')
          FROM espacios_equipamientos ee
          JOIN equipamientos eq ON ee.equipamiento_id = eq.id
-         WHERE ee.espacio_id = e.id) AS equipamiento
+         WHERE ee.espacio_id = e.id) AS equipamiento,
+        ef.name AS imagen
         FROM espacios e
         JOIN categorias_espacios ce ON e.categoria_id = ce.id
         LEFT JOIN espacios_equipamientos ee ON e.id = ee.espacio_id
         LEFT JOIN equipamientos eq ON ee.equipamiento_id = eq.id
+        LEFT JOIN (
+            SELECT ef1.espacio_id, ef1.name
+            FROM espacios_fotos ef1
+            INNER JOIN (
+                SELECT espacio_id, MIN(id) AS min_id
+                FROM espacios_fotos
+                GROUP BY espacio_id
+            ) ef2 ON ef1.espacio_id = ef2.espacio_id AND ef1.id = ef2.min_id
+        ) ef ON e.id = ef.espacio_id
         WHERE 1
     `;
 
@@ -75,7 +85,6 @@ const filterModel = async (filters) => {
     }
 
     try {
-        
         const [rows] = await pool.query(sql, params);
         return rows;
     } catch (error) {
