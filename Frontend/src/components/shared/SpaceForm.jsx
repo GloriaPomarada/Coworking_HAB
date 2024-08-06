@@ -159,7 +159,7 @@ const SpaceForm = ({ onSubmit, onPhotosChange, photos, imagePreview }) => {
       <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
         {id ? "Actualizar Espacio" : "Crear Espacio"}
       </h1>
-      <div className="space-y-4">
+      <div className="space-y-4 ">
         <label>
           Nombre:
           <input

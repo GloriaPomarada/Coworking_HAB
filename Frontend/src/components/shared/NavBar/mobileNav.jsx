@@ -1,4 +1,5 @@
 
+
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { useState, useRef, useEffect } from "react";
@@ -17,6 +18,10 @@ function MobileNav() {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
       setMenuOpen(false);
     }
+  };
+
+  const handleMenuClose = () => {
+    setMenuOpen(false);
   };
 
   useEffect(() => {
@@ -78,23 +83,61 @@ function MobileNav() {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="sm:hidden absolute top-full left-0 w-full bg-white text-black shadow-lg">
-          <nav className="flex flex-col space-y-2 p-4">
+          <nav className="flex flex-col space-y-2 p-4" ref={menuRef}>
             {user ? (
               isAdmin ? (
                 <>
-                  <Link to="/space/create-space" className="hover:bg-gray-200 p-2 rounded">
-                    Crear Espacio
+                  <Link to="/space/create-space" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                    <img
+                      src="../../../../public/crear_espacios_black.png"
+                      alt="Crear espacios"
+                      className="h-8 w-8 mr-2"
+                    />
+                    Crear espacios
                   </Link>
-                  <Link to="/space/spaces" className="hover:bg-gray-200 p-2 rounded">
-                     Ver Espacios
+                  <Link to="/space/spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                    <img
+                      src="../../../../public/logo_ver_espacios_black.png"
+                      alt="Ver Espacios"
+                      className="h-8 w-8 mr-2"
+                    />
+                    Espacios Disponibles
                   </Link>
-                  <Link to="/space/filter-spaces" className="hover:bg-gray-200 p-2 rounded" >
-                    Filtrar Espacios
+                  <Link to="/space/filter-spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                    <img
+                      title="Busqueda Avanzada"
+                      src="../../../../public/logo_filtrar_espacios_black.png"
+                      alt="Admin Icon"
+                      className="h-8 w-8 mr-2"
+                    />
+                    Busqueda Avanzada
                   </Link>
-                  <Link to="/user/adminBookings" className="hover:bg-gray-200 p-2 rounded">
+                  <Link to="/user/adminBookings" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                    <img
+                      src="../../../../public/reserva_pendiente_black.png"
+                      alt="Admin Icon"
+                      className="h-8 w-8 mr-2"
+                    />
                     Reservas Pendientes
                   </Link>
-                  <Link to="/user/profile" className="hover:bg-gray-200 p-2 rounded">
+                  <Link to="/user/my-bookings" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                    <img
+                      title="Reservas"
+                      src="../../../../public/ver_reservas_black.png"
+                      alt="Admin Icon"
+                      className="h-8 w-8 mr-2"
+                    />
+                    Reservas
+                  </Link>
+                  <Link to="/user/incident-list" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                    <img
+                      src="../../../../public/ver_incidencias_black.png"
+                      alt="Admin Icon"
+                      className="h-8 w-8 mr-2"
+                    />
+                    Incidencias
+                  </Link>
+                  <Link to="/user/profile" className="hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
                     <img
                       src="../../../../public/iconoPerfUser.png"
                       alt="Profile Icon"
@@ -102,7 +145,6 @@ function MobileNav() {
                     />
                     Perfil
                   </Link>
-                  
                   <button
                     className="hover:bg-gray-200 p-2 rounded focus:outline-none"
                     onClick={() => {
@@ -120,23 +162,36 @@ function MobileNav() {
                 </>
               ) : (
                 <>
-                  <Link to="/space/spaces" className="hover:bg-gray-200 p-2 rounded">
+                  <Link to="/space/spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                    <img
+                      src="../../../../public/logo_ver_espacios_black.png"
+                      alt="Admin Icon"
+                      className="h-8 w-8 mr-3"
+                    />
                     Ver Espacios
                   </Link>
-                  <Link to="/space/filter-spaces" className="hover:bg-gray-200 p-2 rounded" >
+                  <Link to="/space/filter-spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                    <img
+                      src="../../../../public/logo_filtrar_espacios_black.png"
+                      alt="Admin Icon"
+                      className="h-8 w-8 mr-3"
+                    />
                     Filtrar Espacios
                   </Link>
-                  <Link to="/user/profile" className="hover:bg-gray-200 p-2 rounded">
+                  <Link to="/user/profile" className="hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
                     <img
                       src="../../../../public/iconoPerfUser.png"
                       alt="Profile Icon"
-                      className="h-7 w-7 inline mr-2"
+                      className="h-8 w-8 inline mr-2"
                     />
                     Perfil
                   </Link>
                   <button
                     className="hover:bg-gray-200 p-2 rounded focus:outline-none"
-                    onClick={logout}
+                    onClick={() => {
+                      logout();
+                      handleMenuClose();
+                    }}
                   >
                     <img
                       src="../../../../public/logo_logout_black.png"
@@ -149,17 +204,37 @@ function MobileNav() {
               )
             ) : (
               <>
-                <Link to="/auth/login" className="hover:bg-gray-200 p-2 rounded">
+                <Link to="/auth/login" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                  <img
+                    src="../../../../public/iniciar-sesion.png"
+                    alt="Admin Icon"
+                    className="h-8 w-8 mr-3"
+                  />
                   Log in
                 </Link>
-                <Link to="/auth/register" className="hover:bg-gray-200 p-2 rounded">
+                <Link to="/auth/register" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                  <img
+                    src="../../../../public/agregar.png"
+                    alt="Admin Icon"
+                    className="h-8 w-8 mr-3"
+                  />
                   Sign Up
                 </Link>
-                <Link to="/space/spaces" className="hover:bg-gray-200 p-2 rounded" >
+                <Link to="/space/spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                  <img
+                    src="../../../../public/logo_ver_espacios_black.png"
+                    alt="Admin Icon"
+                    className="h-8 w-8 mr-3"
+                  />
                   Ver Espacios
                 </Link>
-                <Link to="/space/filter-spaces" className="hover:bg-gray-200 p-2 rounded" >
-                 Filtrar Espacios
+                <Link to="/space/filter-spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                  <img
+                    src="../../../../public/logo_filtrar_espacios_black.png"
+                    alt="Admin Icon"
+                    className="h-8 w-8 mr-3"
+                  />
+                  Filtrar Espacios
                 </Link>
               </>
             )}

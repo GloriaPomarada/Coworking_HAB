@@ -121,7 +121,7 @@ function Register() {
           type="submit"
           className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
         >
-          Registrar
+          Registrarse
         </button>
         <p className="mt-4 text-center text-gray-700">
           ¿Ya tienes una cuenta?{" "}
