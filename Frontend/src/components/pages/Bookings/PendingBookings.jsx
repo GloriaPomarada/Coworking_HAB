@@ -8,7 +8,7 @@ function PendingBookings() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [shouldRedirect, setShouldRedirect] = useState(false); 
+  const [shouldRedirect, setShouldRedirect] = useState(false);
   const apiUrl = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -94,24 +94,31 @@ function PendingBookings() {
   }
 
   if (bookings.length === 0) {
-    return(
+    return (
       navigate("/user/profile"),
       toast.success(`No tienes reservas pendientes de revisar`)
-    )
+    );
   }
 
   return (
     <div className="flex flex-col items-center pt-6 pb-12 px-6 bg-gray-100 min-h-screen">
-      <h2 className="text-xl font-bold text-gray-800 mb-6">Reservas Pendientes</h2>
-      <div className="p-6 bg-white rounded-lg shadow-md max-w-4xl w-full">
+      <h2 className="text-xl font-bold text-gray-800 ">Reservas Pendientes</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6  rounded-lg shadow-md max-w-6xl w-full">
         {bookings.map((booking) => (
           <div
             key={booking.id}
             className="bg-white rounded-lg shadow-md p-6 mb-4"
           >
-            <h3 className="text-lg font-semibold text-gray-700 mb-2 text-center">
-              {booking.espacio_nombre}
-            </h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-700 mr-4">
+                {booking.espacio_nombre}
+              </h3>
+              <img
+                src={booking.espacio_imagen ? `${apiUrl}/${booking.espacio_imagen}` : "https://via.placeholder.com/300x200"}
+                alt={booking.espacio_nombre}
+                className="w-20 h-20 rounded-lg object-cover"
+              />
+            </div>
             <p className="text-sm text-gray-700 mb-2">
               <span className="font-semibold">Fecha de inicio: </span>
               {booking.fecha_inicio}
@@ -135,7 +142,7 @@ function PendingBookings() {
             <div className="flex justify-around mt-4">
               <button
                 onClick={() => updateBookingStatus(booking.id, "reservado")}
-                className="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
               >
                 Aceptar
               </button>
