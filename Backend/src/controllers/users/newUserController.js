@@ -1,10 +1,9 @@
-import randomstring from 'randomstring'; // crea el código de registro random
+import randomstring from 'randomstring'; 
 import validateSchema from '../../utils/validateSchema.js';
 import newUserSchema from '../../schema/user/newUserSchema.js';
 import sendMailUtil from '../../utils/sendMailUtils.js';
 import * as userModel from '../../models/users/index.js';
-import { CLIENT_URL } from '../../../env.js';
-//-> Endpoint newUser
+
 const newUserController = async (req, res, next) => {
     try {
         const { username, email, password } = req.body;
@@ -12,22 +11,22 @@ const newUserController = async (req, res, next) => {
         // -> Validamos body con Joi.
         await validateSchema(newUserSchema, req.body);
 
-        // -> Generamos el codigo de registro para activar la cuenta.
         const registrationCode = randomstring.generate(30);
 
-        // -> Generamos el correo y el cuerpo del correo.
         const emailSubject = 'Activación Cuenta Espacios Coworking';
         const emailBody = `
     ¡Hola, ${username}!
-    
-    Para activar tu cuenta, haz clic en el siguiente enlace:
 
-    <a href="${CLIENT_URL}auth/activate/${registrationCode}">Activar mi cuenta</a>
+    Bienvenido a Coworking Space!!
+    Éste es tu código de registro: 
+       <strong> ${registrationCode} </strong>
+       
+    Úsalo para activar tu cuenta.
    `;
 
-        // -> Ya validada, llamamos al modelo para que realice la consulta a la base de datos.
         await userModel.insertUser(username, email, password, registrationCode);
 
+         console.log(registrationCode)
         // -> Ya se ha guardado el user en la DB (lo ha hecho el modelo). Ahora enviamos correo con el registrationCode.
         await sendMailUtil(email, emailSubject, emailBody);
 
@@ -37,7 +36,6 @@ const newUserController = async (req, res, next) => {
             message:
                 'Usuario creado correctamente. Por favor revisa tu correo.',
         });
-
     } catch (err) {
         next(err);
     }

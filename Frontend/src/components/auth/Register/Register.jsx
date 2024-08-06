@@ -43,8 +43,8 @@ function Register() {
           "Registro exitoso. Revise su correo para la activacion. Redirigiendo a la página de inicio de sesión..."
         );
         setTimeout(() => {
-          navigate("/auth/login");
-        }, 3000);
+          navigate("/auth/activate");
+        }, 2000);
       } else {
         toast.error("Hubo un problema con el registro. Inténtalo de nuevo.");
       }

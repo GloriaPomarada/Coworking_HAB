@@ -3,7 +3,7 @@ import Register from "../auth/Register/Register";
 import Login from "../auth/Login/Login";
 import RecoverPass from "../auth/RecoverPass/RecoverPass";
 import ResetPass from "../auth/ResetPass/ResetPass";
-import Activate from "../auth/Activate/Activate";
+import Activate from "../auth/Activate/Activate.jsx";
 import UpdatePass from "../auth/UpdatePass/UpdatePass";
 import ProtectedRoute from "../utils/ProtectedRoute";
 import Home from "../pages/Home/Home";
@@ -13,10 +13,7 @@ function AuthRoutes() {
     <Routes>
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
-      <Route
-        path="/activate/:registrationCode"
-        element={<ProtectedRoute element={<Activate />} />}
-      />
+      <Route path="/activate" element={<Activate />}/>
       <Route path="/recoverPass" element={<RecoverPass />} />
       <Route
         path="/resetPass"
