@@ -3,7 +3,6 @@ import pool from '../../config/connection.js';
 const getEspacio = async (espacioId = null) => {
     let sql;
     if (espacioId) {
-        // Query para obtener un solo espacio
         sql = `SELECT e.*, ef.id AS espacio_imagen_id, ef.name AS espacio_imagen, ce.nombre AS categoria_nombre, eq.nombre AS equipamiento_nombre
                FROM espacios e
                LEFT JOIN espacios_fotos ef ON e.id = ef.espacio_id
@@ -12,14 +11,12 @@ const getEspacio = async (espacioId = null) => {
                LEFT JOIN equipamientos eq ON ee.equipamiento_id = eq.id
                WHERE e.id = ?`;
     } else {
-        // Query para obtener todos los espacios
         sql = `SELECT e.*, ef.id AS espacio_imagen_id, ef.name AS espacio_imagen, ce.nombre AS categoria_nombre, eq.nombre AS equipamiento_nombre
                FROM espacios e
                LEFT JOIN espacios_fotos ef ON e.id = ef.espacio_id
                LEFT JOIN categorias_espacios ce ON e.categoria_id = ce.id
                LEFT JOIN espacios_equipamientos ee ON e.id = ee.espacio_id
-               LEFT JOIN equipamientos eq ON ee.equipamiento_id = eq.id
-               ORDER BY e.id DESC`;
+               LEFT JOIN equipamientos eq ON ee.equipamiento_id = eq.id`;
     }
 
     try {

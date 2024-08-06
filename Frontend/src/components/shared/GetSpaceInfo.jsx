@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
-import RatingStars from './Filter/RatingStars.jsx';
+import RatingStars from "./Filter/RatingStars.jsx";
 
 function SpacesList() {
   const [spaces, setSpaces] = useState([]);
@@ -15,7 +15,8 @@ function SpacesList() {
       try {
         const response = await axios.get(`/api/spaces`);
         if (response.data && Array.isArray(response.data.data)) {
-          setSpaces(response.data.data);
+          const sortedSpaces = response.data.data.sort((a, b) => b.id - a.id);
+          setSpaces(sortedSpaces);
         } else {
           console.error("Error en el formato de la data:", response.data);
           setSpaces([]);
