@@ -10,7 +10,7 @@ const UpdateSpace = () => {
   const navigate = useNavigate();
   const { token } = useAuth();
   const [photos, setPhotos] = useState([]);
-  const [imagePreview, setImagePreview] = useState("");
+  const [imagePreview, setImagePreview] = useState([]);
 
   const handleUpdateSubmit = async (id, formData, token, photos) => {
     try {
@@ -57,11 +57,9 @@ const UpdateSpace = () => {
         return updatedPhotos;
       });
     }
-    if (files.length > 0) {
-      setImagePreview(URL.createObjectURL(files[0]));
-    } else {
-      setImagePreview("");
-    }
+
+    const previews = files.map((file) => URL.createObjectURL(file));
+    setImagePreview(previews);
   };
 
   const handleDeletePhoto = async (spaceId, photoId) => {
@@ -83,20 +81,16 @@ const UpdateSpace = () => {
   };
 
   const uploadPhotos = async (spaceId, files) => {
-    console.log("spaceId para actualizar:", spaceId);
-    console.log("Fotos para actualizar:", files);
     if (!photos || !Array.isArray(files) || photos.length === 0) return;
     const formData = new FormData();
     photos.forEach((file) => formData.append(`photo`, file));
     try {
-      console.log("Subiendo fotos a:", spaceId);
       await axios.post(`/api/spaces/${spaceId}/photos`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: token,
         },
       });
-      console.log("Fotos subidas");
       toast.success("Fotos subidas");
     } catch (error) {
       console.error("Error subiendo las fotos:", error);

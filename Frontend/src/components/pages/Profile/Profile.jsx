@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FaEdit } from "react-icons/fa";
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -65,11 +66,27 @@ const Profile = () => {
     <div className="p-6 bg-gray-100 rounded-lg ">
       <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
         <div className="flex justify-center mb-6">
-          <img
-            src={avatarUrl}
-            alt={userData?.avatar || "Avatar"}
-            className="w-24 h-24 rounded-full object-cover"
-          />
+          <div className="relative">
+            <img
+              src={avatarUrl}
+              alt={userData?.avatar || "Avatar"}
+              className="w-24 h-24 rounded-full object-cover"
+            />
+
+            <label
+              htmlFor="avatar-upload"
+              className="absolute bottom-0 right-0 bg-gray-200 text-black p-1 rounded-full cursor-pointer hover:bg-gray-400 transition duration-300"
+            >
+              <FaEdit className="text-blue" title="Cambiar el avatar" />
+            </label>
+            <input
+              id="avatar-upload"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleAvatarChange}
+            />
+          </div>
         </div>
         <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
           Perfil de Usuario
@@ -120,21 +137,6 @@ const Profile = () => {
             >
               Cambiar Contraseña
             </button>
-          </div>
-          <div>
-            <label
-              htmlFor="avatar-upload"
-              className="inline-block bg-blue-500 text-white py-2 px-4 rounded-md cursor-pointer hover:bg-blue-600 transition duration-300 text-center"
-            >
-              Cambiar Avatar
-            </label>
-            <input
-              id="avatar-upload"
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={handleAvatarChange}
-            />
           </div>
         </div>
       </div>

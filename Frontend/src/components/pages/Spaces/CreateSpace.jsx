@@ -10,7 +10,7 @@ const CreateSpace = () => {
   const navigate = useNavigate();
   const { token } = useAuth();
   const [photos, setPhotos] = useState([]);
-  const [imagePreview, setImagePreview] = useState("");
+  const [imagePreview, setImagePreview] = useState([]);
 
   const handleCreateSubmit = async (id, formData, token) => {
     try {
@@ -39,11 +39,8 @@ const CreateSpace = () => {
   const handlePhotosChange = (e) => {
     const files = Array.from(e.target.files);
     setPhotos(files);
-    if (files.length > 0) {
-      setImagePreview(URL.createObjectURL(files[0]));
-    } else {
-      setImagePreview("");
-    }
+    const previews = files.map((file) => URL.createObjectURL(file));
+    setImagePreview(previews);
   };
 
   const uploadPhotos = async (spaceId, photos) => {

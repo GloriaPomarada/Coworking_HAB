@@ -68,7 +68,6 @@ const SpaceForm = ({ onSubmit, onPhotosChange, photos, imagePreview }) => {
             estado: space.estado,
           });
 
-          // Construye la URL e id de la imagen
           const photoDetails = space.imagenes.map((image) => ({
             url: `${BASE_URL}/${image.filename}`,
             id: image.id,
@@ -99,7 +98,6 @@ const SpaceForm = ({ onSubmit, onPhotosChange, photos, imagePreview }) => {
     }
 
     try {
-      console.log(`Attempting to delete photo with ID: ${photoId}`);
       const response = await axios.delete(
         `/api/spaces/${id}/photos/${photoId}`,
         {
@@ -272,10 +270,17 @@ const SpaceForm = ({ onSubmit, onPhotosChange, photos, imagePreview }) => {
             onChange={onPhotosChange}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {imagePreview && (
-            <img src={imagePreview} alt="Preview" className="w-full mt-4" />
-          )}
-          <div className="mt-4">
+          <div className="mt-4 grid grid-cols-2 gap-4">
+            {imagePreview.map((preview, index) => (
+              <img
+                key={index}
+                src={preview}
+                alt={`Preview ${index}`}
+                className="w-full h-40 object-cover rounded-md"
+              />
+            ))}
+          </div>
+          <div className="mt-4 grid grid-cols-2 gap-4">
             {spacePhotos.map((photo) => (
               <div key={photo.id} className="relative">
                 <img
@@ -288,7 +293,7 @@ const SpaceForm = ({ onSubmit, onPhotosChange, photos, imagePreview }) => {
                   onClick={() => handleDeletePhoto(photo.id)}
                   className="absolute top-2 right-2 text-white bg-red-500 rounded-full  hover:bg-red-600 p-1"
                 >
-                  <FaRegTrashAlt className="w-6 h-6" />
+                  <FaRegTrashAlt className="w-6 h-6" title="Eliminar foto" />
                 </button>
               </div>
             ))}
