@@ -15,8 +15,6 @@ function BookingForm({ spaceId, onBookingSuccess }) {
   const token = localStorage.getItem("token"); 
   const userId = localStorage.getItem('userId'); 
 
-  
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -63,59 +61,68 @@ function BookingForm({ spaceId, onBookingSuccess }) {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto">
-      <h2 className="text-xl font-bold text-gray-800 mb-4 text-center">Formulario de Reserva</h2>
-      {error && <p className="text-red-500">{error}</p>}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="fecha_inicio" className="block text-gray-700">Fecha de Inicio</label>
-          <input
-            type="date"
-            id="fecha_inicio"
-            name="fecha_inicio"
-            value={formData.fecha_inicio}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded"
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="fecha_fin" className="block text-gray-700">Fecha de Fin</label>
-          <input
-            type="date"
-            id="fecha_fin"
-            name="fecha_fin"
-            value={formData.fecha_fin}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded"
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="observaciones" className="block text-gray-700">Observaciones</label>
-          <textarea
-            id="observaciones"
-            name="observaciones"
-            value={formData.observaciones}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded"
-            rows="4"
-          />
-        </div>
-        <div className="flex justify-center">
-          <button
-            type="submit"
-            className={`bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-            disabled={loading}
-          >
-            {loading ? 'Reservando...' : 'Reservar'}
-          </button>
-        </div>
-      </form>
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 p-6">
+      <h2 className="text-xl font-bold text-gray-800 mb-4 text-center">
+        Formulario de Reserva
+      </h2>
+      <div className="p-6 bg-white rounded-lg shadow-md max-w-md w-full">
+        {error && <p className="text-red-500">{error}</p>}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="fecha_inicio" className="block text-gray-700">
+              Fecha de Inicio
+            </label>
+            <input
+              type="date"
+              id="fecha_inicio"
+              name="fecha_inicio"
+              value={formData.fecha_inicio}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded"
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="fecha_fin" className="block text-gray-700">
+              Fecha de Fin
+            </label>
+            <input
+              type="date"
+              id="fecha_fin"
+              name="fecha_fin"
+              value={formData.fecha_fin}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded"
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="observaciones" className="block text-gray-700">
+              Observaciones
+            </label>
+            <textarea
+              id="observaciones"
+              name="observaciones"
+              value={formData.observaciones}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded"
+              rows="4"
+            />
+          </div>
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              className={`bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              disabled={loading}
+            >
+              {loading ? 'Reservando...' : 'Reservar'}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
-
 
 BookingForm.propTypes = {
   spaceId: PropTypes.number.isRequired,
