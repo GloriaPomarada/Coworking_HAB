@@ -45,6 +45,7 @@ const CreateSpace = () => {
 
   const uploadPhotos = async (spaceId, photos) => {
     const formData = new FormData();
+    // eslint-disable-next-line no-unused-vars
     photos.forEach((file, index) => formData.append(`photo`, file));
     try {
       await axios.post(`/api/spaces/${spaceId}/photos`, formData, {
