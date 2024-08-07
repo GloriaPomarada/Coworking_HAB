@@ -107,12 +107,16 @@ A continuación se detalla el listado de las rutas disponibles en el frontend:
 - `/user/profile`: Panel de control del usuario o administrador. Permite cambiar el avatar y redirecciona a cambio de contraseña y reservas del usuario.
 - `/auth/updatePass`: Página para actualizar la contraseña del usuario.
 - `/user/my-bookings`: Listado de reservas del usuario.
+- `/user/new-booking/:id` : Crear una nueva reserva de un espacio de coworking.
+- `user/adminBookings`: Reservas pendientes de aprobación.
+- `/user/incident-list`: Listado de incidencias del usuario.
 - `/booking/create/:id`: Crear una nueva reserva de un espacio de coworking.
 - `/space/spaces`: Listado de espacios de coworking.
 - `/space/filter-spaces`: Filtrado de los espacios de coworking.
 - `/space/get-space/:id`: Detalle de un espacio de coworking específico. Redirecciona a la página de crear reservas de ese espacio.
 - `/space/create-space`: Crear un nuevo espacio de coworking.
 - `/space/update-space/:id`: Modificar un espacio de coworking existente.
+- `/space/new-incident`: Crear una nueva incidencia en un espacio de coworking.
 
 ## Tecnologías Utilizadas
 
