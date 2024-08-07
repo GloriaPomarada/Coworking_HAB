@@ -63,7 +63,7 @@ El frontend ha sido desarrollado empleando React y Vite y el backend Node y MySq
 
 2. Configura las variables de entorno para el frontend:
 
-   - Crea un archivo `.env` en el directorio `frontend` y agrega la configuración (también puedes copiar el archivo .env.local y renombrarlo a .env):
+   - Crea un archivo `.env` en el directorio `frontend` y agrega la configuración (también puedes copiar el archivo env.local y renombrarlo a .env):
 
    VITE_API_URL=
 

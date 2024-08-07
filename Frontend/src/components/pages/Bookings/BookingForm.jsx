@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import PropTypes from 'prop-types';
+import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import PropTypes from "prop-types";
 
 function BookingForm({ spaceId, onBookingSuccess }) {
   const [formData, setFormData] = useState({
-    fecha_inicio: '',
-    fecha_fin: '',
-    observaciones: '',
+    fecha_inicio: "",
+    fecha_fin: "",
+    observaciones: "",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const token = localStorage.getItem("token"); 
-  const userId = localStorage.getItem('userId'); 
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,31 +30,31 @@ function BookingForm({ spaceId, onBookingSuccess }) {
 
     try {
       const response = await axios.post(
-        '/api/bookings/create',
+        "/api/bookings/create",
         {
           usuario_id: userId,
           espacio_id: spaceId,
-          tipo: 'espacio_completo',
+          tipo: "espacio_completo",
           fecha_inicio: formData.fecha_inicio,
           fecha_fin: formData.fecha_fin,
           observaciones: formData.observaciones,
         },
         {
           headers: {
-            Authorization: token, 
+            Authorization: token,
           },
         }
       );
 
-      if (response.data.status === 'ok') {
-        toast.success('Reserva creada con éxito!');
+      if (response.data.status === "ok") {
+        toast.success("Reserva creada con éxito!");
         onBookingSuccess(); // Llama a la función de newBooking como prop si Ok.
       } else {
-        toast.error('No se pudo realizar la reserva.');
+        toast.error("No se pudo realizar la reserva.");
       }
     } catch (err) {
-      toast.error('No se pudo realizar la reserva.');
-      console.error('Error en la reserva:', err);
+      toast.error("No se pudo realizar la reserva.");
+      console.error("Error en la reserva:", err);
     } finally {
       setLoading(false);
     }
@@ -107,15 +107,18 @@ function BookingForm({ spaceId, onBookingSuccess }) {
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded"
               rows="4"
+              required
             />
           </div>
           <div className="flex justify-center">
             <button
               type="submit"
-              className={`bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
               disabled={loading}
             >
-              {loading ? 'Reservando...' : 'Reservar'}
+              {loading ? "Reservando..." : "Reservar"}
             </button>
           </div>
         </form>
