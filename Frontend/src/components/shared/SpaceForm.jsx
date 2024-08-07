@@ -322,8 +322,8 @@ const SpaceForm = ({ onSubmit, onPhotosChange, photos, imagePreview }) => {
 SpaceForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onPhotosChange: PropTypes.func.isRequired,
-  photos: PropTypes.array.isRequired,
-  imagePreview: PropTypes.string,
+  photos: PropTypes.array,
+  imagePreview: PropTypes.array,
 };
 
 export default SpaceForm;
