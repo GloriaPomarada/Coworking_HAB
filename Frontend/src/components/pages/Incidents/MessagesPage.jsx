@@ -65,10 +65,10 @@ const MessagesPage = () => {
 
   return (
     <div className="flex flex-col items-center pt-6 pb-12 px-6 bg-gray-100 min-h-screen">
-      <h2 className="text-xl font-bold text-gray-800 mb-6">
+      <h2 className="text-xl font-bold text-gray-800 ">
         Mensajes de Incidencia
       </h2>
-      <div className="p-6 bg-white rounded-lg shadow-md w-full max-w-4xl relative">
+      <div className="p-6  rounded-lg shadow-md w-full max-w-4xl relative">
         {messages.length > 0 ? (
           <ul className="space-y-4">
             {messages.map((message) => (
@@ -80,7 +80,7 @@ const MessagesPage = () => {
                   {message.espacio_nombre}
                 </p>
                 <p>
-                  <strong>Fecha:</strong> {message.fecha_creacion}{" "}
+                  <strong>Fecha:</strong> {message.fecha_creacion}{" "}-{" "}
                   {message.hora_creacion}
                 </p>
                 <p>
@@ -99,14 +99,14 @@ const MessagesPage = () => {
           <button
             onClick={handleNewMessageClick}
             className={`px-4 py-2 text-white rounded ${
-              showNewMessage ? "bg-gray-400" : "bg-blue-500"
+              showNewMessage ? "bg-gray-400" : "bg-blue-500  hover:bg-blue-700"
             }`}
           >
             {showNewMessage ? "Ocultar " : "Nuevo Mensaje"}
           </button>
         </div>
         {showNewMessage && (
-          <div className="fixed bottom-16 right-6 w-full max-w-lg p-4 bg-white shadow-lg rounded">
+          <div className="fixed bottom-16 right-6  max-w-lg p-4 bg-white shadow-lg rounded">
             <NewMessage incidentId={id} onMessageSent={handleNewMessageSent} />
           </div>
         )}

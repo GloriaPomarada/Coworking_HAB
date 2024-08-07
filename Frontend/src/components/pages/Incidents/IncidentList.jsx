@@ -44,7 +44,7 @@ const IncidentList = () => {
       <h2 className="text-xl font-bold text-gray-800 mb-6">
         Lista de Incidencias
       </h2>
-      <div className="p-6 bg-white rounded-lg shadow-md max-w-4xl w-full">
+      <div className="p-6 rounded-lg shadow-md max-w-4xl w-full">
         {incidents.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {incidents.map((incident) => (
@@ -63,14 +63,16 @@ const IncidentList = () => {
                   <span className="font-semibold">Título:</span>{" "}
                   {incident.titulo}
                 </p>
-                <button
-                  onClick={() =>
-                    navigate(`/user/incident-messages/${incident.id}`)
-                  }
-                  className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
-                >
-                  Ver Mensajes
-                </button>
+                <div className="flex justify-center">
+                  <button
+                    onClick={() =>
+                      navigate(`/user/incident-messages/${incident.id}`)
+                    }
+                    className="mt-4 px-4 py-2 bg-blue-500  hover:bg-blue-700 text-white rounded"
+                  >
+                    Ver Mensajes
+                  </button>
+                </div>
               </div>
             ))}
           </div>

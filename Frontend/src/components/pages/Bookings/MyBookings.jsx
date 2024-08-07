@@ -12,6 +12,7 @@ function MyBookings() {
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -100,49 +101,47 @@ function MyBookings() {
   return (
     <div className="flex flex-col items-center pt-6 pb-12 px-6 bg-gray-100 min-h-screen">
       <h2 className="text-xl font-bold text-gray-800 mb-6">Mis Reservas</h2>
-      <div className="p-6 bg-white rounded-lg shadow-md max-w-4xl w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-lg shadow-md max-w-6xl w-full">
         {bookings.map((booking) => (
           <div
             key={booking.id}
             className="bg-white rounded-lg shadow-md p-6 mb-4"
           >
-            <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold text-gray-700 mb-4 sm:mb-0">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-700 mr-4">
                 {booking.espacio_nombre}
               </h3>
-              {booking.espacio_foto_name && (
-                <img
-                  src={`${import.meta.env.VITE_API_URL}/${booking.espacio_foto_name}`} 
-                  alt="Espacio"
-                  className="w-full max-w-xs h-32 object-cover rounded-lg sm:ml-4"
-                />
-              )}
+              <img
+                src={booking.espacio_foto_name ? `${apiUrl}/${booking.espacio_foto_name}` : "https://via.placeholder.com/300x200"}
+                alt={booking.espacio_nombre}
+                className="w-20 h-20 rounded-lg object-cover"
+              />
             </div>
             <p className="text-sm text-gray-700 mb-2">
               <span className="font-semibold">Fecha de inicio: </span>
               {booking.fecha_inicio}
             </p>
             <p className="text-sm text-gray-700 mb-2">
-              <span className="font-semibold">Fecha de fin:</span>{" "}
+              <span className="font-semibold">Fecha de fin: </span>
               {booking.fecha_fin}
             </p>
             <p className="text-sm text-gray-700 mb-2">
-              <span className="font-semibold">Estado:</span> {booking.estado}
+              <span className="font-semibold">Estado: </span>
+              {booking.estado}
             </p>
             <p className="text-sm text-gray-700 mb-2">
-              <span className="font-semibold">Observaciones:</span>{" "}
+              <span className="font-semibold">Observaciones: </span>
               {booking.observaciones}
             </p>
-            
-            <div className="flex flex-col items-center mt-4">
+            <div className="flex justify-around mt-4">
               <button
                 onClick={() => handleCreateIncident(booking.id, booking.espacio_id)}
-                className="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded"
+                className="bg-blue-500  hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
               >
-                Crear Nueva Incidencia
+                Notificar Incidencia
               </button>
               {ratings[booking.id] === 0 ? (
-                <>
+                <div className="flex flex-col items-center">
                   <span className="text-center font-semibold mb-2">
                     Valora tu experiencia
                   </span>
@@ -160,9 +159,9 @@ function MyBookings() {
                       />
                     ))}
                   </div>
-                </>
+                </div>
               ) : (
-                <>
+                <div className="flex flex-col items-center">
                   <span className="text-center font-semibold mb-2">
                     Tu valoración ha sido
                   </span>
@@ -179,7 +178,7 @@ function MyBookings() {
                       />
                     ))}
                   </div>
-                </>
+                </div>
               )}
             </div>
           </div>
