@@ -2,13 +2,15 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState(null);
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
-  const apiUrl = import.meta.env.VITE_API_URL; // Importa la URL base desde las variables de entorno
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const fetchUserData = async () => {
     setIsLoading(true);
@@ -19,11 +21,11 @@ const Profile = () => {
           Authorization: token,
         },
       });
-      console.log("Datos recibidos:", response.data);
+
       setUserData(response.data.data.user);
-      console.log("Actualizando userData:", response.data);
     } catch (error) {
       console.error("Error al obtener datos:", error);
+      toast.error("Error al obtener datos: " + error.response.data.mensaje);
     } finally {
       setIsLoading(false);
     }
@@ -45,6 +47,7 @@ const Profile = () => {
         fetchUserData();
       } catch (error) {
         console.error("Error al subir el avatar:", error);
+        toast.error("Error al subir el avatar: " + error.response.data.mensaje);
       }
     }
   };

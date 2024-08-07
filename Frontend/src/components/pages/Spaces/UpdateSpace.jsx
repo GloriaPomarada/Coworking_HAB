@@ -23,8 +23,6 @@ const UpdateSpace = () => {
 
       if (response.status === 200 && response.data && response.data.data) {
         const spaceId = response.data.data.id;
-        console.log("Response:", response);
-        console.log("Space Id:", spaceId);
 
         await uploadPhotos(spaceId, photos);
         toast.success("Espacio actualizado");
@@ -49,11 +47,11 @@ const UpdateSpace = () => {
 
   const handlePhotosChange = (e) => {
     const files = Array.from(e.target.files);
-    console.log("Archivos seleccionados:", files);
+
     if (files.length > 0) {
       setPhotos((prevPhotos) => {
         const updatedPhotos = [...prevPhotos, ...files];
-        console.log("Estado de las fotos actualizadas:", updatedPhotos);
+
         return updatedPhotos;
       });
     }
