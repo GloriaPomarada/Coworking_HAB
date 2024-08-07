@@ -155,7 +155,7 @@ const SpaceForm = ({ onSubmit, onPhotosChange, photos, imagePreview }) => {
       className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md"
     >
       <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
-        {id ? "Actualizar Espacio" : "Crear Espacio"}
+        {id ? "Editar Espacio" : "Crear Espacio"}
       </h1>
       <div className="space-y-4 ">
         <label>
@@ -303,7 +303,7 @@ const SpaceForm = ({ onSubmit, onPhotosChange, photos, imagePreview }) => {
           type="submit"
           className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
         >
-          {id ? "Actualizar Espacio" : "Crear Espacio"}
+          {id ? "Enviar cambios" : "Crear espacio"}
         </button>
       </div>
       {message && (
