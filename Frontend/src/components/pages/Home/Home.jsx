@@ -57,24 +57,7 @@ function Home() {
         </ul>
         <p className="mb-8">Por tanto, el coworking es mucho más que el simple alquiler de salas para establecer la base de la empresa o para reuniones. Y esto se aprecia bien en todo lo que ofrecemos en Inspira.</p>
 
-        <h4 className="text-xl font-semibold mb-2">Oficinas privadas por tiempos que van desde horas hasta meses</h4>
-        <p className="mb-8">Se trata de despachos completamente equipados de mobiliario y servicios. Además, puedes elegirlos con la máxima flexibilidad. Los tienes del tamaño que necesites, desde un puesto de trabajo hasta veinticinco. Todos son luminosos y podemos personalizártelos. Por ejemplo, con terraza o sala de reuniones incorporada. </p>
-
-        <h4 className="text-xl font-semibold mb-2">Salas de reuniones </h4>    
-          <p className="mb-8">Precisamente, también te ofrecemos el alquiler de salas para reuniones con objeto de que puedas verte con tus empleados, clientes o proveedores. Además, las diseñamos a tu gusto. De este modo, puedes pedirla más o menos luminosa, con mayor o menor capacidad, con servicio de vídeo conferencia o incluso con catering. Todo en aras de que tu reunión sea un éxito</p>
-
-        <h4 className="text-xl font-semibold mb-2"> Salas de Conferencias</h4>
-        <p className="mb-8">Nuestras salas de conferencias están diseñadas para albergar tus presentaciones y eventos con la máxima profesionalidad. Equipadas con tecnología audiovisual de última generación, estas salas pueden adaptarse a tus necesidades específicas. Puedes elegir la capacidad adecuada, ajustar la iluminación a tu preferencia y disponer de servicios adicionales como videoconferencias o catering. Todo está preparado para que tu conferencia sea un éxito rotundo.</p>
-
-        <h4 className="text-xl font-semibold mb-2">Espacios para eventos</h4>
-        <p className="mb-8">Te ofrecemos espacios versátiles para todo tipo de eventos, desde lanzamientos de productos hasta celebraciones corporativas. Nuestros espacios están diseñados para adaptarse a tus necesidades, permitiéndote personalizar la capacidad, la disposición del mobiliario y la iluminación. Además, puedes solicitar servicios adicionales como equipo de sonido, proyección audiovisual y catering. Todo pensado para que tu evento sea un éxito memorable.</p>
-
-        <h4 className="text-xl font-semibold mb-2">Espacios de coworking        </h4>
-        <p className="mb-4">Todas nuestras instalaciones de <b>Coworking Space</b> cuentan con espacios donde puedes reunirte con otros miembros del coworking. En estos lugares, el objetivo es intercambiar opiniones y socializar al tiempo que descansas del trabajo.</p>
-        <p className="mb-8">Asimismo, encontrarás otros servicios útiles al margen de tu oficina. Por ejemplo, te ofrecemos taquillas o trastero, reparaciones, aparcamiento, zona de café o té e incluso servicio de mudanzas. Para disfrutar de todos ellos tendrás la máxima flexibilidad y los mejores precios.</p>
-
-        <h4 className="text-xl font-semibold mb-2">Áreas de Descanso</h4>
-        <p>Nuestras áreas de descanso están diseñadas para ofrecerte un respiro en medio de la jornada laboral. Equipadas con muebles cómodos y un ambiente relajante, estos espacios te permiten desconectar y recargar energías. Puedes disfrutar de zonas tranquilas para relajarte, leer o simplemente tomar un descanso. Además, nuestras áreas están pensadas para fomentar el bienestar y la productividad, ofreciendo un espacio ideal para rejuvenecer y volver con renovada energía</p>
+        
       </div>
     </>
   );

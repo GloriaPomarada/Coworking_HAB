@@ -162,13 +162,30 @@ function MobileNav() {
                 </>
               ) : (
                 <>
+                <Link to="/user/my-bookings" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                    <img
+                      title="Reservas"
+                      src="../../../../public/ver_reservas_black.png"
+                      alt="Admin Icon"
+                      className="h-8 w-8 mr-2"
+                    />
+                    <p className="pt-1">Mis Reservas</p>
+                </Link>
+                  <Link to="/user/incident-list" className=" flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                    <img
+                      src="../../../../public/ver_incidencias_black.png"
+                      alt="Admin Icon"
+                      className="h-8 w-8 mr-2"
+                    />
+                    <p className="pt-1">Incidencias</p>
+                  </Link>
                   <Link to="/space/spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
                     <img
                       src="../../../../public/logo_ver_espacios_black.png"
                       alt="Admin Icon"
                       className="h-8 w-8 mr-3"
                     />
-                    Ver Espacios
+                    <p className="pt-1">Espacios Disponibles</p>
                   </Link>
                   <Link to="/space/filter-spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
                     <img
@@ -176,15 +193,15 @@ function MobileNav() {
                       alt="Admin Icon"
                       className="h-8 w-8 mr-3"
                     />
-                    Filtrar Espacios
+                    <p className="pt-1">Busqueda Avanzada</p>
                   </Link>
-                  <Link to="/user/profile" className="hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                  <Link to="/user/profile" className=" flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
                     <img
                       src="../../../../public/iconoPerfUser.png"
                       alt="Profile Icon"
                       className="h-8 w-8 inline mr-2"
                     />
-                    Perfil
+                    <p className="pt-1">Perfil</p>
                   </Link>
                   <button
                     className="hover:bg-gray-200 p-2 rounded focus:outline-none"
@@ -210,7 +227,7 @@ function MobileNav() {
                     alt="Admin Icon"
                     className="h-8 w-8 mr-3"
                   />
-                  Log in
+                  <p className="pt-1">Log in</p>
                 </Link>
                 <Link to="/auth/register" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
                   <img
@@ -218,7 +235,7 @@ function MobileNav() {
                     alt="Admin Icon"
                     className="h-8 w-8 mr-3"
                   />
-                  Sign Up
+                  <p className="pt-1">Sign Up</p>
                 </Link>
                 <Link to="/space/spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
                   <img
@@ -226,7 +243,7 @@ function MobileNav() {
                     alt="Admin Icon"
                     className="h-8 w-8 mr-3"
                   />
-                  Ver Espacios
+                  <p className="pt-1">Espacios Disponibles</p>
                 </Link>
                 <Link to="/space/filter-spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
                   <img
@@ -234,7 +251,7 @@ function MobileNav() {
                     alt="Admin Icon"
                     className="h-8 w-8 mr-3"
                   />
-                  Filtrar Espacios
+                  <p className="pt-1">Busqueda Avanzada </p>
                 </Link>
               </>
             )}
