@@ -75,7 +75,7 @@ function DesktopNav() {
                     <div className="absolute right-0 mt-4 w-60 bg-white text-black rounded-md shadow-lg">
                       <Link
                         to="/space/create-space"
-                        className="flex block px-4 py-2 hover:bg-gray-200"
+                        className="flex px-4 py-2 hover:bg-gray-200"
                       >
                         <img
                           src="../../../../public/crear_espacios_black.png"
@@ -86,7 +86,7 @@ function DesktopNav() {
                       </Link>
                       <Link
                         to="/space/spaces"
-                        className="flex block px-4 py-2 hover:bg-gray-200"
+                        className="flex  px-4 py-2 hover:bg-gray-200"
                       >
                         <img
                           src="../../../../public/logo_ver_espacios_black.png"
@@ -97,7 +97,7 @@ function DesktopNav() {
                       </Link>
                       <Link
                         to="/space/filter-spaces"
-                        className="flex block px-4 py-2 hover:bg-gray-200"
+                        className="flex px-4 py-2 hover:bg-gray-200"
                       >
                         <img
                           title="Busqueda Avanzada"
@@ -126,7 +126,7 @@ function DesktopNav() {
                     <div className="absolute right-0 mt-4 w-60 bg-white text-black rounded-md shadow-lg">
                       <Link
                         to="/user/my-bookings"
-                        className="flex block px-4 py-2 hover:bg-gray-200"
+                        className="flex px-4 py-2 hover:bg-gray-200"
                       >
                         <img
                       title="Reservas"
@@ -138,7 +138,7 @@ function DesktopNav() {
                       </Link>
                       <Link
                         to="/user/incident-list"
-                        className="flex block px-4 py-2 hover:bg-gray-200"
+                        className="flex px-4 py-2 hover:bg-gray-200"
                       >
                         <img
                       src="../../../../public/ver_incidencias_black.png"
@@ -149,7 +149,7 @@ function DesktopNav() {
                       </Link>
                       <Link
                         to="/user/adminBookings"
-                        className="flex block px-4 py-2 hover:bg-gray-200"
+                        className="flex px-4 py-2 hover:bg-gray-200"
                       >
                         <img
                           src="../../../../public/reserva_pendiente_black.png"
@@ -199,7 +199,7 @@ function DesktopNav() {
                     <div className="absolute right-0 mt-4 w-60 bg-white text-black rounded-md shadow-lg">
                       <Link
                         to="/space/spaces"
-                        className="flex block px-4 py-2 hover:bg-gray-200"
+                        className="flex px-4 py-2 hover:bg-gray-200"
                       >
                         <img
                           title="Espacios"
@@ -211,7 +211,7 @@ function DesktopNav() {
                       </Link>
                       <Link
                         to="/space/filter-spaces"
-                        className="flex block px-4 py-2 hover:bg-gray-200"
+                        className="flex px-4 py-2 hover:bg-gray-200"
                       >
                         <img
                           title="Busqueda Avanzada"
@@ -240,7 +240,7 @@ function DesktopNav() {
                     <div className="absolute right-0 mt-4 w-60 bg-white text-black rounded-md shadow-lg">
                       <Link
                         to="/user/my-bookings"
-                        className="flex block px-4 py-2 hover:bg-gray-200"
+                        className="flex px-4 py-2 hover:bg-gray-200"
                       >
                         <img
                       title="Reservas"
@@ -252,7 +252,7 @@ function DesktopNav() {
                       </Link>
                       <Link
                         to="/user/incident-list"
-                        className="flex block px-4 py-2 hover:bg-gray-200"
+                        className="flex px-4 py-2 hover:bg-gray-200"
                       >
                         <img
                       src="../../../../public/ver_incidencias_black.png"
@@ -325,7 +325,7 @@ function DesktopNav() {
                   <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded-md shadow-lg">
                     <Link
                       to="/auth/login"
-                      className=" flex block px-4 py-2 hover:bg-gray-200"
+                      className=" flex px-4 py-2 hover:bg-gray-200"
                     >
                       <img
                       src="../../../../public/iniciar-sesion.png"
@@ -336,7 +336,7 @@ function DesktopNav() {
                     </Link>
                     <Link
                       to="/auth/register"
-                      className=" flex block px-4 py-2 hover:bg-gray-200"
+                      className=" flex px-4 py-2 hover:bg-gray-200"
                     >
                       <img
                       src="../../../../public/agregar.png"

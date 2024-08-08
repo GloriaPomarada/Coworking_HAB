@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, } from "react";
 
 function MobileNav() {
   const { user, isAdmin, logout } = useAuth();
@@ -8,43 +8,15 @@ function MobileNav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef();
 
+  // Función para alternar la apertura/cierre del menú
   const handleMenuToggle = () => {
     setMenuOpen((prev) => !prev);
   };
 
-  const handleClickOutside = (event) => {
-    if (menuRef.current && !menuRef.current.contains(event.target)) {
-      setMenuOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  // eslint-disable-next-line no-unused-vars
-  const [isScrolled, setIsScrolled] = useState(false);
-  const handleScroll = () => {
-    if (window.scrollY > 0) {
-      setIsScrolled(true);
-    } else {
-      setIsScrolled(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   return (
     <div className="flex items-center ml-auto">
-      {/* Button for mobile menu */}
+      {/* Botón para abrir/cerrar el menú móvil */}
       <button
         className="sm:hidden text-white focus:outline-none"
         onClick={handleMenuToggle}
@@ -74,7 +46,7 @@ function MobileNav() {
         </svg>
       </button>
 
-      {/* Mobile menu */}
+      {/* Menú móvil desplegable */}
       {menuOpen && (
         <div
           className="sm:hidden absolute top-full left-0 w-full bg-white text-black shadow-lg"
