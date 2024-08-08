@@ -100,7 +100,7 @@ function MyBookings() {
 
   return (
     <div className="flex flex-col items-center pt-6 pb-12 px-6 bg-gray-100 min-h-screen">
-      <h2 className="text-xl font-bold text-gray-800 mb-6">Mis Reservas</h2>
+      <h2 className="text-xl font-bold text-gray-800">Mis Reservas</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-lg shadow-md max-w-6xl w-full">
         {bookings.map((booking) => (
           <div

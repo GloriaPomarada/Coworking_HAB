@@ -30,12 +30,12 @@ function ResetPass() {
       );
       return;
     }
-    if (credentials.recoverPassCode !== "codigo_valido") {
+    /* if (credentials.recoverPassCode !== "codigo_valido") {
       toast.error(
         "El código de recuperación no es válido. Por favor, verifica e intenta nuevamente."
       );
       return;
-    }
+    } */
     try {
       const resp = await axios.put("/api/users/password/reset", credentials);
       console.log(resp);
@@ -59,7 +59,7 @@ function ResetPass() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 pt-20">
+    <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 pt-8">
       <h2 className="text-2xl font-bold mb-6">Cambiar Contraseña</h2>
       <form
         onSubmit={handleSubmit}

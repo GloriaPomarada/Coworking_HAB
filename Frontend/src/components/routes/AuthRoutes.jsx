@@ -15,10 +15,7 @@ function AuthRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/activate" element={<Activate />} />
       <Route path="/recoverPass" element={<RecoverPass />} />
-      <Route
-        path="/resetPass"
-        element={<ProtectedRoute element={<ResetPass />} />}
-      />
+      <Route path="/resetPass" element={<ResetPass />} />
       <Route
         path="/updatePass"
         element={<ProtectedRoute element={<UpdatePass />} />}

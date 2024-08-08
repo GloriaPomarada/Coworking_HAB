@@ -152,7 +152,7 @@ const SpaceForm = ({ onSubmit, onPhotosChange, photos, imagePreview }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md"
+      className="max-w-md mx-auto m-8 p-6 bg-white rounded-lg shadow-md"
     >
       <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
         {id ? "Editar Espacio" : "Crear Espacio"}
@@ -301,7 +301,7 @@ const SpaceForm = ({ onSubmit, onPhotosChange, photos, imagePreview }) => {
         </label>
         <button
           type="submit"
-          className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 mt-3"
         >
           {id ? "Enviar cambios" : "Crear espacio"}
         </button>

@@ -18,7 +18,7 @@ const imgSchema = joi
       )
       .required()
       .messages(joiErrorMessages),
-    size: joi.number().max(5000000).required().messages(joiErrorMessages),
+    size: joi.number().max(20000000).required().messages(joiErrorMessages),
   })
   .unknown(true);
 

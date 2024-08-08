@@ -61,7 +61,7 @@ function BookingForm({ spaceId, onBookingSuccess }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 p-6">
+    <div className=" flex flex-col justify-center items-center bg-gray-100 p-6">
       <h2 className="text-xl font-bold text-gray-800 mb-4 text-center">
         Formulario de Reserva
       </h2>

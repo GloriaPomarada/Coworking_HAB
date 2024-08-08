@@ -41,7 +41,7 @@ const IncidentList = () => {
 
   return (
     <div className="flex flex-col items-center pt-6 pb-12 px-6 bg-gray-100 min-h-screen">
-      <h2 className="text-xl font-bold text-gray-800 mb-6">
+      <h2 className="text-xl font-bold text-gray-800">
         Lista de Incidencias
       </h2>
       <div className="p-6 rounded-lg shadow-md max-w-4xl w-full">

@@ -41,22 +41,32 @@ const getEspacio = async (espacioId = null) => {
                 direccion: rows[0].direccion,
                 estado: rows[0].estado,
                 valoracion_media: rows[0].valoracion_media,
-                imagenes: rows
-                    .map((row) => ({
+                imagenes: [],
+                equipamientos: [],
+            };
+
+            const imagenSet = new Set();
+            const equipamientoSet = new Set();
+
+            rows.forEach(row => {
+                if (row.espacio_imagen_id && row.espacio_imagen && !imagenSet.has(row.espacio_imagen_id)) {
+                    espacio.imagenes.push({
                         id: row.espacio_imagen_id,
                         filename: row.espacio_imagen,
-                    }))
-                    .filter((img) => img.id && img.filename),
-                equipamientos: rows
-                    .map((row) => row.equipamiento_nombre)
-                    .filter(Boolean),
-            };
+                    });
+                    imagenSet.add(row.espacio_imagen_id);
+                }
+                if (row.equipamiento_nombre && !equipamientoSet.has(row.equipamiento_nombre)) {
+                    espacio.equipamientos.push(row.equipamiento_nombre);
+                    equipamientoSet.add(row.equipamiento_nombre);
+                }
+            });
 
             return espacio;
         } else {
             const espacios = {};
 
-            rows.forEach((row) => {
+            rows.forEach(row => {
                 if (!espacios[row.id]) {
                     espacios[row.id] = {
                         id: row.id,
@@ -73,17 +83,16 @@ const getEspacio = async (espacioId = null) => {
                     };
                 }
 
-                if (row.espacio_imagen_id) {
-                    espacios[row.id].imagenes.push({
+                const espacio = espacios[row.id];
+                if (row.espacio_imagen_id && row.espacio_imagen && !espacio.imagenes.some(img => img.id === row.espacio_imagen_id)) {
+                    espacio.imagenes.push({
                         id: row.espacio_imagen_id,
                         filename: row.espacio_imagen,
                     });
                 }
 
-                if (row.equipamiento_nombre) {
-                    espacios[row.id].equipamientos.push(
-                        row.equipamiento_nombre
-                    );
+                if (row.equipamiento_nombre && !espacio.equipamientos.includes(row.equipamiento_nombre)) {
+                    espacio.equipamientos.push(row.equipamiento_nombre);
                 }
             });
 
