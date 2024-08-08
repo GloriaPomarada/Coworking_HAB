@@ -1,5 +1,3 @@
-
-
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { useState, useRef, useEffect } from "react";
@@ -11,17 +9,13 @@ function MobileNav() {
   const menuRef = useRef();
 
   const handleMenuToggle = () => {
-    setMenuOpen(!menuOpen);
+    setMenuOpen((prev) => !prev);
   };
 
   const handleClickOutside = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
       setMenuOpen(false);
     }
-  };
-
-  const handleMenuClose = () => {
-    setMenuOpen(false);
   };
 
   useEffect(() => {
@@ -40,7 +34,7 @@ function MobileNav() {
       setIsScrolled(false);
     }
   };
-  
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -82,12 +76,15 @@ function MobileNav() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="sm:hidden absolute top-full left-0 w-full bg-white text-black shadow-lg">
-          <nav className="flex flex-col space-y-2 p-4" ref={menuRef}>
+        <div
+          className="sm:hidden absolute top-full left-0 w-full bg-white text-black shadow-lg"
+          ref={menuRef}
+        >
+          <nav className="flex flex-col space-y-2 p-4">
             {user ? (
               isAdmin ? (
                 <>
-                  <Link to="/space/create-space" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                  <Link to="/space/create-space" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuToggle}>
                     <img
                       src="../../../../public/crear_espacios_black.png"
                       alt="Crear espacios"
@@ -95,7 +92,7 @@ function MobileNav() {
                     />
                     Crear espacios
                   </Link>
-                  <Link to="/space/spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                  <Link to="/space/spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuToggle}>
                     <img
                       src="../../../../public/logo_ver_espacios_black.png"
                       alt="Ver Espacios"
@@ -103,16 +100,16 @@ function MobileNav() {
                     />
                     Espacios Disponibles
                   </Link>
-                  <Link to="/space/filter-spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                  <Link to="/space/filter-spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuToggle}>
                     <img
                       title="Busqueda Avanzada"
-                      src="../../../../public/logo_filtrar_espacios_black.png"
+                      src="../../../../public/logo_lupa_black.png"
                       alt="Admin Icon"
                       className="h-8 w-8 mr-2"
                     />
                     Busqueda Avanzada
                   </Link>
-                  <Link to="/user/adminBookings" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                  <Link to="/user/adminBookings" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuToggle}>
                     <img
                       src="../../../../public/reserva_pendiente_black.png"
                       alt="Admin Icon"
@@ -120,7 +117,7 @@ function MobileNav() {
                     />
                     Reservas Pendientes
                   </Link>
-                  <Link to="/user/my-bookings" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                  <Link to="/user/my-bookings" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuToggle}>
                     <img
                       title="Reservas"
                       src="../../../../public/ver_reservas_black.png"
@@ -129,7 +126,7 @@ function MobileNav() {
                     />
                     Reservas
                   </Link>
-                  <Link to="/user/incident-list" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                  <Link to="/user/incident-list" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuToggle}>
                     <img
                       src="../../../../public/ver_incidencias_black.png"
                       alt="Admin Icon"
@@ -137,7 +134,7 @@ function MobileNav() {
                     />
                     Incidencias
                   </Link>
-                  <Link to="/user/profile" className="hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                  <Link to="/user/profile" className="hover:bg-gray-200 p-2 rounded" onClick={handleMenuToggle}>
                     <img
                       src="../../../../public/iconoPerfUser.png"
                       alt="Profile Icon"
@@ -150,6 +147,7 @@ function MobileNav() {
                     onClick={() => {
                       navigate("/");
                       logout();
+                      handleMenuToggle();
                     }}
                   >
                     <img
@@ -162,7 +160,7 @@ function MobileNav() {
                 </>
               ) : (
                 <>
-                <Link to="/user/my-bookings" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                  <Link to="/user/my-bookings" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuToggle}>
                     <img
                       title="Reservas"
                       src="../../../../public/ver_reservas_black.png"
@@ -170,8 +168,8 @@ function MobileNav() {
                       className="h-8 w-8 mr-2"
                     />
                     <p className="pt-1">Mis Reservas</p>
-                </Link>
-                  <Link to="/user/incident-list" className=" flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                  </Link>
+                  <Link to="/user/incident-list" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuToggle}>
                     <img
                       src="../../../../public/ver_incidencias_black.png"
                       alt="Admin Icon"
@@ -179,7 +177,7 @@ function MobileNav() {
                     />
                     <p className="pt-1">Incidencias</p>
                   </Link>
-                  <Link to="/space/spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                  <Link to="/space/spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuToggle}>
                     <img
                       src="../../../../public/logo_ver_espacios_black.png"
                       alt="Admin Icon"
@@ -187,15 +185,15 @@ function MobileNav() {
                     />
                     <p className="pt-1">Espacios Disponibles</p>
                   </Link>
-                  <Link to="/space/filter-spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                  <Link to="/space/filter-spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuToggle}>
                     <img
-                      src="../../../../public/logo_filtrar_espacios_black.png"
+                      src="../../../../public/logo_lupa_black.png"
                       alt="Admin Icon"
                       className="h-8 w-8 mr-3"
                     />
                     <p className="pt-1">Busqueda Avanzada</p>
                   </Link>
-                  <Link to="/user/profile" className=" flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                  <Link to="/user/profile" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuToggle}>
                     <img
                       src="../../../../public/iconoPerfUser.png"
                       alt="Profile Icon"
@@ -206,8 +204,9 @@ function MobileNav() {
                   <button
                     className="hover:bg-gray-200 p-2 rounded focus:outline-none"
                     onClick={() => {
+                      navigate("/");
                       logout();
-                      handleMenuClose();
+                      handleMenuToggle();
                     }}
                   >
                     <img
@@ -221,7 +220,7 @@ function MobileNav() {
               )
             ) : (
               <>
-                <Link to="/auth/login" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                <Link to="/auth/login" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuToggle}>
                   <img
                     src="../../../../public/iniciar-sesion.png"
                     alt="Admin Icon"
@@ -229,7 +228,7 @@ function MobileNav() {
                   />
                   <p className="pt-1">Log in</p>
                 </Link>
-                <Link to="/auth/register" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                <Link to="/auth/register" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuToggle}>
                   <img
                     src="../../../../public/agregar.png"
                     alt="Admin Icon"
@@ -237,7 +236,7 @@ function MobileNav() {
                   />
                   <p className="pt-1">Sign Up</p>
                 </Link>
-                <Link to="/space/spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                <Link to="/space/spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuToggle}>
                   <img
                     src="../../../../public/logo_ver_espacios_black.png"
                     alt="Admin Icon"
@@ -245,13 +244,13 @@ function MobileNav() {
                   />
                   <p className="pt-1">Espacios Disponibles</p>
                 </Link>
-                <Link to="/space/filter-spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuClose}>
+                <Link to="/space/filter-spaces" className="flex hover:bg-gray-200 p-2 rounded" onClick={handleMenuToggle}>
                   <img
-                    src="../../../../public/logo_filtrar_espacios_black.png"
+                    src="../../../../public/logo_lupa_black.png"
                     alt="Admin Icon"
                     className="h-8 w-8 mr-3"
                   />
-                  <p className="pt-1">Busqueda Avanzada </p>
+                  <p className="pt-1">Busqueda Avanzada</p>
                 </Link>
               </>
             )}

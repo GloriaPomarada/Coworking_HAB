@@ -101,7 +101,7 @@ function DesktopNav() {
                       >
                         <img
                           title="Busqueda Avanzada"
-                          src="../../../../public/logo_filtrar_espacios_black.png"
+                          src="../../../../public/logo_lupa_black.png"
                           alt="Admin Icon"
                           className="h-8 w-8 mr-2"
                         />
@@ -215,7 +215,7 @@ function DesktopNav() {
                       >
                         <img
                           title="Busqueda Avanzada"
-                          src="../../../../public/logo_filtrar_espacios_black.png"
+                          src="../../../../public/logo_lupa_black.png"
                           alt="Admin Icon"
                           className="h-8 w-8 mr-2"
                         />
@@ -293,7 +293,7 @@ function DesktopNav() {
               >
                 <img
                   title="Busqueda Avanzada"
-                  src="../../../../public/logo_filtrar_espacios_white.png"
+                  src="../../../../public/logo_lupa_white.png"
                   alt="Admin Icon"
                   className="h-11 w-11"
                 />

@@ -27,7 +27,7 @@ const Login = () => {
       login(token);
 
       toast.success("Inicio de sesión exitoso");
-      navigate("/space/spaces");
+      navigate("/");
     } catch (error) {
       if (error.response && error.response.status === 404) {
         toast.error(
