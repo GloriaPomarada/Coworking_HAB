@@ -13,7 +13,7 @@ const postVoteController = async (req, res, next) => {
 
 
     try {
-        // Verificar si la reserva existe y pertenece al usuario
+        
         const [reservas] = await pool.query(
             'SELECT id, espacio_id, fecha_fin FROM reservas WHERE id = ? AND usuario_id = ?  AND estado = "finalizada"',
             [reserva_id, usuario_id]
@@ -26,7 +26,7 @@ const postVoteController = async (req, res, next) => {
         const reserva = reservas[0];
         const now = new Date();
 
-        // Comparar fecha de fin de la reserva con la fecha actual
+        // Comparar fecha de fin de la reserva con la fecha actual.
         if (new Date(reserva.fecha_fin) > now) {
             return res.status(403).json({ message: 'No puedes valorar este espacio hasta que tu reserva haya finalizado.' });
         }

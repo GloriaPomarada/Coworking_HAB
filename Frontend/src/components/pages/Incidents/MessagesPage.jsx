@@ -95,21 +95,21 @@ const MessagesPage = () => {
         ) : (
           <div>No hay mensajes para esta incidencia.</div>
         )}
+        {showNewMessage && (
+          <div className="fixed bottom-16 right-6 max-w-lg p-4 bg-white shadow-lg rounded">
+            <NewMessage incidentId={id} onMessageSent={handleNewMessageSent} />
+          </div>
+        )}
         <div className="fixed bottom-6 right-6">
           <button
             onClick={handleNewMessageClick}
             className={`px-4 py-2 text-white rounded ${
-              showNewMessage ? "bg-gray-400" : "bg-blue-500  hover:bg-blue-700"
+              showNewMessage ? "" : "bg-blue-500 hover:bg-blue-700"
             }`}
           >
-            {showNewMessage ? "Ocultar " : "Nuevo Mensaje"}
+            {showNewMessage ? "" : "Nuevo Mensaje"}
           </button>
         </div>
-        {showNewMessage && (
-          <div className="fixed bottom-16 right-6  max-w-lg p-4 bg-white shadow-lg rounded">
-            <NewMessage incidentId={id} onMessageSent={handleNewMessageSent} />
-          </div>
-        )}
       </div>
     </div>
   );

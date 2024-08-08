@@ -12,7 +12,6 @@ const NewMessage = ({ incidentId, onMessageSent }) => {
       await axios.post(`/api/incidents/postmessage`, {
         incidencia_id: incidentId,
         mensaje: message,
-         
       }, {
         headers: {
           Authorization: token,
@@ -25,6 +24,10 @@ const NewMessage = ({ incidentId, onMessageSent }) => {
     }
   };
 
+  const handleHide = () => {
+    onMessageSent();  
+  };
+
   return (
     <form onSubmit={handleSubmit} className="mt-4">
       <textarea
@@ -33,9 +36,14 @@ const NewMessage = ({ incidentId, onMessageSent }) => {
         className="w-full p-2 border border-gray-300 rounded"
         placeholder="Escribe tu mensaje aquí..."
       />
-      <button type="submit" className="mt-2 px-4 py-2 bg-blue-500  hover:bg-blue-700 text-white rounded">
-        Enviar Mensaje
-      </button>
+      <div className="flex justify-between mt-2 gap-4"> {/* Añadido gap-4 para espacio */}
+        <button type="submit" className="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white rounded">
+          Enviar Mensaje
+        </button>
+        <button type="button" onClick={handleHide} className="px-4 py-2 bg-gray-500 hover:bg-gray-700 text-white rounded">
+          Ocultar
+        </button>
+      </div>
     </form>
   );
 };
