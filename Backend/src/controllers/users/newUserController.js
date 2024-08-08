@@ -12,6 +12,7 @@ const newUserController = async (req, res, next) => {
         await validateSchema(newUserSchema, req.body);
 
         const registrationCode = randomstring.generate(30);
+        const activationUrl = `http://localhost:3000/auth/activate/`;
 
         const emailSubject = 'Activación Cuenta Espacios Coworking';
         const emailBody = `
@@ -19,10 +20,11 @@ const newUserController = async (req, res, next) => {
 
     Bienvenido a Coworking Space!!
     Éste es tu código de registro: 
-       <strong> ${registrationCode} </strong>
-       
-    Úsalo para activar tu cuenta.
-   `;
+        <strong> ${registrationCode} </strong>
+
+    Usa el siguiente enlace para activar tu cuenta:
+        <a href="${activationUrl}">Activa tu Cuenta</a>
+          `;
 
         await userModel.insertUser(username, email, password, registrationCode);
 

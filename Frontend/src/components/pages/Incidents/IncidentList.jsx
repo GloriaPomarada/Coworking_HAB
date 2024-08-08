@@ -60,7 +60,7 @@ const IncidentList = () => {
                   {incident.fecha_creacion}
                 </p>
                 <p className="text-sm text-gray-700 mb-2">
-                  <span className="font-semibold">Título:</span>{" "}
+                  <span className="font-semibold">Descripción:</span>{" "}
                   {incident.titulo}
                 </p>
                 <div className="flex justify-center">

@@ -1,5 +1,15 @@
 import pool from '../../config/connection.js';
 
+const getReservationStartDate = async (reserva_id) => {
+    try {
+        const sql = `SELECT fecha_inicio FROM reservas WHERE id = ?`;
+        const [rows] = await pool.query(sql, [reserva_id]);
+        return rows.length > 0 ? rows[0].fecha_inicio : null;
+    } catch (error) {
+        throw new Error('Error al obtener la fecha de inicio de la reserva: ' + error.message);
+    }
+};
+
 const newIncident = async (reserva_id, usuario_id, categoria_incidencia_id, titulo) => {
     try {
         // El ID del espacio se obtiene basado en la reserva.
@@ -17,4 +27,4 @@ const newIncident = async (reserva_id, usuario_id, categoria_incidencia_id, titu
     }
 };
 
-export default newIncident;
+export { getReservationStartDate, newIncident };

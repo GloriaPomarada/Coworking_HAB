@@ -50,7 +50,7 @@ function NewIncident() {
       <form onSubmit={handleSubmit} className="p-6 bg-white rounded-lg shadow-md max-w-md w-full">
         <div className="mb-4">
           <label htmlFor="titulo" className="block text-sm font-semibold text-gray-700 mb-2">
-            Título
+            Descripción
           </label>
           <input
             type="text"
