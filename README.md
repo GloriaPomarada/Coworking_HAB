@@ -134,7 +134,13 @@ Este proyecto cuenta con licencia conforme a los términos de la licencia MIT.
 
 ## Desarrolladores
 
-- Abel Coria
-- Antonio Gómez
-- Roberto Medrano
-- Gloria Pomarada
+<a href="https://github.com/abelcoria16"> <img alt="Static Badge" src="https://img.shields.io/badge/Abel_Coria-white?style=for-the-badge&logo=github&logoColor=black&link=https%3A%2F%2Fgithub.com%2FAbelCoria"> </a>
+
+<a href="https://github.com/AntGom"> <img alt="Static Badge" src="https://img.shields.io/badge/Antonio_Gómez-white?style=for-the-badge&logo=github&logoColor=black&link=https%3A%2F%2Fgithub.com%2FAntonioGomez"> </a>
+
+<a href="https://github.com/isbull"> <img alt="Static Badge" src="https://img.shields.io/badge/Roberto_Medrano-white?style=for-the-badge&logo=github&logoColor=black&link=https%3A%2F%2Fgithub.com%2FRobertoMedrano"> </a>
+
+<a href="https://github.com/GloriaPomarada"> <img alt="Static Badge" src="https://img.shields.io/badge/Gloria_Pomarada-white?style=for-the-badge&logo=github&logoColor=black&link=https%3A%2F%2Fgithub.com%2FGloriaPomarada"> </a>
+
+
+
