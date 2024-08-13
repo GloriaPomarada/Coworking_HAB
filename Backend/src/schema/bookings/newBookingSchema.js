@@ -6,7 +6,6 @@ const newBookingSchema = joi.object({
     usuario_id: joi
         .string()
         .guid({ version: 'uuidv4' })
-        .required()
         .messages(joiErrorMessages),
     espacio_id: joi
         .number()

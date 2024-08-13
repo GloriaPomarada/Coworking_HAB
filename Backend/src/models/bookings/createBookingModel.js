@@ -7,13 +7,13 @@ const checkExistingReservation = async (espacio_id, fecha_inicio, fecha_fin) => 
         [espacio_id]
     );
 
-    // Convertir las fechas de la base de datos a objetos Date para comparar
+    // Convertir las fechas de la base de datos a objetos Date para comparar.
     const reservasExistentes = existingReservations.map(reserva => ({
         fecha_inicio: new Date(reserva.fecha_inicio),
         fecha_fin: new Date(reserva.fecha_fin)
     }));
 
-    // Verificar si hay superposición con alguna reserva existente
+    // Verificar si hay superposición con alguna reserva existente.
     const nuevaReservaIntervalo = {
         start: new Date(fecha_inicio),
         end: new Date(fecha_fin)

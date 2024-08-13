@@ -4,13 +4,14 @@ import * as bookingModel from '../../models/bookings/index.js';
 
 const postBookingController = async (req, res, next) => {
     const {
-        usuario_id,
         espacio_id,
         tipo,
         fecha_inicio,
         fecha_fin,
         observaciones,
     } = req.body;
+
+    const usuario_id = req.user.id;  // Obtener el usuario autenticado
 
     const { error } = newBookingSchema.validate(req.body);
 
