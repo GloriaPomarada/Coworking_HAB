@@ -46,7 +46,9 @@ function Register() {
           navigate("/auth/activate");
         }, 2000);
       } else {
-        toast.error("Hubo un problema con el registro. Inténtalo de nuevo.");
+        toast.error(
+          "Hubo un problema con el registro" + error.response.data.mensaje
+        );
       }
     } catch (error) {
       console.error("Error registrando usuario:", error);
@@ -56,7 +58,7 @@ function Register() {
         );
       } else {
         toast.error(
-          "Hubo un error al registrar el usuario. Por favor, inténtalo de nuevo."
+          "Hubo un problema con el registro: " + error.response.data.mensaje
         );
       }
     }

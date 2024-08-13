@@ -35,7 +35,8 @@ function RecoverPass() {
         );
       } else {
         toast.error(
-          "Hubo un error al intentar recuperar la contraseña. Por favor, inténtalo de nuevo."
+          "Hubo un error al intentar recuperar la contraseña: " +
+            error.response.data.mensaje
         );
       }
     }
